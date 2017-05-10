@@ -11,7 +11,8 @@ class LibrariesController < ApplicationController
 	def create
 		@library = Library.new(library_params)
 		if @library.save
-			redirect_to :index
+			flash[:success] = "Library successfully created"
+			redirect_to libraries_url
 		else
 			render :new
 		end
