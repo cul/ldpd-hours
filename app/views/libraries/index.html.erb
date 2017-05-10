@@ -1,3 +1,8 @@
-<% @libraries.each do |library| %>
-	<%= library.name %>
-<% end %>
+<div>
+	<h2>Select a Library</h2>
+	<ul>
+		<% @libraries.each do |library| %>
+			<li><%= link_to library.name, libraries_path(library) %></li>
+		<% end %>
+	</ul>
+</div>
