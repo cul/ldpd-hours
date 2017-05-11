@@ -245,7 +245,6 @@ DEPENDENCIES
   capybara (~> 2.13.0)
   coffee-rails (~> 4.2)
   jbuilder (~> 2.5)
-  listen (>= 3.0.5, < 3.2)
   mysql2
   poltergeist
   puma (~> 3.7)
