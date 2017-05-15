@@ -1,7 +1,5 @@
 {
   "name": "ldpd-hours",
   "private": true,
-  "dependencies": {
-    "jquery": "^3.2.1"
-  }
+  "dependencies": {}
 }
