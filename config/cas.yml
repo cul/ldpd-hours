@@ -1,0 +1,7 @@
+cas: &CAS
+  host: cas.columbia.edu
+  login_url: /cas/login
+  logout_url: /cas/logout
+  service_validate_url: /cas/serviceValidate
+  disable_ssl_verification: true
+  provider: cas

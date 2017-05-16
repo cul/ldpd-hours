@@ -27,11 +27,8 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
 gem 'mysql2'
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
+
 gem 'tether-rails'
 
 group :development, :test do
@@ -65,8 +62,11 @@ gem 'bootstrap', '~> 4.0.0.alpha6'
 
 gem 'jquery-rails'
 
+# Moved outside dev/test group to get deploy to work, known issue
 gem 'listen', '>= 3.0.5', '< 3.2'
 
+# Login/auth gems
 gem 'devise'
+gem 'cul_omniauth', git: 'git@github.com:Oneill38/cul_omniauth.git', branch: 'rails_5'
 
 
