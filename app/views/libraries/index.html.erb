@@ -1,0 +1,8 @@
+<div>
+	<h2>Select a Library</h2>
+	<ul>
+		<% @libraries.each do |library| %>
+			<li><%= link_to library.name, library_path(library.id) %></li>
+		<% end %>
+	</ul>
+</div>
