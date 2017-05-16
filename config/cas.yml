@@ -5,3 +5,13 @@ cas: &CAS
   service_validate_url: /cas/serviceValidate
   disable_ssl_verification: true
   provider: cas
+saml: &SAML
+  <<: *CAS
+  provider: saml
+  service_validate_url: /cas/samlValidate
+
+development: *SAML
+test: *SAML
+hours_dev: *SAML
+hours_test: *SAML
+hours_prod: *SAML

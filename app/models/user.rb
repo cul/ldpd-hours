@@ -1,7 +1,12 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
   include Cul::Omniauth::Users
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  ROLES = %i[admin superadmin]
+
+  def password
+  	Devise.friendly_token[0,20]
+  end
+
+  def password=(*val)
+
+  end
 end
