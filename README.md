@@ -4,11 +4,9 @@
 
 ## Testing
 
-Run rspec testing suite with `bundle exec rspec`
-
-To run system tests which use Capybara run the following:
+Run testing suite with:
 
 ```
 rake db:seed RAILS_ENV=test
-rails test:system
+bundle exec rspec
 ```
