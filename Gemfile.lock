@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:Oneill38/cul_omniauth.git
+  remote: https://github.com/Oneill38/cul_omniauth.git
   revision: 26a5ccb1527391c49ce4dfe5610d0c123e273502
   branch: rails_5
   specs:

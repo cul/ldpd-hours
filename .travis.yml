@@ -14,5 +14,4 @@ before_script:
 before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS hours_test;'
 script:
-  - bundle exec rails test:system
   - bundle exec rspec spec/

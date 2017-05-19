@@ -68,6 +68,6 @@ gem 'listen', '>= 3.0.5', '< 3.2'
 
 # Login/auth gems
 gem 'devise'
-gem 'cul_omniauth', git: 'git@github.com:Oneill38/cul_omniauth.git', branch: 'rails_5'
+gem 'cul_omniauth', git: 'https://github.com/Oneill38/cul_omniauth.git', branch: 'rails_5'
 
 
