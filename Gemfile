@@ -40,6 +40,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.5'
   gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
   gem 'poltergeist'
+  gem 'database_cleaner'
 end
 
 group :development do
