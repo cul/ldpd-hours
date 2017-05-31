@@ -1,5 +1,5 @@
 class Admin::UsersController < ApplicationController
-	load_and_authorize_resource
+	# load_and_authorize_resource
 
 	def new
 		@user = User.new
@@ -18,6 +18,12 @@ class Admin::UsersController < ApplicationController
 
 	def index
 		@users = User.all
+	end
+
+	def destroy
+		@user = User.find(params[:id])
+		@user.destroy
+		render json: { message: "removed" }, status: :ok
 	end
 
 	private

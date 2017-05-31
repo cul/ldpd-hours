@@ -2,7 +2,10 @@
 	<h2>All Users</h2>
 	<ul>
 		<% @users.each do |user| %>
-			<li><%= user.email %></li>
+			<li>
+				<%= user.email %>
+				<%= link_to "<i class='fa fa-times alert-danger' aria-hidden='true'></i>".html_safe, admin_user_path(user), method: :delete, remote: true, :class => "text-danger", data: {confirm: "Are you sure you want to delete this user"}%>
+			</li>
 		<% end %>
 	</ul>
 </div>

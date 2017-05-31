@@ -28,7 +28,7 @@ describe "Admin::Users" do
     end
   end
 
-  describe "adding a user" do
+  describe "adding and removing a user" do
     include_context 'login admin user'
 
     it "adds a new user" do
@@ -40,7 +40,14 @@ describe "Admin::Users" do
       click_button "Create User"
       expect(page).to have_content("User successfully added")
     end
+
+    it "should delete a user" do
+      visit("/admin/users")
+      first("a i.fa-times").click
+      expect(page.has_content?('def456')).to eq(false)
+    end
   end
+
 
 
 

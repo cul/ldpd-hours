@@ -1,0 +1,134 @@
+html {
+  overflow-y: scroll;
+}
+
+body{
+	font-size: 16px;
+	padding: 0;
+}
+
+li{
+	list-style-type: none;
+}
+
+ul.user-login {
+	margin: 0;
+	padding: 5px 8px;
+	text-align: right;
+}
+
+ul.user-login li  {
+	display: inline;
+	margin: 0 8px;
+}
+
+/* logo area */
+
+.navbar-inverse {
+  background-color: #174785;
+	border: none;
+}
+
+.logo-contain {
+	text-align: center;
+	padding: 45px 0 45px 0;
+}
+
+#logo {
+	float: none;
+	font-size: 60px;
+	font-weight: 300;
+	letter-spacing: -1px;
+	line-height: 1;
+	margin: 0;
+	padding: 0;
+	text-transform: none;
+}
+
+a#logo {
+	color: #fff;
+}
+
+a#logo:hover,
+a#logo:active {
+	border: 0;
+	color: #ccc;
+	text-decoration: none;
+}
+
+/* nav bar */
+
+nav.bottom-nav {
+	background: #c4d8e2;
+	border: none;
+	border-bottom: $border;
+	border-radius: 0;
+	color: black;
+	}
+
+.container-fluid {
+	max-width: 1020px;
+	padding: 0;
+}
+
+.navbar {
+	margin: 0;
+}
+
+.navbar .nav li a {
+	padding: 15px 11px 10px 11px;
+}
+
+.navbar-form input,
+.navbar .btn {
+	margin: 0;
+}
+
+/* main content well */
+
+#header-row{
+	padding-bottom: 20px;
+}
+
+.body-contain {
+	margin-top: 15px;
+}
+
+.browse-box {
+	background: #fff;
+	border: 5px solid #eee;
+	border-radius: 10px;
+	margin: 15px 0;
+	overflow: hidden;
+	padding: 25px 20px 10px 20px;
+}
+
+.browse-box .col-sm-6{
+	margin: 0 0 20px 0;
+}
+
+.browse-box h2{
+	font-size: 24px;
+	margin: 0 0 25px 15px;
+	text-align: center !important;
+}
+
+.hp-main-content p {
+	font-size: 17px;
+	line-height: 1.7;
+	margin: 0 0 20px 0;
+}
+
+/* extras */
+
+.outline{
+	background: #f5f5f5;
+	border: 1px solid #ddd;;
+	border-radius: 8px;
+}
+
+.outline h2{
+	font-size: 24px;
+	margin: 0 0 25px 15px;
+	text-align: center !important;
+}
