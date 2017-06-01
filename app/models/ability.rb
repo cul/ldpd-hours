@@ -30,7 +30,7 @@ class Ability
     # https://github.com/ryanb/cancan/wiki/Defining-Abilities
     user ||= User.new # guest user (not logged in)
     if user.role == "superadmin"
-      can :manage, User
+      can :manage, :all
     elsif user.role == "admin"
       can :read, :all
     end
