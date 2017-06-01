@@ -61,7 +61,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Styling
 gem 'bootstrap', '~> 4.0.0.alpha6'
 gem "font-awesome-rails"
-gem 'jquery-rails'
 
 # Moved outside dev/test group to get deploy to work, known issue
 gem 'listen', '>= 3.0.5', '< 3.2'
