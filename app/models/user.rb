@@ -11,6 +11,14 @@ class User < ApplicationRecord
 
   end
 
+  def admin?
+    self.role == "admin"
+  end
+
+  def superadmin?
+    self.role == "superadmin"
+  end
+  
   private
 
   def add_email

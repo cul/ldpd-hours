@@ -31,7 +31,7 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.role == "superadmin"
       can :manage, :all
-    else
+    elsif user.role == "admin"
       can :read, :all
     end
   end
