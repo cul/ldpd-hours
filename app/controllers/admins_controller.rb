@@ -1,4 +1,4 @@
-class DashboardsController < ApplicationController
+class AdminsController < ApplicationController
   	authorize_resource :class => false
 	
 	def show

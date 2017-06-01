@@ -71,3 +71,4 @@ gem 'devise'
 gem 'cul_omniauth', git: 'https://github.com/Oneill38/cul_omniauth.git', branch: 'rails_5'
 gem 'cancancan'
 
+gem 'gaffe'
