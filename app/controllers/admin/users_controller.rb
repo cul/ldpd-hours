@@ -26,6 +26,15 @@ class Admin::UsersController < ApplicationController
 		render json: { message: "removed" }, status: :ok
 	end
 
+	def update
+		@user = User.find(params[:id])
+		if @user.update(user_params)
+			render json: { message: "updated" }, status: :ok
+		else
+			render json: { message: @user.errors.full_messages.to_sentence }
+		end
+	end
+
 	private
 
 	def user_params

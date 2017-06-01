@@ -16,6 +16,11 @@ describe "Admin::Users" do
       visit '/sign_in'
       User.find_by(uid: uid).update!(role: "superadmin")
     end
+
+  end
+
+  before(:each) do
+    @admin = User.create(uid: "def45678", role: "admin")
   end
 
   describe "visiting the index" do
@@ -28,7 +33,7 @@ describe "Admin::Users" do
     end
   end
 
-  describe "adding and removing a user" do
+  describe "add/delete users", js: true do
     include_context 'login admin user'
 
     it "adds a new user" do
@@ -44,11 +49,27 @@ describe "Admin::Users" do
     it "should delete a user" do
       visit("/admin/users")
       first("a i.fa-times").click
-      expect(page.has_content?('def456')).to eq(false)
+      expect(page.has_content?('def45678')).to eq(false)
     end
+
   end
 
+  describe "add/remove superadmin status", js: true do
+    include_context 'login admin user'
 
+    it "should be able to update an admin to a superadmin" do
+      visit("/admin/users")
+      first("a i.fa-user-circle").click
+      expect(first("a i.fa-user-circle")[:class]).to include 'admin-color'
+    end
+
+    it "should be able to change a superadmin back to an admin" do
+      visit("/admin/users")
+      first("a i.fa-user-circle").click
+      first("a i.fa-user-circle").click
+      expect(first("a i.fa-user-circle")[:class]).to_not include 'admin-color'
+    end
+  end
 
 
 end

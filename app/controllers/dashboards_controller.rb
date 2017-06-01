@@ -1,5 +1,5 @@
 class DashboardsController < ApplicationController
-	# load_and_authorize_resource
+	load_and_authorize_resource
 	
 	def show
 
