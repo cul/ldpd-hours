@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'calendar/show'
+
   	devise_for :users, controllers: {sessions: 'users/sessions', omniauth_callbacks: 'users/omniauth_callbacks'}
   	
   	namespace :admin do
@@ -13,4 +15,6 @@ Rails.application.routes.draw do
 	resources :libraries
 	root to: "libraries#index"
 	resource :admin, only: [:show]
+
+  resource :calendar, only: [:show], controller: :calendar
 end
