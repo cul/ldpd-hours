@@ -136,3 +136,9 @@ nav.bottom-nav {
 .admin-color{
 	color: #3c763d;
 }
+
+/* library views */
+
+.library h2{
+	text-align: center;
+}
