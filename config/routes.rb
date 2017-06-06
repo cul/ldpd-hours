@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   	end
 
 	resources :libraries do
-    resources :calendars, only: [:update, :create]
+    resources :calendars, only: [:create]
   end
   get 'libraries/:id/edit_calendar', controller: :libraries, action: :edit_calendar, as: :edit_library_calendar
 	resource :admin, only: [:show]

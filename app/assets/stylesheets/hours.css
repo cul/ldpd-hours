@@ -142,3 +142,9 @@ nav.bottom-nav {
 .library h2{
 	text-align: center;
 }
+
+/* Selectable */
+
+#selectable .ui-selected {
+	background: #a5d6a7;
+}

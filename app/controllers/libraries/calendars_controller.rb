@@ -1,13 +1,8 @@
 class Library::CalendarsController < ApplicationController
+  
+  # used for bulk update/create
   def create
 
   end
-
-  def new
-
-  end
-
-  def update
-
-  end
+  
 end

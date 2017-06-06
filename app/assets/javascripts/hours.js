@@ -10,4 +10,11 @@ $(document).ready(function(){
 		$(this).toggleClass("admin-color");
 	});
 
+	$("#selectable").selectable({
+	  filter:'tbody tr td',
+	  selected: function(event, ui){
+	    console.log( "SELECTED " + $(ui.selected).find("th").html() );
+	  }
+	});
+
 });
