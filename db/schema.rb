@@ -10,17 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170605155353) do
-
-  create_table "calendars", force: :cascade do |t|
-    t.string "code"
-    t.date "date"
-    t.string "open"
-    t.string "close"
-    t.text "notes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+ActiveRecord::Schema.define(version: 20170606175422) do
 
   create_table "libraries", force: :cascade do |t|
     t.string "name", null: false
@@ -29,6 +19,16 @@ ActiveRecord::Schema.define(version: 20170605155353) do
     t.text "comment"
     t.text "comment_two"
     t.string "summary"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "library_calendars", force: :cascade do |t|
+    t.string "code"
+    t.date "date"
+    t.string "open"
+    t.string "close"
+    t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

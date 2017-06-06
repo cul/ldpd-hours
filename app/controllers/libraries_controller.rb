@@ -20,8 +20,13 @@ class LibrariesController < ApplicationController
 
 	def show
 		@library = Library.find(params[:id])
-		  	@date = params[:date] ? Date.parse(params[:date]) : Date.today
+		@date = params[:date] ? Date.parse(params[:date]) : Date.today
+	end
 
+	def edit_calendar
+		@library = Library.find_by(params[:code])
+		@date = params[:date] ? Date.parse(params[:date]) : Date.today
+		@calendar = ::Library::Calendar.new
 	end
 
 	private

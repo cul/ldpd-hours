@@ -1,5 +1,13 @@
-class Admin::CalendarsController < ApplicationController
-  def show
-  	@date = params[:date] ? Date.parse(params[:date]) : Date.today
+class Library::CalendarsController < ApplicationController
+  def create
+
+  end
+
+  def new
+
+  end
+
+  def update
+
   end
 end
