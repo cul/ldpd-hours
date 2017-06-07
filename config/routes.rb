@@ -11,9 +11,10 @@ Rails.application.routes.draw do
   	  get 'sign_out', :to => 'users/sessions#destroy', :as => :destroy_user_session
   	end
 
-	resources :libraries do
-    resources :calendars, only: [:create]
-  end
-  get 'libraries/:id/edit_calendar', controller: :libraries, action: :edit_calendar, as: :edit_library_calendar
+	resources :libraries 
+
+  get "/libraries/:id/time_tables/batch_edit", controller: "time_tables", action: :batch_edit, :as => :time_tables_batch_edit
+  post "/libraries/:id/time_tables/batch_update", controller: "time_tables", action: :batch_update, :as => :time_tables_batch_update
+
 	resource :admin, only: [:show]
 end

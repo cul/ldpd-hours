@@ -1,4 +1,4 @@
-<%= form_for @calendar, :url => library_calendars_path(@library, @calendar) do |f| %>
+<%= form_for @calendar, :url => time_tables_batch_edit_path(@library, @calendar) do |f| %>
 	<div class="form-group">
 		<%= f.label :open %>
 		<%= time_select("calendar", "open") %>

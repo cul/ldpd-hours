@@ -5,7 +5,7 @@
 		<h2>Dashboard</h2>
 		<ul>
 			<% @libraries.each do |lib| %>
-				<li><%= link_to "Edit #{lib.name} Calendar", edit_library_calendar_path(lib) %></li>
+				<li><%= link_to "Edit #{lib.name} Calendar", time_tables_batch_edit_path(lib) %></li>
 			<% end %>
 		</ul>
 	</div>

@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20170606175422) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "library_calendars", force: :cascade do |t|
+  create_table "time_tables", force: :cascade do |t|
     t.string "code"
     t.date "date"
     t.string "open"

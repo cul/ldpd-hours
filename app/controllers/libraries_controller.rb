@@ -23,12 +23,6 @@ class LibrariesController < ApplicationController
 		@date = params[:date] ? Date.parse(params[:date]) : Date.today
 	end
 
-	def edit_calendar
-		@library = Library.find_by(params[:code])
-		@date = params[:date] ? Date.parse(params[:date]) : Date.today
-		@calendar = ::Library::Calendar.new
-	end
-
 	private
 
 	def library_params
