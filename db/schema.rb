@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170606175422) do
+ActiveRecord::Schema.define(version: 20170608171043) do
 
-  create_table "libraries", force: :cascade do |t|
+  create_table "libraries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
     t.string "code", null: false
     t.string "url"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20170606175422) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "time_tables", force: :cascade do |t|
+  create_table "time_tables", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "code"
     t.date "date"
     t.string "open"
@@ -31,9 +31,10 @@ ActiveRecord::Schema.define(version: 20170606175422) do
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["code", "date"], name: "index_time_tables_on_code_and_date", unique: true
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
