@@ -8,7 +8,7 @@
     <!-- Mobile viewport optimization h5bp.com/ad -->
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    
+
     <!-- Internet Explorer use the highest version available -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -20,14 +20,12 @@
 
   <body>
     <%= render 'layouts/header' %>
-    
+
     <div class="container body-contain">
       <%= render 'layouts/messages' %>
-      <div class="row">
-        <%= yield %>
-      </div>
+      <%= yield %>
     </div>
-  
+
     <%= render 'layouts/footer' %>
   </body>
 
