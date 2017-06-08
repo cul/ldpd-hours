@@ -1,16 +1,44 @@
-<div>
-	<h2>All Users</h2>
-	<ul>
-		<% @users.each do |user| %>
-			<li>
-				<%= user.email %>
-				<% if user.admin? %>
-					<%= link_to "<i class='fa fa-user-circle' aria-hidden='true'></i>".html_safe, admin_user_path(user, user: {id: user.id, role: "superadmin"}), method: :put, remote: :true %>
-				<% elsif user.superadmin? %>
-					<%= link_to "<i class='fa fa-user-circle admin-color' aria-hidden='true'></i>".html_safe, admin_user_path(user, user: {id: user.id, role: "admin"}), method: :put, remote: :true %>
-				<% end %>
-				<%= link_to "<i class='fa fa-times alert-danger' aria-hidden='true'></i>".html_safe, admin_user_path(user), method: :delete, remote: true, :class => "text-danger", data: {confirm: "Are you sure you want to delete this user"}%>
-			</li>
-		<% end %>
-	</ul>
+<div class="row">
+  <div class="col-6"><h2>All Users</h2></div>
+  <div class="col-6 text-right">
+    <%= link_to "<i class='fa fa-user-plus' aria-hidden='true'></i> Add User".html_safe, new_admin_user_path %>
+   </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>UNI</th>
+          <th>Can manage</th>
+          <th class="text-center">Super Admin</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td></td>
+            <td><%= user.uid %></td>
+            <td><%= 'all libraries' if user.superadmin? %></td>
+            <td class="text-center">
+              <% if user.superadmin? %>
+                <i class='fa fa-user-circle admin-color' aria-hidden='true'></i>
+              <% end %>
+            </td>
+            <td>
+              <%= link_to "<i class='fa fa-pencil text-info' aria-hidden='true'></i>".html_safe, edit_admin_user_path(user) %>
+            </td>
+            <td>
+              <%= link_to "<i class='fa fa-times text-danger' aria-hidden='true'></i>".html_safe, admin_user_path(user), method: :delete, class: "text-danger", data: {confirm: "Are you sure you want to delete this user"}%>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
