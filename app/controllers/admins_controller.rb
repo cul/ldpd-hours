@@ -1,8 +1,5 @@
 class AdminsController < ApplicationController
-  	authorize_resource :class => false
-	
-	def show
+  authorize_resource :class => false
 
-	end
-
+  def show; end
 end

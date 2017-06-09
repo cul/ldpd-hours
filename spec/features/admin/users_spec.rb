@@ -8,10 +8,10 @@ describe "Admin::Users" do
 
   describe "visiting the index" do
     include_context 'login admin user'
-    
+
     it "visiting the index" do
       visit("/admin/users")
-    
+
       expect(page).to have_text("All Users")
     end
   end
@@ -22,7 +22,7 @@ describe "Admin::Users" do
     it "adds a new user" do
       visit("/admin/users/new")
 
-      fill_in "Enter Uni", with: "def456"
+      fill_in "UNI", with: "def456"
       select "Admin", from: "Role"
 
       click_button "Create User"
@@ -34,25 +34,16 @@ describe "Admin::Users" do
       first("a i.fa-times").click
       expect(page.has_content?('def45678')).to eq(false)
     end
-
   end
 
-  describe "add/remove superadmin status", js: true do
+  describe "add/remove superadmin status" do
     include_context 'login admin user'
 
     it "should be able to update an admin to a superadmin" do
-      visit("/admin/users")
-      first("a i.fa-user-circle").click
-      expect(first("a i.fa-user-circle")[:class]).to include 'admin-color'
-    end
-
-    it "should be able to change a superadmin back to an admin" do
-      visit("/admin/users")
-      first("a i.fa-user-circle").click
-      first("a i.fa-user-circle").click
-      expect(first("a i.fa-user-circle")[:class]).to_not include 'admin-color'
+      visit("/admin/users/#{@admin.id}/edit")
+      select "Superadmin", from: "Role"
+      click_button "Update User"
+      expect(@admin.reload.role).to eql 'superadmin'
     end
   end
-
-
 end
