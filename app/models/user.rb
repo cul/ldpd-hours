@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   include Cul::Omniauth::Users
-  ROLES = %i[admin superadmin]
+
+  has_many :permissions, dependent: :destroy
+
   before_validation :add_email
 
   def password
@@ -8,17 +10,16 @@ class User < ApplicationRecord
   end
 
   def password=(*val)
-
   end
 
   def admin?
-    self.role == "admin"
+    false
   end
 
   def superadmin?
-    self.role == "superadmin"
+    false
   end
-  
+
   private
 
   def add_email
@@ -28,5 +29,4 @@ class User < ApplicationRecord
       return false
     end
   end
-
 end

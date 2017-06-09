@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(version: 20170615203023) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "permissions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "user_id"
+    t.string "action", null: false
+    t.string "subject_class", null: false
+    t.integer "subject_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_permissions_on_user_id"
+  end
+
   create_table "timetables", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.date "date"
     t.string "open"
@@ -52,7 +62,6 @@ ActiveRecord::Schema.define(version: 20170615203023) do
     t.string "uid"
     t.string "provider"
     t.string "email", default: "", null: false
-    t.string "role"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
