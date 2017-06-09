@@ -25,8 +25,6 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 gem 'mysql2'
 
-gem 'tether-rails'
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -55,10 +53,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
-# Styling
-gem 'bootstrap', '~> 4.0.0.alpha6'
-gem "font-awesome-rails"
 
 # Moved outside dev/test group to get deploy to work, known issue
 gem 'listen', '>= 3.0.5', '< 3.2'
