@@ -29,9 +29,4 @@ describe "Libraries" do
     expect(page).to have_css("tr")
   end
 
-  it "should have a calendar on the edit_calendars page" do
-    visit("/admin")
-    first("li a").click
-    expect(page).to have_css("tr")
-  end
 end
