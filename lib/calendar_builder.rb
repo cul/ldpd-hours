@@ -25,7 +25,7 @@ class CalendarBuilder < Struct.new(:view, :date, :callback)
     end
 
     def day_cell(day)
-      content_tag :td, view.capture(day, &callback), class: day_classes(day)
+      content_tag :td, view.capture(day, &callback) + content_tag(:p, day, class: "hidden"), class: day_classes(day)
     end
 
     def day_classes(day)

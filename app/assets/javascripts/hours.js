@@ -16,18 +16,11 @@ $(document).ready(function(){
     selected: function(event, ui){
       $( ".days-list" ).empty();
       $( ".ui-selected", this ).each(function() {
-        var date = formatted_date($(this).contents().filter(function() { return this.nodeType == 3; })[0].nodeValue)
+        var date = $(this).children("p").text();
         $(".days-list").append("<li>" + date + "</li>").append("<input type='hidden' name='time_table[dates][]' value='" + date + "'>")
       });
     }
   });
-
-  function formatted_date(day){
-    var month = $(".well.controls").text().trim().split(" ")[0];
-    var year = $(".well.controls").text().trim().split(" ")[1];
-    var myDate = new Date(month + ", " + day + " " + year);
-    return myDate.getMonth(month) + "/" + day.trim() + "/" + year;
-  }
 
   // On batch_edit form submit, add days and times to cal on success
   $(document).bind('ajax:success', 'form#new_time_table', function(event, jqxhr, settings, exception){
@@ -39,6 +32,15 @@ $(document).ready(function(){
       });
     });
     $("td").removeClass("ui-selected");
+  });
+
+  $(document).bind('ajax:error', 'form#new_time_table', function(event, jqxhr, settings, exception){
+    $( ".days-list" ).empty();
+    $(".ui-selected").each(function(){
+      $(this).children("span").remove();
+    });
+    $("td").removeClass("ui-selected");
+    $("div.body-contain").prepend("<div class='alert alert-danger'><a href='#' data-dismiss='alert' class='close'>×</a><ul><li>Please Enter Valid Data</li></ul></div>");
   });
 
   function library_hours(){

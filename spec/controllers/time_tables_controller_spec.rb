@@ -4,7 +4,7 @@ RSpec.describe TimeTablesController, type: :controller do
 
   describe "#format_dates" do
     it "returns an array of date objects" do
-      dates = ["8/16/2017"]
+      dates = ["2017-06-06", "2017-05-29"]
       expect(TimeTablesController.new.send(:format_dates, dates).first.class).to eql(Date)
     end
   end

@@ -28,6 +28,16 @@ describe "TimeTables" do
       click_button("Update Hours")
       expect(find("td span").text).to eq("07:30AM-06:30PM")
     end
+
+    it "should not save dates with invalid hours" do
+      find("td", :text => "25").click
+      select "07 PM", :from => "time_table_open_4i"
+      select "30", :from => "time_table_open_5i"
+      select "06 PM", :from => "time_table_close_4i"
+      select "30", :from => "time_table_close_5i"
+      click_button("Update Hours")
+      expect(find("div .alert-danger ul li").text).to eq("Please Enter Valid Data")
+    end
   end
 
 end

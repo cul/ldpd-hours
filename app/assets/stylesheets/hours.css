@@ -145,6 +145,16 @@ nav.bottom-nav {
 
 /* Selectable */
 
-#selectable .ui-selected {
+#selectable .ui-selected, #selectable .ui-selecting {
 	background: #a5d6a7;
+}
+
+/* Time Tables */
+
+#new_time_table h4{
+	text-align: center;
+}
+
+.hidden{
+	display: none;
 }

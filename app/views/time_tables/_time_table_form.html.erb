@@ -1,4 +1,5 @@
 <%= form_for @time_table, :url => time_tables_batch_update_path(@library, @time_table), remote: true do |f| %>
+    <h4>Edit Hours</h4>
     <div class="form-group">
         <%= f.label :open %>
         <%= time_select("time_table", "open", {ignore_date: true, ampm: true}) %>
