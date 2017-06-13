@@ -1,5 +1,5 @@
 class TimeTablesController < ApplicationController
-  # load_and_authorize_resource
+  load_and_authorize_resource
 
   def batch_edit
 		@library = Library.find_by(params[:code])
@@ -28,12 +28,14 @@ class TimeTablesController < ApplicationController
   end
 
   def format_dates(dates)
-		dates.map{|selected_date| Date.parse(selected_date) }
+		dates.map!{|selected_date| Date.parse(selected_date) }
   end
 
   def opens_before_close(open,close)
 		if !(Time.parse(open, Time.now) < Time.parse(close, Time.now))  
 			raise StandardError
+		else
+			return true
 		end
   end
   

@@ -29,11 +29,6 @@ describe "Admin::Users" do
       expect(page).to have_content("User successfully added")
     end
 
-    it "should delete a user" do
-      visit("/admin/users")
-      first("a i.fa-times").click
-      expect(page.has_content?('def45678')).to eq(false)
-    end
   end
 
   describe "add/remove superadmin status" do
