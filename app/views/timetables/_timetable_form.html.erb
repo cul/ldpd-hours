@@ -1,4 +1,4 @@
-<%= form_for @time_table, :url => time_tables_batch_update_path(@library, @time_table), remote: true do |f| %>
+<%= form_for @time_table, :url => timetables_batch_update_path(@library, @time_table), remote: true do |f| %>
     <h4>Edit Hours</h4>
     <div class="form-group">
         <%= f.label :open %>
@@ -10,6 +10,13 @@
         <%= time_select("time_table", "close", {ignore_date: true, ampm: true}) %>
     </div>
 
+    <div class="form-group">
+        <%= f.label "TBD" %>
+        <%= f.checkbox, :tbd %>
+
+        <%= f.label :closed %>
+        <%= f.checkbox, :closed %>
+    </div>
     <%= f.submit "Update Hours", class: "btn btn-primary btn-sm" %>
 
     <hr>

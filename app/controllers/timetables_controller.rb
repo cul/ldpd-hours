@@ -1,4 +1,4 @@
-class TimeTablesController < ApplicationController
+class TimetablesController < ApplicationController
   load_and_authorize_resource
 
   def batch_edit

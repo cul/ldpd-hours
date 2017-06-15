@@ -13,8 +13,8 @@ Rails.application.routes.draw do
 
 	resources :libraries 
 
-  get "/libraries/:id/time_tables/batch_edit", controller: "time_tables", action: :batch_edit, :as => :time_tables_batch_edit
-  post "/libraries/:id/time_tables/batch_update", controller: "time_tables", action: :batch_update, :as => :time_tables_batch_update
+  get "/libraries/:id/timetables/batch_edit", controller: "timetables", action: :batch_edit, :as => :timetables_batch_edit
+  post "/libraries/:id/timetables/batch_update", controller: "timetables", action: :batch_update, :as => :timetables_batch_update
 
 	resource :admin, only: [:show]
 end
