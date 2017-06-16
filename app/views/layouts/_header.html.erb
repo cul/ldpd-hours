@@ -1,11 +1,11 @@
 <nav class="navbar navbar-default navbar-static-top navbar-inverse">
   <ul class="user-login">
-      <% if @current_user && @current_user.role == ("admin" || "superadmin") %>
+    <% if @current_user && (@current_user.admin? || @current_user.editor?) %>
       <li class="user-login"><%= @current_user.email %></li>
       <li class="log-out"><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
       <li class=""><%= link_to dashboard_path %></li>
-     <% end %>
-    </ul>
+    <% end %>
+  </ul>
 
   <h1 class="container logo-contain">
     <%= link_to "Library Hours", root_path, id: "logo" %>

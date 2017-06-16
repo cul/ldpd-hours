@@ -12,8 +12,8 @@
         <tr>
           <th>Name</th>
           <th>UNI</th>
-          <th>Can manage</th>
-          <th class="text-center">Super Admin</th>
+          <th>Editor for</th>
+          <th class="text-center">Admin</th>
           <th></th>
           <th></th>
         </tr>
@@ -24,9 +24,15 @@
           <tr>
             <td></td>
             <td><%= user.uid %></td>
-            <td><%= 'all libraries' if user.superadmin? %></td>
+            <td>
+              <% if user.admin? %>
+                all libraries
+              <% else %>
+                <%= sanitize(user.edit_permissions.map(&:subject_id).map{ |lib_id| Library.find(lib_id).name }.join('<br>')) %>
+              <% end %>
+            </td>
             <td class="text-center">
-              <% if user.superadmin? %>
+              <% if user.admin? %>
                 <i class='fa fa-user-circle admin-color' aria-hidden='true'></i>
               <% end %>
             </td>

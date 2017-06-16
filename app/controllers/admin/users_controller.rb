@@ -12,7 +12,7 @@ class Admin::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.provider = "saml"
-    if @user.save
+    if @user.save && @user.update_permissions(permissions_params)
       flash[:success] = "User successfully added"
       redirect_to admin_users_path
     else
@@ -39,7 +39,7 @@ class Admin::UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update(user_params)
+    if @user.update(user_params) && @user.update_permissions(permissions_params)
       respond_to do |f|
         f.html {
           flash[:success] = "User successfully updated"
@@ -62,6 +62,10 @@ class Admin::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :provider, :uid, :role)
+    params.require(:user).permit(:email, :provider, :uid)
+  end
+
+  def permissions_params
+    params.require(:user).require(:permissions).permit(:admin, library_ids: [])
   end
 end
