@@ -6,15 +6,22 @@ RSpec.describe Timetable, :type => :model do
   end
 	describe "batch_update_or_create" do
 		it "should add records to the time_tables table" do
-			code, dates, open, close = Library.first.id, [Date.today], "07:00AM", "08:00PM"
-			Timetable.batch_update_or_create(code,dates,open,close)
+			code, dates, open, close, closed, tbd, note = Library.first.id, [Date.today], "07:00AM", "08:00PM", false, false, ""
+			Timetable.batch_update_or_create(code,dates,open,close, closed, tbd, note)
 			expect(Timetable.last.date).to eq(Date.today)
 		end
 
 		it "should add multiple dates" do
-			code, dates, open, close = Library.first.id, [Date.today, Date.today + 1.month], "07:00AM", "08:00PM"
-			Timetable.batch_update_or_create(code,dates,open,close)
+			code, dates, open, close, closed, tbd, note = Library.first.id, [Date.today, Date.today + 1.month], "07:00AM", "08:00PM", false, false, ""
+			Timetable.batch_update_or_create(code,dates,open,close,closed,tbd,note)
 			expect(Timetable.count).to eq(2)
+		end
+
+		it "should not have an open or close time for a closed day" do
+			code, dates, open, close, closed, tbd, note = Library.first.id, [Date.today], nil, nil, true, false, ""
+			Timetable.batch_update_or_create(code,dates,open,close,closed,tbd,note)
+			expect(Timetable.first.open).to eq("")
+			expect(Timetable.first.close).to eq("")
 		end
 	end
 

@@ -12,12 +12,12 @@ RSpec.describe TimetablesController, type: :controller do
   describe "#opens_before_close" do
     it "returns true if the open time is before close time" do
       open, close = "12:30PM", "1:30PM"
-      expect(TimetablesController.new.send(:opens_before_close, open,close)).to eql(true)
+      expect(TimetablesController.new.send(:opens_before_close, open,close, false, false)).to eql(true)
     end
 
     it "rasies and error if the open time is not before close time" do
       open, close = "2:30PM", "1:30PM"
-      expect{TimetablesController.new.send(:opens_before_close, open,close)}.to raise_error(StandardError)
+      expect{TimetablesController.new.send(:opens_before_close, open,close, false, false)}.to raise_error(StandardError)
     end
   end
 
