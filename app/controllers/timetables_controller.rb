@@ -1,5 +1,5 @@
 class TimetablesController < ApplicationController
-  # load_and_authorize_resource
+  load_and_authorize_resource
 
   def batch_edit
 		@library = Library.find(params["library_id"])
@@ -17,7 +17,7 @@ class TimetablesController < ApplicationController
 
     Timetable.batch_update_or_create(timetable_params, @open, @close)
 		render json: {message: "success"}, status: :ok
-	rescue ArgumentError, MySql::Error, StandardError
+	rescue ArgumentError, MySql::Error, ArgumentError, StandardError
 		render json: {message: "error"}, status: :error
   end
 

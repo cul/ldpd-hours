@@ -19,7 +19,7 @@ RSpec.describe TimetablesController, type: :controller do
     it "rasies and error if the open time is not before close time" do
       controller.instance_variable_set(:@open, "2:30PM")
       controller.instance_variable_set(:@close, "1:30PM")
-      expect{controller.send(:opens_before_close, {closed: false, tbd: false})}.to raise_error(StandardError)
+      expect{controller.send(:opens_before_close, {closed: false, tbd: false})}.to raise_error(ArgumentError)
     end
   end
 
