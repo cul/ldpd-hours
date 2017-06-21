@@ -136,3 +136,25 @@ nav.bottom-nav {
 .admin-color{
 	color: #3c763d;
 }
+
+/* library views */
+
+.library h2{
+	text-align: center;
+}
+
+/* Selectable */
+
+#selectable .ui-selected, #selectable .ui-selecting {
+	background: #a5d6a7;
+}
+
+/* Time Tables */
+
+#new_time_table h4{
+	text-align: center;
+}
+
+.hidden{
+	display: none;
+}

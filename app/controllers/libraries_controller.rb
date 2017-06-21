@@ -20,6 +20,7 @@ class LibrariesController < ApplicationController
 
 	def show
 		@library = Library.find(params[:id])
+		@date = params[:date] ? Date.parse(params[:date]) : Date.today
 	end
 
 	private

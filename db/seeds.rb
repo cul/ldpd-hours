@@ -7,3 +7,4 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 Library.create(name: "Butler", code: "butler")
+Library.create(name: "Avery", code: "avery")
