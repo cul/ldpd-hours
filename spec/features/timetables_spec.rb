@@ -11,7 +11,7 @@ describe "Timetables", js: true do
 
     it "should display a calendar" do
       visit(batch_edit_library_timetables_path(@library))
-      expect(page).to have_css("table")
+      expect(page).to have_css("table.calendar")
     end
   end
 

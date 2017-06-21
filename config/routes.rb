@@ -20,9 +20,5 @@ Rails.application.routes.draw do
     end
   end
 
-  # get "/libraries/:id/timetables/batch_edit", controller: "timetables", action: :batch_edit, :as => :timetables_batch_edit
-  # post "/libraries/:id/timetables/batch_update", controller: "timetables", action: :batch_update, :as => :timetables_batch_update
-
-
 	resource :admin, only: [:show]
 end

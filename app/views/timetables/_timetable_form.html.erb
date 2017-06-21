@@ -22,6 +22,8 @@
         <%= f.label :note %>
         <%= f.text_field :note %>
     </div>
+
+    <%= f.hidden_field :library_id, value: @library.id %>
     <%= f.submit "Update Hours", class: "btn btn-primary btn-sm" %>
 
     <hr>
