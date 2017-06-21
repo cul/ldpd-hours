@@ -8,7 +8,7 @@ Bundler.require(*Rails.groups)
 
 module LdpdHours
   class Application < Rails::Application
-  	include Cul::Omniauth::FileConfigurable
+    include Cul::Omniauth::FileConfigurable
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
     config.autoload_paths += %W(#{config.root}/lib)

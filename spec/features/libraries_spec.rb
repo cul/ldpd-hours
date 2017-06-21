@@ -14,13 +14,13 @@ describe "Libraries" do
   end
 
   it "adding a library" do
-  	visit new_library_path
+    visit new_library_path
 
-  	fill_in "Name", with: "Test Lib"
-  	fill_in "Code", with: "Test code"
+    fill_in "Name", with: "Test Lib"
+    fill_in "Code", with: "Test code"
 
-  	click_on "Create Library"
-  	expect(page).to have_content("Library successfully created")
+    click_on "Create Library"
+    expect(page).to have_content("Library successfully created")
   end
 
   it "should have a calendar on show page" do
