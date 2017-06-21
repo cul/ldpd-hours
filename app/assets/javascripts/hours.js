@@ -34,6 +34,11 @@ $(document).ready(function(){
         }else{
           $(that).append(location_hours);
         }
+
+        if($("#timetable_note").val()){
+          $(that).append("<span>" + $("#timetable_note").val() + "</span>");
+          $("#timetable_note").val('');
+        }
       });
     });
     $("td").removeClass("ui-selected");
@@ -45,6 +50,7 @@ $(document).ready(function(){
       $(this).children("span").remove();
     });
     $("td").removeClass("ui-selected");
+    $("#timetable_note").val('');
     $("div.body-contain").prepend("<div class='alert alert-danger'><a href='#' data-dismiss='alert' class='close'>×</a><ul><li>Please Enter Valid Data</li></ul></div>");
   });
 
