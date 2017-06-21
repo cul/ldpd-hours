@@ -1,5 +1,5 @@
 class TimetablesController < ApplicationController
-  load_and_authorize_resource
+  # load_and_authorize_resource
 
   def batch_edit
     @location = Location.find(params["location_id"])

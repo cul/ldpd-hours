@@ -25,7 +25,10 @@ class CalendarBuilder < Struct.new(:view, :date, :callback)
     end
 
     def day_cell(day)
-      content_tag :td, view.capture(day, &callback) + content_tag(:p, day, class: "hidden"), class: day_classes(day)
+      todays_hours = @times.select{|timetable| timetable.date == day}
+      hours = todays_hours.empty? ? content_tag(:span, "TBD") : formatted_hours(todays_hours.flatten)
+      note = (todays_hours.empty? || todays_hours.first.note.blank?) ? "" : content_tag(:span, todays_hours.first.note)
+      content_tag :td, view.capture(day, &callback) + content_tag(:p, day, class: "hidden") + hours + note, class: day_classes(day)
     end
 
     def day_classes(day)
@@ -38,6 +41,26 @@ class CalendarBuilder < Struct.new(:view, :date, :callback)
     def weeks
       first = date.beginning_of_month.beginning_of_week(START_DAY)
       last = date.end_of_month.end_of_week(START_DAY)
+      get_times(first,last)
       (first..last).to_a.in_groups_of(7)
+    end
+
+    private
+
+    def get_times(first,last)
+      library_id = view.assigns["library"].id
+      @times = Timetable.where(library_id: library_id, date: first..last)
+    end
+
+    def formatted_hours(timetable)
+      timetable = timetable.first
+      if timetable.open && timetable.close
+        content = "#{timetable.open.to_time.strftime('%l:%M%p')}-#{timetable.close.to_time.strftime('%l:%M%p')}"
+      elsif timetable.closed
+        content = "Closed"
+      else
+        content = "TBD"
+      end
+      content_tag(:span, content)
     end
 end
