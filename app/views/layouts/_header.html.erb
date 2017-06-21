@@ -1,35 +1,31 @@
 <nav class="navbar navbar-default navbar-static-top navbar-inverse">
-	<ul class="user-login">
-    	<% if @current_user && @current_user.role == ("admin" || "superadmin") %>
-			<li class="user-login"><%= @current_user.email %></li>
-			<li class="log-out"><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
-			<li class=""><%= link_to dashboard_path %></li>
-	 	<% end %>
-  	</ul>
-  
-	<h1 class="container logo-contain">
-		<%= link_to "Library Hours", root_path, id: "logo" %>
-	</h1>
+  <ul class="user-login">
+      <% if @current_user && @current_user.role == ("admin" || "superadmin") %>
+      <li class="user-login"><%= @current_user.email %></li>
+      <li class="log-out"><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
+      <li class=""><%= link_to dashboard_path %></li>
+     <% end %>
+    </ul>
+
+  <h1 class="container logo-contain">
+    <%= link_to "Library Hours", root_path, id: "logo" %>
+  </h1>
 </nav>
 
 <nav class="navbar navbar-default bottom-nav">
-	<div class="container-fluid">
+  <div class="container-fluid">
 
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-			<span class="sr-only">Toggle navigation</span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			</button>
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      </button>
     </div>
     <%= link_to "Library Hours", root_path, :class => "navbar-brand" %>
-	<a href="//library.columbia.edu">Libraries Home</a>
+  <a href="//library.columbia.edu">Libraries Home</a>
 
   </div><!-- /.container-fluid -->
 </nav>
-
-
-
-
