@@ -3,7 +3,7 @@
     <% if @current_user && (@current_user.admin? || @current_user.editor?) %>
       <li class="user-login"><%= @current_user.email %></li>
       <li class="log-out"><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
-      <li class=""><%= link_to dashboard_path %></li>
+      <li class=""><%= link_to admin_path %></li>
     <% end %>
   </ul>
 

@@ -54,7 +54,7 @@ class Admin::UsersController < ApplicationController
           flash[:error] = error
           render :edit
         }
-        f.json { render json: { message:  error }, status: :internal_server_error }
+        f.json { render json: { message: error }, status: :internal_server_error }
       end
     end
   end

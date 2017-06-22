@@ -17,13 +17,14 @@ class User < ApplicationRecord
   end
 
   def editor?
-    !edit_permissions.count.zero?
+    !editable_libraries.count.zero?
   end
 
-  def edit_permissions
+  def editable_libraries
     self.permissions
       .where(action: 'edit', subject_class: Library.to_s)
       .where.not(subject_id: nil)
+      .map{ |p| Library.find(p.subject_id) }
   end
 
   # Updating permissions. Destroys all previously definited permissions.
@@ -42,8 +43,8 @@ class User < ApplicationRecord
     # Check that all library ids are valid.
     begin
       Library.find(library_ids)
-    rescue RecordNotFound => e
-      errors.add(:permissions, message: "One or more of the library ids given is invalid") # could probably use e to find out what the invalid record is
+    rescue ActiveRecord::RecordNotFound => e
+      errors.add(:permissions, :invalid, message: "one or more of the library ids given is invalid") # TODO: could probably use e to find out what the invalid record is
       return false
     end
 

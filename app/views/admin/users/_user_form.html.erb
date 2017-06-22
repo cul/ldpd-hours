@@ -37,8 +37,9 @@
       <div class="row">
         <% Library.order(:name).each do |lib| %>
           <div class="col-sm-6">
-            <%= check_box_tag('user[permissions][library_ids][]', lib.id, @user.can?(:edit, lib), class: 'chk-edit-permissions') %>
-            <%= label_tag('user[permissions][library_ids][]', lib.name) %>
+            <%= check_box_tag "user[permissions][library_ids][]", lib.id, @user.can?(:edit, lib),
+                              class: 'chk-edit-permissions', id: "user_permissions_library_ids_#{lib.id}" %>
+            <%= label_tag "user[permissions][library_ids][#{lib.id}]", lib.name %>
           </div>
        <% end %>
      </div>
@@ -48,7 +49,9 @@
   <div class="row">
     <div class="col-sm-6">
       <% unless @user.new_record? %>
-        <%= link_to "Delete User", admin_user_path(@user), method: :delete, class: "btn btn-danger btn-sm", data: {confirm: "Are you sure you want to delete this user?"} %>
+        <%= link_to "Delete User", admin_user_path(@user), method: :delete,
+                    class: "btn btn-danger btn-sm",
+                    data: {confirm: "Are you sure you want to delete this user?"} %>
       <% end %>
     </div>
     <div class="col-sm-6"><%= f.submit class: 'btn btn-primary btn-sm'%></div>
