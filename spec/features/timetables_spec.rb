@@ -21,6 +21,18 @@ describe "Timetables", js: true do
         visit(batch_edit_location_timetables_path(lehman))
         expect(page).to have_content("TBD")
       end
+
+      it "should display hours that have previously been set" do
+        visit(batch_edit_library_timetables_path(@library))
+        find("td", :text => "16").click
+        select "07 AM", :from => "timetable_open_4i"
+        select "30", :from => "timetable_open_5i"
+        select "06 PM", :from => "timetable_close_4i"
+        select "30", :from => "timetable_close_5i"
+        click_button("Update Hours")
+        visit(batch_edit_library_timetables_path(@library))
+        expect(find("td", :text => "16")).to have_content("7:30AM-6:30PM")
+      end
   end
 
 

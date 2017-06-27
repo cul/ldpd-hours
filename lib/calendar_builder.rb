@@ -55,7 +55,7 @@ class CalendarBuilder < Struct.new(:view, :date, :callback)
     def formatted_hours(timetable)
       timetable = timetable.first
       if timetable.open && timetable.close
-        content = "#{timetable.open.to_time.strftime('%l:%M%p')}-#{timetable.close.to_time.strftime('%l:%M%p')}"
+        content = "#{timetable.open.to_time.strftime('%l:%M%p')}-#{timetable.close.to_time.strftime('%l:%M%p')}".gsub(/\s+/, "")
       elsif timetable.closed
         content = "Closed"
       else
