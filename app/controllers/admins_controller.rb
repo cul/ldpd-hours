@@ -4,5 +4,4 @@ class AdminsController < ApplicationController
   def show
     @libraries = Library.all
   end
-
 end

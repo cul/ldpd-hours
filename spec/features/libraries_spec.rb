@@ -1,15 +1,13 @@
 require 'rails_helper'
 
 describe "Libraries" do
-  include_context 'login admin user'
-  
   before(:each) do
-    @library = Library.create(name: "Lehman", code: "lehman")
+    @library = FactoryGirl.create(:lehman)
   end
 
   it "visiting the index" do
     visit("/libraries")
-  
+
     expect(page).to have_css("ul")
   end
 
@@ -28,5 +26,4 @@ describe "Libraries" do
     first("li a").click
     expect(page).to have_css("tr")
   end
-
 end

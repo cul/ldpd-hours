@@ -32,9 +32,9 @@ class TimetablesController < ApplicationController
   end
 
   def opens_before_close(params)
-    if (params["closed"] == "1" || params["tbd"] == "1")  
+    if (params["closed"] == "1" || params["tbd"] == "1")
       return true
-    elsif !(Time.parse(@open, Time.now) < Time.parse(@close, Time.now)) 
+    elsif !(Time.parse(@open, Time.now) < Time.parse(@close, Time.now))
       raise ArgumentError, "End time cannot be before start time"
     else
       return true
@@ -46,5 +46,5 @@ class TimetablesController < ApplicationController
       @open, @close = nil, nil
     end
   end
-  
+
 end

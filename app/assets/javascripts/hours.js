@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
   // remove admin
   $('ul li i.fa-times').on('click', function( data, status, xhr) {
     $(this).parent().parent().remove();
@@ -50,11 +49,11 @@ $(document).ready(function(){
   });
 
   function library_hours(){
-    var open = $("#timetable_open_4i option:selected").text().split(" ")[0] + ":" + 
-               $("#timetable_open_5i option:selected").text() + 
+    var open = $("#timetable_open_4i option:selected").text().split(" ")[0] + ":" +
+               $("#timetable_open_5i option:selected").text() +
                $("#timetable_open_4i option:selected").text().split(" ")[1]
-    var close = $("#timetable_close_4i option:selected").text().split(" ")[0] + ":" + 
-                $("#timetable_close_5i option:selected").text() + 
+    var close = $("#timetable_close_4i option:selected").text().split(" ")[0] + ":" +
+                $("#timetable_close_5i option:selected").text() +
                 $("#timetable_close_4i option:selected").text().split(" ")[1]
     return "<span>" + open + "-" + close + "</span>"
   }

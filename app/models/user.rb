@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   include Cul::Omniauth::Users
-  ROLES = %i[admin superadmin]
+
+  has_many :permissions, dependent: :destroy
+
   before_validation :add_email
 
   def password
@@ -8,18 +10,54 @@ class User < ApplicationRecord
   end
 
   def password=(*val)
-
   end
 
   def admin?
-    self.role == "admin"
+    can? :manage, :all
   end
 
-  def superadmin?
-    self.role == "superadmin"
+  def editor?
+    !editable_libraries.count.zero?
   end
-  
-  private
+
+  def editable_libraries
+    self.permissions
+      .where(action: 'edit', subject_class: Library.to_s)
+      .where.not(subject_id: nil)
+      .map{ |p| Library.find(p.subject_id) }
+  end
+
+  # Updating permissions. Destroys all previously definited permissions.
+  # Recreates them based on the paramters given. If admin flag is true,
+  # adds adnub access (can :manage, all). If not admin, recreates editor
+  # permissions using the array given.
+  def update_permissions(params)
+    admin = params.fetch(:admin, false)
+    library_ids = params.fetch(:library_ids, [])
+
+    admin = ActiveRecord::Type::Boolean.new.cast(admin) # Convert to bool.
+    return if(admin && self.admin?)
+
+    self.permissions.destroy_all
+
+    # Check that all library ids are valid.
+    begin
+      Library.find(library_ids)
+    rescue ActiveRecord::RecordNotFound => e
+      errors.add(:permissions, :invalid, message: "one or more of the library ids given is invalid") # TODO: could probably use e to find out what the invalid record is
+      return false
+    end
+
+    if admin
+      permissions.create(action: 'manage', subject_class: 'all')
+    else
+      library_ids.each do |id|
+        permissions.create(action: 'edit', subject_class: Library.to_s, subject_id: id)
+      end
+    end
+
+    return true
+  end
 
   def add_email
     if self.uid.present?
@@ -28,5 +66,4 @@ class User < ApplicationRecord
       return false
     end
   end
-
 end
