@@ -1,4 +1,4 @@
-<%= form_for @timetable, :url => batch_update_library_timetables_path(@library, @timetable), remote: true do |f| %>
+<%= form_for @timetable, :url => batch_update_location_timetables_path(@location, @timetable), remote: true do |f| %>
     <h4>Edit Hours</h4>
     <div class="form-group">
         <%= f.label :open %>
@@ -23,7 +23,7 @@
         <%= f.text_field :note %>
     </div>
 
-    <%= f.hidden_field :library_id, value: @library.id %>
+    <%= f.hidden_field :location_id, value: @location.id %>
     <%= f.submit "Update Hours", class: "btn btn-primary btn-sm" %>
 
     <hr>
@@ -31,7 +31,7 @@
     <div class="form-group">
         <h4>Selected Days</h4>
         <ul class="days-list">
-            
+
         </ul>
     </div>
 <% end %>

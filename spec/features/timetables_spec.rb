@@ -5,14 +5,14 @@ describe "Timetables", js: true do
 
   describe "viewing the page" do
     include_examples 'not authorized when non-admin logged in' do
-      let(:request) { visit batch_edit_library_timetables_path(lehman)}
+      let(:request) { visit batch_edit_location_timetables_path(lehman)}
     end
 
     context "when admin is logged in" do
       include_context 'login admin user'
 
       it "should display a calendar" do
-        visit(batch_edit_library_timetables_path(lehman))
+        visit(batch_edit_location_timetables_path(lehman))
         expect(page).to have_css("table.calendar")
       end
     end
@@ -23,13 +23,13 @@ describe "Timetables", js: true do
       include_context 'login admin user'
 
       it "should add dates to the sidebar when clicked" do
-        visit(batch_edit_library_timetables_path(lehman))
+        visit(batch_edit_location_timetables_path(lehman))
         first("tr td").click
         expect(page).to have_css('.days-list li', count: 1)
       end
 
       it "should save dates" do
-        visit(batch_edit_library_timetables_path(lehman))
+        visit(batch_edit_location_timetables_path(lehman))
         find("td", :text => "25").click
         select "07 AM", :from => "timetable_open_4i"
         select "30", :from => "timetable_open_5i"
@@ -40,7 +40,7 @@ describe "Timetables", js: true do
       end
 
       it "should not save dates with invalid hours" do
-        visit(batch_edit_library_timetables_path(lehman))
+        visit(batch_edit_location_timetables_path(lehman))
         find("td", :text => "25").click
         select "07 PM", :from => "timetable_open_4i"
         select "30", :from => "timetable_open_5i"
@@ -51,7 +51,7 @@ describe "Timetables", js: true do
       end
 
       it "should display closed on calendar if closed" do
-        visit(batch_edit_library_timetables_path(lehman))
+        visit(batch_edit_location_timetables_path(lehman))
         find("input#timetable_closed").click
         find("td", :text => "15").click
         click_button("Update Hours")

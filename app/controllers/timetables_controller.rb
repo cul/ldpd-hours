@@ -2,7 +2,7 @@ class TimetablesController < ApplicationController
   load_and_authorize_resource
 
   def batch_edit
-    @library = Library.find(params["library_id"])
+    @location = Location.find(params["location_id"])
     @date = params[:date] ? Date.parse(params[:date]) : Date.today
     @timetable = Timetable.new
   end
@@ -24,7 +24,7 @@ class TimetablesController < ApplicationController
   private
 
   def timetable_params
-    params.require(:timetable).permit("open(4i)", "open(5i)", "close(4i)", "close(5i)", :closed, :tbd, :note, :library_id, dates: [])
+    params.require(:timetable).permit("open(4i)", "open(5i)", "close(4i)", "close(5i)", :closed, :tbd, :note, :location_id, dates: [])
   end
 
   def format_dates(params)

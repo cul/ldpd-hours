@@ -1,10 +1,10 @@
 FactoryGirl.define do
-  factory :butler, class: Library do
+  factory :butler, class: Location do
     code 'butler'
     name 'Butler'
   end
 
-  factory :lehman, class: Library do
+  factory :lehman, class: Location do
     code 'lehman'
     name 'Lehman'
   end

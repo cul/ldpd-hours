@@ -74,28 +74,28 @@ describe "User management", js: true do
         expect(user.admin?).to eq true
       end
 
-      it "can add library edit permissions" do
+      it "can add location edit permissions" do
         butler = FactoryGirl.create(:butler)
         visit edit_admin_user_path(user)
         check 'Butler'
         click_button 'Update User'
         expect(page).to have_content 'User successfully updated'
-        expect(user.reload.editable_libraries).to eql [butler]
+        expect(user.reload.editable_locations).to eql [butler]
       end
 
-      it "can change library edit permissions" do
+      it "can change location edit permissions" do
         butler, lehman = FactoryGirl.create(:butler), FactoryGirl.create(:lehman)
-        user.update_permissions(library_ids: [butler.id])
+        user.update_permissions(location_ids: [butler.id])
         visit edit_admin_user_path(user)
         check 'Lehman'
         uncheck 'Butler'
         click_button 'Update User'
         expect(page).to have_content 'User successfully updated'
-        expect(user.reload.editable_libraries).to eql [lehman]
+        expect(user.reload.editable_locations).to eql [lehman]
       end
 
       it "can remove all edit and admin permissions" do
-        user.update_permissions(library_ids: [FactoryGirl.create(:butler).id])
+        user.update_permissions(location_ids: [FactoryGirl.create(:butler).id])
         visit edit_admin_user_path(user.id)
         uncheck "Butler"
         click_button 'Update User'

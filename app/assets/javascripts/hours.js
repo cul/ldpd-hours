@@ -32,7 +32,7 @@ $(document).ready(function(){
         }else if($("input#timetable_tbd").is(":checked")){
           $(that).append("<span>TBD</span>");
         }else{
-          $(that).append(library_hours);
+          $(that).append(location_hours);
         }
       });
     });
@@ -48,7 +48,7 @@ $(document).ready(function(){
     $("div.body-contain").prepend("<div class='alert alert-danger'><a href='#' data-dismiss='alert' class='close'>×</a><ul><li>Please Enter Valid Data</li></ul></div>");
   });
 
-  function library_hours(){
+  function location_hours(){
     var open = $("#timetable_open_4i option:selected").text().split(" ")[0] + ":" +
                $("#timetable_open_5i option:selected").text() +
                $("#timetable_open_4i option:selected").text().split(" ")[1]

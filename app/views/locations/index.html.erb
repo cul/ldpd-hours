@@ -1,0 +1,8 @@
+<div>
+  <h2>Select a Location</h2>
+  <ul>
+    <% @locations.each do |location| %>
+      <li><%= link_to location.name, location_path(location.id) %></li>
+    <% end %>
+  </ul>
+</div>

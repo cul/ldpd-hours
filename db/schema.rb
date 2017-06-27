@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170615203023) do
+ActiveRecord::Schema.define(version: 20170627151458) do
 
-  create_table "libraries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "locations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
     t.string "code", null: false
     t.string "url"
@@ -43,9 +43,9 @@ ActiveRecord::Schema.define(version: 20170615203023) do
     t.boolean "tbd", default: false
     t.boolean "closed", default: false
     t.string "note"
-    t.bigint "library_id"
-    t.index ["library_id", "date"], name: "index_timetables_on_library_id_and_date", unique: true
-    t.index ["library_id"], name: "index_timetables_on_library_id"
+    t.bigint "location_id"
+    t.index ["location_id", "date"], name: "index_timetables_on_location_id_and_date", unique: true
+    t.index ["location_id"], name: "index_timetables_on_location_id"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -65,5 +65,5 @@ ActiveRecord::Schema.define(version: 20170615203023) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "timetables", "libraries"
+  add_foreign_key "timetables", "locations"
 end

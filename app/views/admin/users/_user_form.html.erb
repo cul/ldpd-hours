@@ -35,11 +35,11 @@
     <%= f.label :permissions, 'Editor for', class: "col-sm-2" %>
     <div class="col-sm-10">
       <div class="row">
-        <% Library.order(:name).each do |lib| %>
+        <% Location.order(:name).each do |lib| %>
           <div class="col-sm-6">
-            <%= check_box_tag "user[permissions][library_ids][]", lib.id, @user.can?(:edit, lib),
-                              class: 'chk-edit-permissions', id: "user_permissions_library_ids_#{lib.id}" %>
-            <%= label_tag "user[permissions][library_ids][#{lib.id}]", lib.name %>
+            <%= check_box_tag "user[permissions][location_ids][]", lib.id, @user.can?(:edit, lib),
+                              class: 'chk-edit-permissions', id: "user_permissions_location_ids_#{lib.id}" %>
+            <%= label_tag "user[permissions][location_ids][#{lib.id}]", lib.name %>
           </div>
        <% end %>
      </div>

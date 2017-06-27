@@ -6,5 +6,5 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Library.create(name: "Butler", code: "butler")
-Library.create(name: "Avery", code: "avery")
+Location.create(name: "Butler", code: "butler")
+Location.create(name: "Avery", code: "avery")
