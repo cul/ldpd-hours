@@ -26,9 +26,9 @@
             <td><%= user.uid %></td>
             <td>
               <% if user.admin? %>
-                all libraries
+                all locations
               <% else %>
-                <%= sanitize(user.editable_libraries.map(&:name).join('<br>')) %>
+                <%= sanitize(user.editable_locations.map(&:name).join('<br>')) %>
               <% end %>
             </td>
             <td class="text-center">

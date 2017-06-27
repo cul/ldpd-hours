@@ -1,4 +1,4 @@
-html {
+locationhtml {
   overflow-y: scroll;
 }
 
@@ -137,9 +137,9 @@ nav.bottom-nav {
   color: #3c763d;
 }
 
-/* library views */
+/* location views */
 
-.library h2{
+.location h2{
   text-align: center;
 }
 

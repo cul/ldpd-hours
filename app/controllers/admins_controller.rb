@@ -2,6 +2,6 @@ class AdminsController < ApplicationController
   authorize_resource :class => false
 
   def show
-    @libraries = Library.all
+    @locations = Location.all
   end
 end

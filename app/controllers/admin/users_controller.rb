@@ -66,6 +66,6 @@ class Admin::UsersController < ApplicationController
   end
 
   def permissions_params
-    params.require(:user).require(:permissions).permit(:admin, library_ids: [])
+    params.require(:user).require(:permissions).permit(:admin, location_ids: [])
   end
 end

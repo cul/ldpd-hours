@@ -4,8 +4,8 @@
   <div class="col-sm-12 browse-box">
     <h2>Dashboard</h2>
     <ul>
-      <% @libraries.each do |lib| %>
-        <li><%= link_to "Edit #{lib.name} Calendar", batch_edit_library_timetables_path(lib) %></li>
+      <% @locations.each do |lib| %>
+        <li><%= link_to "Edit #{lib.name} Calendar", batch_edit_location_timetables_path(lib) %></li>
       <% end %>
     </ul>
   </div>

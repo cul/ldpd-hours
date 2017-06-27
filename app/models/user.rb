@@ -17,14 +17,14 @@ class User < ApplicationRecord
   end
 
   def editor?
-    !editable_libraries.count.zero?
+    !editable_locations.count.zero?
   end
 
-  def editable_libraries
+  def editable_locations
     self.permissions
-      .where(action: 'edit', subject_class: Library.to_s)
+      .where(action: 'edit', subject_class: Location.to_s)
       .where.not(subject_id: nil)
-      .map{ |p| Library.find(p.subject_id) }
+      .map{ |p| Location.find(p.subject_id) }
   end
 
   # Updating permissions. Destroys all previously definited permissions.
@@ -33,26 +33,26 @@ class User < ApplicationRecord
   # permissions using the array given.
   def update_permissions(params)
     admin = params.fetch(:admin, false)
-    library_ids = params.fetch(:library_ids, [])
+    location_ids = params.fetch(:location_ids, [])
 
     admin = ActiveRecord::Type::Boolean.new.cast(admin) # Convert to bool.
     return if(admin && self.admin?)
 
     self.permissions.destroy_all
 
-    # Check that all library ids are valid.
+    # Check that all location ids are valid.
     begin
-      Library.find(library_ids)
+      Location.find(location_ids)
     rescue ActiveRecord::RecordNotFound => e
-      errors.add(:permissions, :invalid, message: "one or more of the library ids given is invalid") # TODO: could probably use e to find out what the invalid record is
+      errors.add(:permissions, :invalid, message: "one or more of the location ids given is invalid") # TODO: could probably use e to find out what the invalid record is
       return false
     end
 
     if admin
       permissions.create(action: 'manage', subject_class: 'all')
     else
-      library_ids.each do |id|
-        permissions.create(action: 'edit', subject_class: Library.to_s, subject_id: id)
+      location_ids.each do |id|
+        permissions.create(action: 'edit', subject_class: Location.to_s, subject_id: id)
       end
     end
 

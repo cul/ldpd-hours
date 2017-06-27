@@ -29,20 +29,20 @@ RSpec.describe Admin::UsersController, type: :controller do
       end
 
       it "adds editor privilages" do
-        patch :update, params: { id: jane.id, user: { permissions: { library_ids: [butler.id] } } }
+        patch :update, params: { id: jane.id, user: { permissions: { location_ids: [butler.id] } } }
         expect(jane.permissions.count).to eql 1
         expect(jane.permissions.first.attributes).to include(
-          'action' => 'edit', 'subject_class' => 'Library', 'subject_id' => butler.id
+          'action' => 'edit', 'subject_class' => 'Location', 'subject_id' => butler.id
         )
       end
 
       it "changes editor privilages" do
-        jane.update_permissions(library_ids: [butler.id])
-        patch :update, params: { id: jane.id, user: { permissions: { library_ids: [lehman.id] } } }
+        jane.update_permissions(location_ids: [butler.id])
+        patch :update, params: { id: jane.id, user: { permissions: { location_ids: [lehman.id] } } }
         jane.reload
         expect(jane.permissions.count).to eql 1
         expect(jane.permissions.first.attributes).to include(
-          'action' => 'edit', 'subject_class' => 'Library', 'subject_id' => lehman.id
+          'action' => 'edit', 'subject_class' => 'Location', 'subject_id' => lehman.id
         )
       end
     end
@@ -62,15 +62,15 @@ RSpec.describe Admin::UsersController, type: :controller do
       end
 
       it "creates user with editor privilages" do
-        post :create, params: { user: { uid: uid, permissions: { library_ids: [butler.id] } } }
+        post :create, params: { user: { uid: uid, permissions: { location_ids: [butler.id] } } }
         user = User.find_by(uid: uid)
         expect(user.permissions.count).to eql 1
         expect(user.permissions.first.subject_id).to eql butler.id
       end
 
-      it "throws error if library id invalid" do
-        post :create, params: { user: { uid: uid, permissions: { library_ids: [1] } } }
-        expect(flash[:error]).to eq 'Permissions one or more of the library ids given is invalid'
+      it "throws error if location id invalid" do
+        post :create, params: { user: { uid: uid, permissions: { location_ids: [1] } } }
+        expect(flash[:error]).to eq 'Permissions one or more of the location ids given is invalid'
       end
 
       it "creates user with no permissions" do
