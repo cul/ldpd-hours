@@ -30,7 +30,7 @@ class Timetable < ApplicationRecord
 
   def display_str
     if self.open && self.close
-      "#{self.open.to_time.strftime('%l:%M%p')}-#{self.close.to_time.strftime('%l:%M%p')}".gsub(/\s+/, "")
+      "#{open_time.strftime('%l:%M%p')}-#{close_time.strftime('%l:%M%p')}".gsub(/\s+/, "")
     elsif self.closed
       "Closed"
     else
