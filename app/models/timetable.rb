@@ -1,6 +1,23 @@
 class Timetable < ApplicationRecord
   belongs_to :location
 
+  def open_time
+    generate_time(open)
+  end
+
+  def close_time
+    generate_time(close)
+  end
+
+  def generate_time(open_or_close)
+    return nil if date.blank? || open_or_close.blank?
+    Time.local(date.year, date.month, date.day, *open_or_close.split(':'))
+  end
+
+  def open_at?(time)
+    (open_time < time) && (close > time)
+  end
+
   def self.batch_update_or_create(timetable_params, open, close)
     params, values = [],[]
     (timetable_params["dates"].count).times{ params.push("(?,?,?,?,?,?,?,?,?)")}
@@ -20,5 +37,4 @@ class Timetable < ApplicationRecord
       "TBD"
     end
   end
-
 end

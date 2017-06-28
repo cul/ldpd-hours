@@ -1,0 +1,8 @@
+<h3>Open Now</h3>
+<h4> <%= @now.strftime('%B %e, %Y') %></h4>
+
+<% @open.each do |timetable| %>
+  <%= link_to timetable.location.name, timetable.location.url %>
+  Until <%= timetable.close_time.strftime("%l:%M %P") %>
+  <br/>
+<% end %>

@@ -23,10 +23,17 @@ class LocationsController < ApplicationController
     @date = params[:date] ? Date.parse(params[:date]) : Date.today
   end
 
+  def open_now
+    @now = Time.now
+    @open = Timetable.where(date: Date.today)
+                     .where.not(open: nil, close: nil)
+                     .select { |t| t.open_at?(@now) }
+                     .sort_by { |t| t.location.name }
+  end
+
   private
 
   def location_params
     params.require(:location).permit(:name, :code, :comment, :comment_two, :url, :summary)
   end
-
 end

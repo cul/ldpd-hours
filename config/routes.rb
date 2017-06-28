@@ -7,15 +7,17 @@ Rails.application.routes.draw do
   end
 
   devise_scope :user do
-    get 'sign_in', :to => 'users/sessions#new', :as => :new_user_session
-    get 'sign_out', :to => 'users/sessions#destroy', :as => :destroy_user_session
+    get 'sign_in', to: 'users/sessions#new', as: :new_user_session
+    get 'sign_out', to: 'users/sessions#destroy', as: :destroy_user_session
   end
 
   resources :locations do
+    get :open_now, on: :collection
+
     resources :timetables do
       collection do
-        get "batch_edit", action: :batch_edit, :as => :batch_edit
-        post "batch update", action: :batch_update, :as => :batch_update
+        get :batch_edit
+        post :batch_update
       end
     end
   end
