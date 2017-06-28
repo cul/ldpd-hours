@@ -17,15 +17,27 @@ class CalendarBuilder < Struct.new(:view, :date, :callback)
     end
 
     def week_rows
+      timetable = get_timetable(weeks.first.first, weeks.last.last)
       weeks.map do |week|
         content_tag :tr do
-          week.map { |day| day_cell(day) }.join.html_safe
+          week.map do |day|
+            day_cell(day, timetable.find_by(date: day))
+          end.join.html_safe
         end
       end.join.html_safe
     end
 
-    def day_cell(day)
-      content_tag :td, view.capture(day, &callback) + content_tag(:p, day, class: "hidden"), class: day_classes(day)
+    def day_cell(day, timetable = nil)
+      if timetable.nil?
+        hours, note = 'TBD', ''
+      else
+        hours = timetable.display_str
+        note = content_tag(:span, todays_hours.note) unless timetable.note.blank?
+      end
+      
+      content_tag :td, class: day_classes(day) do
+        view.capture(day, &callback) + content_tag(:p, day, class: "hidden") + content_tag(:span, hours) + note 
+      end
     end
 
     def day_classes(day)
@@ -39,5 +51,12 @@ class CalendarBuilder < Struct.new(:view, :date, :callback)
       first = date.beginning_of_month.beginning_of_week(START_DAY)
       last = date.end_of_month.end_of_week(START_DAY)
       (first..last).to_a.in_groups_of(7)
+    end
+
+    private
+
+    def get_timetable(first,last)
+      location_id = view.assigns["location"].id
+      Timetable.where(location_id: location_id, date: first..last)
     end
 end
