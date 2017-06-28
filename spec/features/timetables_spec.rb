@@ -23,16 +23,17 @@ describe "Timetables", js: true do
       end
 
       it "should display hours that have previously been set" do
-        visit(batch_edit_library_timetables_path(@library))
+        visit(batch_edit_location_timetables_path(lehman))
         find("td", :text => "16").click
         select "07 AM", :from => "timetable_open_4i"
         select "30", :from => "timetable_open_5i"
         select "06 PM", :from => "timetable_close_4i"
         select "30", :from => "timetable_close_5i"
         click_button("Update Hours")
-        visit(batch_edit_library_timetables_path(@library))
+        visit(batch_edit_location_timetables_path(lehman))
         expect(find("td", :text => "16")).to have_content("7:30AM-6:30PM")
       end
+    end
   end
 
 
@@ -73,11 +74,11 @@ describe "Timetables", js: true do
         find("input#timetable_closed").click
         find("td", :text => "15").click
         click_button("Update Hours")
-        expect(find("td span").text).to eq("Closed")
+        expect(find("td", :text => "15")).to have_content("Closed")
       end
 
       it "should display note if one is added" do
-        visit(batch_edit_library_timetables_path(@library))
+        visit(batch_edit_location_timetables_path(lehman))
         find("input#timetable_closed").click
         find("td", :text => "15").click
         fill_in "Note", with: "Holiday"

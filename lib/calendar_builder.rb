@@ -48,8 +48,8 @@ class CalendarBuilder < Struct.new(:view, :date, :callback)
     private
 
     def get_times(first,last)
-      library_id = view.assigns["library"].id
-      @times = Timetable.where(library_id: library_id, date: first..last)
+      location_id = view.assigns["location"].id
+      @times = Timetable.where(location_id: location_id, date: first..last)
     end
 
     def formatted_hours(timetable)
