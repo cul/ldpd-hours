@@ -11,4 +11,14 @@ class Timetable < ApplicationRecord
     ActiveRecord::Base.connection.exec_query(sql)
   end
 
+  def display_str
+    if self.open && self.close
+      "#{self.open.to_time.strftime('%l:%M%p')}-#{self.close.to_time.strftime('%l:%M%p')}".gsub(/\s+/, "")
+    elsif self.closed
+      "Closed"
+    else
+      "TBD"
+    end
+  end
+
 end
