@@ -20,12 +20,12 @@ class LocationsController < ApplicationController
 
   def show
     @location = Location.find(params[:id])
-    @date = params[:date] ? Date.parse(params[:date]) : Date.today
+    @date = params[:date] ? Date.parse(params[:date]) : Date.current
   end
 
   def open_now
-    @now = Time.now
-    @open = Timetable.where(date: Date.today)
+    @now = Time.current
+    @open = Timetable.where(date: Date.current)
                      .where.not(open: nil, close: nil)
                      .select { |t| t.open_at?(@now) }
                      .sort_by { |t| t.location.name }
