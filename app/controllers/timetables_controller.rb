@@ -1,7 +1,7 @@
 class TimetablesController < ApplicationController
   load_and_authorize_resource
 
-  def batch_edit
+  def exceptional_edit
     @location = Location.find(params["location_id"])
     @date = params[:date] ? Date.parse(params[:date]) : Date.current
     @timetable = Timetable.new
