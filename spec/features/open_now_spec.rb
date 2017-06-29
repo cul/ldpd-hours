@@ -1,16 +1,21 @@
 require 'rails_helper'
 
 describe 'locations open now' do
-  let(:butler) { FactoryGirl.create(:butler) }
-  let(:avery) { FactoryGirl.create(:avery) }
+  context 'when one library closed and one open' do
+    before do
+      FactoryGirl.create(:butler_today, open: (Time.now - 1.hour).hour.to_s,
+                         close: (Time.now + 5.hours).hour.to_s)
+      FactoryGirl.create(:lehman_today, open: (Time.now + 1.hour).hour.to_s,
+                         close: (Time.now + 6.hours).hour.to_s)
+      visit '/locations/open_now'
+    end
 
-  before do
-    Timetable.create(location: butler, date: Date.today, open: '', close: '')
-    Timetable.create(location: avery, date: Date.today, open: '', close: '')
+    it "correctly displays open library" do
+      expect(page).to have_content 'Butler'
+    end
+
+    it "does not display closed libraries" do
+      expect(page).not_to have_content 'Lehman'
+    end
   end
-
-  it "correctly displays open library"
-
-  it "does not display closed libraries"
-
 end

@@ -15,7 +15,7 @@ class Timetable < ApplicationRecord
   end
 
   def open_at?(time)
-    (open_time < time) && (close > time)
+    (open_time < time) && (close_time > time)
   end
 
   def self.batch_update_or_create(timetable_params, open, close)
