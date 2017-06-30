@@ -27,4 +27,23 @@ bundle exec rspec
 
 ## Notes
 
-Because updating our hours uses a MySQL specific flavor of a batch upsert, if the db provider changes in the future you will need to modify the `TimeTable.batch_update_or_create` method with SQL appropriate for the db provider. 
+Because updating our hours uses a MySQL specific flavor of a batch upsert, if the db provider changes in the future you will need to modify the `TimeTable.batch_update_or_create` method with SQL appropriate for the db provider.
+
+## Permissions (as they currently are implemented in the original hours app)
+### Admins
+- For all libraries:
+  - can edit comments, display name and URL (but not code)
+  - can edit all times
+- Can add/delete users
+- Can edit what libraries a user can edit
+
+### Supervisor
+- For an assigned library:
+  - can edit all times
+  - can edit comments
+  - can change what users can edit the library
+  
+### Contributor
+- For an assigned library:
+  - can edit all times
+  - can edit comments
