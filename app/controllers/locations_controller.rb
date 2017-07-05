@@ -1,26 +1,43 @@
 class LocationsController < ApplicationController
-
   def index
     @locations = Location.all
+    render action: :index, layout: "public"
   end
 
   def new
     @location = Location.new
   end
 
+  def edit
+    @location = Location.find(params[:id])
+  end
+
   def create
     @location = Location.new(location_params)
     if @location.save
       flash[:success] = "Location successfully created"
-      redirect_to locations_url
+      redirect_to admin_url
     else
       render :new
+    end
+  end
+
+  def update
+    @location = Location.find(params[:id])
+    if @location.update(location_params)
+      flash[:success] = "Location successfully updated"
+      redirect_to admin_url
+    else
+      error = @location.errors.full_messages.to_sentence
+      flash[:error] = error
+      render :edit
     end
   end
 
   def show
     @location = Location.find(params[:id])
     @date = params[:date] ? Date.parse(params[:date]) : Date.current
+    render action: :show, layout: "public"
   end
 
   def open_now
