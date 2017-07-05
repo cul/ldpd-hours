@@ -1,22 +1,55 @@
 <div class="row">
-  <div class="col-sm-8 hp-main-content">
-
-  <div class="col-sm-12 browse-box">
-    <h2>Dashboard</h2>
-    <ul>
-      <% @locations.each do |lib| %>
-        <li><%= link_to "Edit #{lib.name} Calendar", exceptional_edit_location_timetables_path(lib) %></li>
-      <% end %>
-    </ul>
+  <div class="col-sm-8">
+    <div class="card mb-3">
+      <div class="card-block">
+        <div class="card-title">
+          <h2 class="text-center">Editable Locations</h2>
+        </div>
+        <div class="card-text">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Locations</th>
+                <th>Timetable</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @locations.each do |lib| %>
+              <tr>
+                <td><%= link_to lib.name, edit_location_path(lib) %></td>
+                <td><%= link_to 'Batch Edit', batch_edit_location_timetables_path(lib)%></td>
+                <td><%= link_to 'Exceptional Edit', exceptional_edit_location_timetables_path(lib)%></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 
-  </div>
-
-  <div class="col-sm-3 outline">
-    <h2>Users</h2>
-    <ul>
-      <li><%= link_to "Manage Users", admin_users_path %></li>
-      <li><%= link_to "Add User", new_admin_user_path %></li>
-    </ul>
+  <div class="col-sm-4">
+    <div class="card mb-3">
+      <div class="card-block">
+        <p class="card-text">
+          <%= link_to 'Add new location', new_location_path %>
+        </p>
+      </div>
+    </div>
+    <div class="card mb-3">
+      <div class="card-block">
+        <p class="card-text">
+          <%= link_to "Add User", new_admin_user_path %>
+        </p>
+      </div>
+    </div>
+    <div class="card mb-3">
+      <div class="card-block">
+        <p class="card-text">
+          <%= link_to "Manage Users", admin_users_path %>
+        </p>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,31 +1,35 @@
-<nav class="navbar navbar-default navbar-static-top navbar-inverse">
-  <ul class="user-login">
-    <% if @current_user && (@current_user.admin? || @current_user.editor?) %>
-      <li class="user-login"><%= @current_user.email %></li>
-      <li class="log-out"><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
-      <li class=""><%= link_to admin_path %></li>
-    <% end %>
-  </ul>
-
+<nav class="navbar navbar-static-top navbar-inverse">
   <h1 class="container logo-contain">
-    <%= link_to "Location Hours", root_path, id: "logo" %>
+    <%= link_to "Library Hours", root_path, id: "logo" %>
   </h1>
 </nav>
 
-<nav class="navbar navbar-default bottom-nav">
-  <div class="container-fluid">
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      </button>
-    </div>
-    <%= link_to "Location Hours", root_path, :class => "navbar-brand" %>
-  <a href="//library.columbia.edu">Libraries Home</a>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+      <li class="nav-item">
+        <a class="nav-link" href="//library.columbia.edu" target="_blank">CUL Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/" target="_blank">Hours Public</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/admin">Hours Admin</a>
+      </li>
+    </ul>
 
-  </div><!-- /.container-fluid -->
+    <ul class="navbar-nav my-2 my-lg-0">
+      <% if @current_user && (@current_user.admin? || @current_user.editor?) %>
+        <li class="nav-item">
+          <%= link_to "Sign out #{current_user.uid}", destroy_user_session_path, class: "nav-link my-lg-0" %>
+        </li>
+      <% else %>
+        <li class="nav-item"><%= link_to "Sign in", new_user_session_path, class: "nav-link my-lg-0" %></li>
+      <% end %>
+    </ul>
+  </div>
 </nav>
