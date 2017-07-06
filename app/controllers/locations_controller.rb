@@ -27,8 +27,9 @@ class LocationsController < ApplicationController
     @now = Time.current
     @open = Timetable.where(date: Date.current)
                      .where.not(open: nil, close: nil)
+                     .includes(:location)
+                     .order('locations.name')
                      .select { |t| t.open_at?(@now) }
-                     .sort_by { |t| t.location.name }
   end
 
   private
