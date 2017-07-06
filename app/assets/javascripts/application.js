@@ -15,4 +15,5 @@
 //= require jquery-ui-dist/jquery-ui.min.js
 //= require tether/dist/js/tether
 //= require bootstrap/dist/js/bootstrap
+//= require bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js
 //= require_tree .

@@ -64,4 +64,12 @@ $(document).ready(function(){
     return "<span>" + open + "-" + close + "</span>"
   }
 
+  $(document).bind('ajax:error', 'form#batch_edit', function(event, jqxhr, settings, exception){
+    $("div.body-contain").prepend("<div class='alert alert-danger'><a href='#' data-dismiss='alert' class='close'>×</a><ul><li>Please Enter Valid Data</li></ul></div>");
+  });
+
+  $(document).bind('ajax:success', 'form#batch_edit', function(event, jqxhr, settings, exception){
+    $("div.body-contain").prepend("<div class='alert alert-success'><a href='#' data-dismiss='alert' class='close'>×</a><ul><li>Dates Successfully Added</li></ul></div>");
+  });
+
 });

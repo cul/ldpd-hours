@@ -1,5 +1,5 @@
 class TimetablesController < ApplicationController
-  load_and_authorize_resource
+  # load_and_authorize_resource
 
   def exceptional_edit
     @location = Location.find(params["location_id"])
@@ -7,15 +7,25 @@ class TimetablesController < ApplicationController
     @timetable = Timetable.new
   end
 
+  def batch_edit
+    @location = Location.find(params["location_id"])
+    @timetable = Timetable.new
+  end
+
   def batch_update
-    @open = "#{params['timetable']['open(4i)']}:#{params['timetable']['open(5i)']}"
-    @close = "#{params['timetable']['close(4i)']}:#{params['timetable']['close(5i)']}"
+    params = timetable_params.to_hash
+    if params["start_date"] && params["end_date"]
+      params["dates"] = get_dates(params)
+    end
 
-    opens_before_close(timetable_params)
-    format_dates(timetable_params)
-    adjust_times_if_closed(timetable_params)
+    @open = "#{params['open(4i)']}:#{params['open(5i)']}"
+    @close = "#{params['close(4i)']}:#{params['close(5i)']}"
 
-    Timetable.batch_update_or_create(timetable_params, @open, @close)
+    opens_before_close(params)
+    format_dates(params)
+    adjust_times_if_closed(params)
+
+    Timetable.batch_update_or_create(params, @open, @close)
     render json: {message: "success"}, status: :ok
   rescue ArgumentError, MySql::Error, ArgumentError, StandardError
     render json: {message: "error"}, status: :error
@@ -24,7 +34,7 @@ class TimetablesController < ApplicationController
   private
 
   def timetable_params
-    params.require(:timetable).permit("open(4i)", "open(5i)", "close(4i)", "close(5i)", :closed, :tbd, :note, :location_id, dates: [])
+    params.require(:timetable).permit("open(4i)", "open(5i)", "close(4i)", "close(5i)", :closed, :tbd, :note, :location_id, :start_date, :end_date, :days, dates: [])
   end
 
   def format_dates(params)
@@ -45,6 +55,21 @@ class TimetablesController < ApplicationController
     if (params["closed"] == "1" || params["tbd"] == "1")
       @open, @close = nil, nil
     end
+  end
+
+  def get_dates(params)
+    *keys = if params["days"] == "Friday"
+              5
+            elsif params["days"] == "Saturday"
+              6
+            elsif params["days"] == "Sunday"
+              0
+            else
+              [1,2,3,4]
+            end
+    start_day, end_day = Date.strptime(params["start_date"], "%m/%d/%Y"), Date.strptime(params["end_date"], "%m/%d/%Y")
+    datesByWeekday = (start_day..end_day).group_by(&:wday)
+    datesByWeekday.fetch_values(*keys).flatten.map(&:to_s)
   end
 
 end
