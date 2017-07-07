@@ -68,8 +68,7 @@ class TimetablesController < ApplicationController
               [1,2,3,4]
             end
     start_day, end_day = Date.strptime(params["start_date"], "%m/%d/%Y"), Date.strptime(params["end_date"], "%m/%d/%Y")
-    datesByWeekday = (start_day..end_day).group_by(&:wday)
-    datesByWeekday.fetch_values(*keys).flatten.map(&:to_s)
+    dates_by_weekday = (start_day..end_day).group_by(&:wday)
+    dates_by_weekday.fetch_values(*keys).flatten.map(&:to_s)
   end
-
 end
