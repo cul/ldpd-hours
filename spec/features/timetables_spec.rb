@@ -37,7 +37,7 @@ describe "Timetables", js: true do
   end
 
 
-  describe "editing the calendar", js: true do 
+  describe "editing the calendar", js: true do
     context 'when admin is logged in' do
       include_context 'login admin user'
 
@@ -49,7 +49,7 @@ describe "Timetables", js: true do
 
       it "should save dates" do
         visit(batch_edit_location_timetables_path(lehman))
-        find("td", :text => "25").click
+        find(:xpath, "//td[not(contains(@class, 'not-month'))]", :text => "25").click
         select "07 AM", :from => "timetable_open_4i"
         select "30", :from => "timetable_open_5i"
         select "06 PM", :from => "timetable_close_4i"
@@ -60,7 +60,7 @@ describe "Timetables", js: true do
 
       it "should not save dates with invalid hours" do
         visit(batch_edit_location_timetables_path(lehman))
-        find("td", :text => "25").click
+        find(:xpath, "//td[not(contains(@class, 'not-month'))]", :text => "25").click
         select "07 PM", :from => "timetable_open_4i"
         select "30", :from => "timetable_open_5i"
         select "06 PM", :from => "timetable_close_4i"

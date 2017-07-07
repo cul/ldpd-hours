@@ -3,7 +3,7 @@ class TimetablesController < ApplicationController
 
   def batch_edit
     @location = Location.find(params["location_id"])
-    @date = params[:date] ? Date.parse(params[:date]) : Date.today
+    @date = params[:date] ? Date.parse(params[:date]) : Date.current
     @timetable = Timetable.new
   end
 
@@ -34,7 +34,7 @@ class TimetablesController < ApplicationController
   def opens_before_close(params)
     if (params["closed"] == "1" || params["tbd"] == "1")
       return true
-    elsif !(Time.parse(@open, Time.now) < Time.parse(@close, Time.now))
+    elsif !(Time.parse(@open, Time.current) < Time.parse(@close, Time.current))
       raise ArgumentError, "End time cannot be before start time"
     else
       return true
