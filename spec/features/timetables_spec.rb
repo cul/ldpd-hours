@@ -85,7 +85,6 @@ describe "Timetables", js: true do
         click_button("Update Hours")
         expect(find("td", :text => "15")).to have_content("Holiday")
       end
-
     end
   end
 end
