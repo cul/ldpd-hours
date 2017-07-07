@@ -1,17 +1,19 @@
-<div class="col-md-12 text-center">
-  <div class="well controls">
-    <%= link_to batch_edit_location_timetables_path(@location, date: @date - 1.month), class: "btn btn-default" do %>
-      <i class="fa fa-arrow-left" aria-hidden="true"></i>
-    <% end %>
-    <%= "#{@date.strftime("%B")} #{@date.year}" %>
-    <%= link_to batch_edit_location_timetables_path(@location, date: @date + 1.month), class: "btn btn-default" do %>
-      <i class="fa fa-arrow-right" aria-hidden="true"></i>
+<div class="row">
+  <div class="col-12 text-center">
+    <div class="well controls">
+      <%= link_to exceptional_edit_location_timetables_path(@location, date: @date - 1.month), class: "btn btn-default" do %>
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+      <% end %>
+      <%= "#{@date.strftime("%B")} #{@date.year}" %>
+      <%= link_to exceptional_edit_location_timetables_path(@location, date: @date + 1.month), class: "btn btn-default" do %>
+        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <%= calendar_builder @date do |date| %>
+      <%= date.day %>
     <% end %>
   </div>
-</div>
-
-<div class="col-md-12">
-  <%= calendar_builder @date do |date| %>
-    <%= date.day %>
-  <% end %>
 </div>

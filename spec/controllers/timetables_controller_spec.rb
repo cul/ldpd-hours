@@ -23,4 +23,30 @@ RSpec.describe TimetablesController, type: :controller do
     end
   end
 
+  describe "#get_dates" do
+    it "returns all mon-thurs when selected" do
+      params = {"days" => "mon-thurs", "start_date" => "07/03/2017", "end_date" => "07/10/2017"}
+      result = controller.send(:get_dates, params)
+      expect(result.count).to eql(5)
+    end
+
+    it "returns all Sundays when selected" do
+      params = {"days" => "Sunday", "start_date" => "07/02/2017", "end_date" => "07/10/2017"}
+      result = controller.send(:get_dates, params)
+      expect(result.count).to eql(2)
+    end
+
+    it "returns all saturdays when selected" do
+      params = {"days" => "Saturday", "start_date" => "07/03/2017", "end_date" => "07/10/2017"}
+      result = controller.send(:get_dates, params)
+      expect(result.count).to eql(1)
+    end
+
+    it "returns all fridays when selected" do
+      params = {"days" => "Friday", "start_date" => "07/03/2017", "end_date" => "07/10/2017"}
+      result = controller.send(:get_dates, params)
+      expect(result.count).to eql(1)
+    end
+  end
+
 end

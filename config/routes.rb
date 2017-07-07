@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
     resources :timetables do
       collection do
+        get :exceptional_edit
         get :batch_edit
         post :batch_update
       end

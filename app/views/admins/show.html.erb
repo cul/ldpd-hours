@@ -5,7 +5,7 @@
     <h2>Dashboard</h2>
     <ul>
       <% @locations.each do |lib| %>
-        <li><%= link_to "Edit #{lib.name} Calendar", batch_edit_location_timetables_path(lib) %></li>
+        <li><%= link_to "Edit #{lib.name} Calendar", exceptional_edit_location_timetables_path(lib) %></li>
       <% end %>
     </ul>
   </div>
