@@ -69,13 +69,15 @@ RSpec.describe Timetable, type: :model do
   end
 
   describe "display_str" do
+    let(:butler) { FactoryGirl.create(:butler) }
+
     it "should display closed if closed" do
-      t = Timetable.create(location_id: Location.first.id, date: Date.today, closed: true)
+      t = Timetable.create(location_id: butler.id, date: Date.today, closed: true)
       expect(t.display_str).to eq("Closed")
     end
 
     it "should display tbd if status is tbd" do
-      t = Timetable.create(location_id: Location.first.id, date: Date.today, tbd: true)
+      t = Timetable.create(location_id: butler.id, date: Date.today, tbd: true)
       expect(t.display_str).to eq("TBD")
     end
   end

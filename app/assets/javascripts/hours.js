@@ -22,7 +22,7 @@ $(document).ready(function(){
   });
 
   // On batch_edit form submit, add days and times to cal on success
-  $(document).bind('ajax:success', 'form#new_timetable', function(event, jqxhr, settings, exception){
+  $('form#new_timetable').on('ajax:success', function(event, jqxhr, settings, exception){
     $( ".days-list" ).empty();
     $(".ui-selected").each(function(){
       var that = this;
@@ -44,7 +44,7 @@ $(document).ready(function(){
     $("td").removeClass("ui-selected");
   });
 
-  $(document).bind('ajax:error', 'form#new_timetable', function(event, jqxhr, settings, exception){
+  $('form#new_timetable').on('ajax:error', function(event, jqxhr, settings, exception){
     $( ".days-list" ).empty();
     $(".ui-selected").each(function(){
       $(this).children("span").remove();
@@ -64,11 +64,11 @@ $(document).ready(function(){
     return "<span>" + open + "-" + close + "</span>"
   }
 
-  $(document).bind('ajax:error', 'form#batch_edit', function(event, jqxhr, settings, exception){
+  $('form#batch_edit').on('ajax:error', function(event, jqxhr, settings, exception){
     $("div.body-contain").prepend("<div class='alert alert-danger'><a href='#' data-dismiss='alert' class='close'>×</a><ul><li>Please Enter Valid Data</li></ul></div>");
   });
 
-  $(document).bind('ajax:success', 'form#batch_edit', function(event, jqxhr, settings, exception){
+  $('form#batch_edit').on('ajax:success', function(event, jqxhr, settings, exception){
     $("div.body-contain").prepend("<div class='alert alert-success'><a href='#' data-dismiss='alert' class='close'>×</a><ul><li>Dates Successfully Added</li></ul></div>");
   });
 

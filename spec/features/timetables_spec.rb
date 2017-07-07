@@ -66,7 +66,7 @@ describe "Timetables", js: true do
         select "06 PM", :from => "timetable_close_4i"
         select "30", :from => "timetable_close_5i"
         click_button("Update Hours")
-        expect(find("div .alert-danger ul li").text).to eq("Please Enter Valid Data")
+        expect(find("div .alert-danger ul li").text).to have_content("Please Enter Valid Data")
       end
 
       it "should display closed on calendar if closed" do
