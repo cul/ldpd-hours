@@ -45,3 +45,37 @@ Because updating our hours uses a MySQL specific flavor of a batch upsert, if th
 - can promote/demote Editors to Managers (can edit all user permissions)
 - can create/delete locations
 - can edit location metadata (comments, url, name, primary location)
+
+## API
+### `GET v1/locations/:location_code`
+#### Query Params
+ - location_code: Location code
+ - date: date in YYYY-MM-DD format or `today`
+        Date should be formated following the w3cdtf specification.
+
+#### Response
+##### Example 1:
+      `GET /v1/locations/avery?date=today`
+      
+      ```
+      {
+        open_time: '',
+        close_time: '',
+        note_1: '',
+        note_2: '',
+        tbd: true/false,
+        closed: true/false,
+        formated_date: '',  
+      }
+      ```
+      
+      `GET v1/locations/:location_code?start_date=2017-09-30&end_date=2017-10-30`
+
+### `GET v1/locations/open_now`
+#### Query Params
+     None
+#### Response
+     ```
+     
+     ```
+     
