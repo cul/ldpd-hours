@@ -35,13 +35,13 @@ Because updating our hours uses a MySQL specific flavor of a batch upsert, if th
   - can change time information
   - can edit notes and url for calendar
  
-### Supervisor/manager
+### Manager
 - can do everything an Editor can do, for all locations
 - can add/delete Editor
 - can assign Editors to locations
  
-### Admins
-- can do everything a Supervisor can do
-- can promote/demote Editors to Managers
+### Administrator
+- can do everything a Manager can do
+- can promote/demote Editors to Managers (can edit all user permissions)
 - can create/delete locations
 - can edit location metadata (comments, url, name, primary location)
