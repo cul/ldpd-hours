@@ -1,7 +1,7 @@
 class LocationsController < ApplicationController
   def index
     @locations = Location.all
-    render action: :index, layout: "public"
+    render layout: "public"
   end
 
   def new
@@ -37,7 +37,7 @@ class LocationsController < ApplicationController
   def show
     @location = Location.find(params[:id])
     @date = params[:date] ? Date.parse(params[:date]) : Date.current
-    render action: :show, layout: "public"
+    render layout: "public"
   end
 
   def open_now
@@ -47,6 +47,7 @@ class LocationsController < ApplicationController
                      .includes(:location)
                      .order('locations.name')
                      .select { |t| t.open_at?(@now) }
+    render layout: "public"
   end
 
   private
