@@ -18,6 +18,7 @@ before_script:
   - "if [ $(phantomjs --version) != '2.1.1' ]; then tar -xvf $PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $PWD/travis_phantomjs; fi"
   - "phantomjs --version"
   - cp config/database.yml.travis config/database.yml
+  - cp config/secrets.template.yml config/secrets.yml
   - RAILS_ENV=test bundle exec rake db:schema:load --trace
   - bundle exec rake db:test:prepare
   - nvm install 6
