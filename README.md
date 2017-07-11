@@ -50,32 +50,94 @@ Because updating our hours uses a MySQL specific flavor of a batch upsert, if th
 ### `GET v1/locations/:location_code`
 #### Query Params
  - location_code: Location code
- - date: date in YYYY-MM-DD format or `today`
-        Date should be formated following the w3cdtf specification.
+ - date: valid params are `today` or a date in `YYYY-MM-DD` format following the `w3cdtf` specification.
+ - start_date: For a range of dates, provide a start date in `YYYY-MM-DD` format
+ - end_date: For a range of date, provide an end date in `YYYY-MM-DD` format
 
-#### Response
-##### Example 1:
-      `GET /v1/locations/avery?date=today`
-      
-      ```
-      {
-        open_time: '',
-        close_time: '',
-        note_1: '',
-        note_2: '',
-        tbd: true/false,
-        closed: true/false,
-        formated_date: '',  
-      }
-      ```
-      
-      `GET v1/locations/:location_code?start_date=2017-09-30&end_date=2017-10-30`
+#### Examples
+```
+GET /v1/locations/avery?date=today
+
+{ 
+  "avery": {
+    "date": "2017-07-14",
+    "open_time": "09:00",
+    "close_time": "22:00",
+    "note": "Intersession",
+    "tbd": false,
+    "closed": false,
+    "formated_date": "9:00AM-10:00PM"
+  }
+}
+```
+
+Another possibility for the response, will leave to product owners to decide.
+
+```
+{ 
+  "avery": {
+    "2017-07-14": {
+      "open_time": "09:00",
+      "close_time": "22:00",
+      "note": "Intersession",
+      "tbd": false,
+      "closed": false,
+      "formated_date": "9:00AM-10:00PM"
+  }
+}
+```
+```
+GET v1/locations/:location_code?start_date=2017-09-27&end_date=2017-09-29
+{
+  "avery": [
+    {
+      "date": "2017-09-27",
+      "open_time": "09:00",
+      "close_time": "22:00",
+      "note": "Intersession",
+      "tbd": false,
+      "closed": false,
+      "formated_date": "9:00AM-10:00PM"
+    },
+    {
+      "date": "2017-09-28",
+      "open_time": null,
+      "close_time": null,
+      "note": "Intersession",
+      "tbd": false,
+      "closed": true,
+      "formated_date": "Closed"
+    },
+    {
+      "date": "2017-09-29",
+      "open_time": null,
+      "close_time": null,
+      "note": "Intersession",
+      "tbd": true,
+      "closed": false,
+      "formated_date": "TBD"
+    }
+  ]
+}
+```
 
 ### `GET v1/locations/open_now`
 #### Query Params
      None
 #### Response
+
      ```
-     
+     {
+       "avery": {
+         "open_time": "09:00",
+         "close_time": "22:00",
+         "formatted_date": "Until 10:00PM"
+       },
+       "butler": {
+         "open_time": "09:00",
+         "close_time": "17:00",
+         "formatted_date": "Until 5:00PM"
+       }     
+     }
      ```
      
