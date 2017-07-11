@@ -7,19 +7,12 @@
         </div>
         <div class="card-text">
           <table class="table">
-            <thead>
-              <tr>
-                <th>Locations</th>
-                <th>Timetable</th>
-                <th></th>
-              </tr>
-            </thead>
             <tbody>
               <% @locations.each do |lib| %>
               <tr>
                 <td><%= link_to lib.name, edit_location_path(lib) %></td>
-                <td><%= link_to 'Batch Edit', batch_edit_location_timetables_path(lib)%></td>
-                <td><%= link_to 'Exceptional Edit', exceptional_edit_location_timetables_path(lib)%></td>
+                <td><%= link_to 'Set Hours', exceptional_edit_location_timetables_path(lib)%></td>
+                <td><%= link_to 'Batch Edit Hours', batch_edit_location_timetables_path(lib)%></td>
               </tr>
               <% end %>
             </tbody>
@@ -33,21 +26,21 @@
     <div class="card mb-3">
       <div class="card-block">
         <p class="card-text">
-          <%= link_to 'Add new location', new_location_path %>
+          <%= link_to '<i class="fa fa-plus" aria-hidden="true"></i> Add New Location'.html_safe, new_location_path %>
         </p>
       </div>
     </div>
     <div class="card mb-3">
       <div class="card-block">
         <p class="card-text">
-          <%= link_to "Add User", new_admin_user_path %>
+          <%= link_to '<i class="fa fa-user-plus" aria-hidden="true"></i> Add User'.html_safe, new_admin_user_path %>
         </p>
       </div>
     </div>
     <div class="card mb-3">
       <div class="card-block">
         <p class="card-text">
-          <%= link_to "Manage Users", admin_users_path %>
+          <%= link_to '<i class="fa fa-users" aria-hidden="true"></i> Manage Users'.html_safe, admin_users_path %>
         </p>
       </div>
     </div>
