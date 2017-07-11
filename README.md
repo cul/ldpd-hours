@@ -54,10 +54,9 @@ Because updating our hours uses a MySQL specific flavor of a batch upsert, if th
  - start_date: For a range of dates, provide a start date in `YYYY-MM-DD` format
  - end_date: For a range of date, provide an end date in `YYYY-MM-DD` format
 
-#### Examples
+#### Response Examples
+##### `GET /v1/locations/avery?date=today`
 ```
-GET /v1/locations/avery?date=today
-
 { 
   "avery": {
     "date": "2017-07-14",
@@ -87,8 +86,9 @@ Another possibility for the response, will leave to product owners to decide.
 }
 ```
 
+##### `GET v1/locations/:location_code?start_date=2017-09-27&end_date=2017-09-29`
+
 ```
-GET v1/locations/:location_code?start_date=2017-09-27&end_date=2017-09-29
 {
   "avery": [
     {
@@ -125,7 +125,8 @@ GET v1/locations/:location_code?start_date=2017-09-27&end_date=2017-09-29
 ### `GET v1/locations/open_now`
 #### Query Params
      None
-#### Response
+#### Response Example
+##### `GET v1/locations/open_now`
 ```
 {
  "avery": {
