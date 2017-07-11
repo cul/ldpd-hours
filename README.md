@@ -86,6 +86,7 @@ Another possibility for the response, will leave to product owners to decide.
   }
 }
 ```
+
 ```
 GET v1/locations/:location_code?start_date=2017-09-27&end_date=2017-09-29
 {
@@ -125,19 +126,18 @@ GET v1/locations/:location_code?start_date=2017-09-27&end_date=2017-09-29
 #### Query Params
      None
 #### Response
-
-     ```
-     {
-       "avery": {
-         "open_time": "09:00",
-         "close_time": "22:00",
-         "formatted_date": "Until 10:00PM"
-       },
-       "butler": {
-         "open_time": "09:00",
-         "close_time": "17:00",
-         "formatted_date": "Until 5:00PM"
-       }     
-     }
-     ```
+```
+{
+ "avery": {
+   "open_time": "09:00",
+   "close_time": "22:00",
+   "formatted_date": "Until 10:00PM"
+ },
+ "butler": {
+   "open_time": "09:00",
+   "close_time": "17:00",
+   "formatted_date": "Until 5:00PM"
+ }     
+}
+```
      
