@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "User management", js: true do
-  let(:user) { User.create(uid: 'def456') }
+  let(:user) { User.create(uid: 'def456', email: "def456@columbia.edu") }
 
   describe "visiting index page" do
      include_examples 'not authorized when non-admin logged in' do
@@ -25,6 +25,11 @@ describe "User management", js: true do
 
     context 'when admin is logged in' do
       include_context 'login admin user'
+
+      before :each do
+        entry = double('entry', name: 'John Doe', email: "def456@columbia.edu")
+        allow(ldap).to receive(:find_by_uni).with('def456').and_return(entry)
+      end
 
       it "can add a new user" do
         visit "/admin/users/new"

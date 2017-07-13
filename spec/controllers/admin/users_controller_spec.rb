@@ -18,7 +18,7 @@ RSpec.describe Admin::UsersController, type: :controller do
     context "when admin logged in" do
       include_context 'mock admin ability'
 
-      let(:jane) { User.create(uid: 'abc123') }
+      let(:jane) { User.create(uid: 'abc123', email: 'abc123@columbia.edu') }
 
       it "updates user's admin status" do
         patch :update, params: { id: jane.id, user: { permissions: { admin: 'true' } } }
@@ -54,6 +54,12 @@ RSpec.describe Admin::UsersController, type: :controller do
       let(:uid) { 'abc123' }
 
       include_context 'mock admin ability'
+      include_context 'mock ldap'
+
+      before :each do
+        entry = double('entry', name: 'Jane Doe', email: "janedoe@columbia.edu")
+        allow(ldap).to receive(:find_by_uni).with(uid).and_return(entry)
+      end
 
       it "creates user with admin privilages" do
         post :create, params: { user: { uid: uid, permissions: { admin: 'true' } } }
