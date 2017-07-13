@@ -64,8 +64,9 @@ class User < ApplicationRecord
   def add_ldap_info
     return false unless self.uid.present?
     ldap = Cul::LDAP.new
-    entry = ldap.find_by_uni(self.uid)
-    self.email = entry.email
-    self.name = entry.name
+    if entry = ldap.find_by_uni(self.uid)
+      self.email = entry.email
+      self.name = entry.name
+    end
   end
 end
