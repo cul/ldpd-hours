@@ -70,22 +70,6 @@ Because updating our hours uses a MySQL specific flavor of a batch upsert, if th
 }
 ```
 
-Another possibility for the response, will leave to product owners to decide.
-
-```
-{ 
-  "avery": {
-    "2017-07-14": {
-      "open_time": "09:00",
-      "close_time": "22:00",
-      "note": "Intersession",
-      "tbd": false,
-      "closed": false,
-      "formated_date": "9:00AM-10:00PM"
-  }
-}
-```
-
 ##### `GET v1/locations/:location_code?start_date=2017-09-27&end_date=2017-09-29`
 
 ```
