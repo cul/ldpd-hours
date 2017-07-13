@@ -22,7 +22,7 @@
       <tbody>
         <% @users.each do |user| %>
           <tr>
-            <td></td>
+            <td><%= user.name %></td>
             <td><%= user.uid %></td>
             <td>
               <% if user.admin? %>

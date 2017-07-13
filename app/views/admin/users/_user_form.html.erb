@@ -1,6 +1,15 @@
 <%= form_for [:admin, @user] do |f| %>
   <h4>Information</h4>
 
+  <% unless @user.new_record? %>
+    <div class="form-group row">
+      <%= f.label :name, "Name", class: "col-sm-2" %>
+      <div class="col-sm-10">
+        <p class="static-control-form"><%= @user.name %></p>
+      </div>
+    </div>
+  <% end %>
+
   <div class="form-group row">
     <%= f.label :uid, "UNI", class: "col-sm-2" %>
     <div class="col-sm-10">

@@ -3,7 +3,7 @@ class User < ApplicationRecord
 
   has_many :permissions, dependent: :destroy
 
-  before_validation :add_email
+  before_validation :add_ldap_info
 
   def password
     Devise.friendly_token[0,20]
@@ -59,11 +59,13 @@ class User < ApplicationRecord
     return true
   end
 
-  def add_email
-    if self.uid.present?
-      self.email = self.uid + "@columbia.edu"
-    else
-      return false
-    end
+  private
+
+  def add_ldap_info
+    return false unless self.uid.present?
+    ldap = Cul::LDAP.new
+    entry = ldap.find_by_uni(self.uid)
+    self.email = entry.email
+    self.name = entry.name
   end
 end

@@ -10,6 +10,13 @@ GIT
       rails (~> 5.0)
 
 GIT
+  remote: https://github.com/cul/cul-ldap.git
+  revision: 05b387850cb11db0dd0792ffea78464d2ef4ce52
+  specs:
+    cul-ldap (0.1.0)
+      net-ldap (>= 0.16.0)
+
+GIT
   remote: https://github.com/thoughtbot/shoulda-matchers.git
   revision: ead87017a6c15adce66a87dce8ee2ece91d0d27c
   branch: rails-5
@@ -146,6 +153,7 @@ GEM
     minitest (5.10.2)
     multi_json (1.12.1)
     mysql2 (0.4.6)
+    net-ldap (0.16.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (4.1.0)
@@ -291,6 +299,7 @@ DEPENDENCIES
   capistrano-rvm (~> 0.1)
   capybara (~> 2.13.0)
   coveralls
+  cul-ldap!
   cul_omniauth!
   database_cleaner
   devise
