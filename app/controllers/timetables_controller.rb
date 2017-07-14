@@ -1,6 +1,4 @@
 class TimetablesController < ApplicationController
-  load_and_authorize_resource
-
   def exceptional_edit
     @location = Location.find(params["location_id"])
     @date = params[:date] ? Date.parse(params[:date]) : Date.current
