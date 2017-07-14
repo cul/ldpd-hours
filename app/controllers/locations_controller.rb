@@ -1,4 +1,6 @@
 class LocationsController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:index, :show, :open_now]
+  
   def index
     @locations = Location.all
     render layout: "public"
