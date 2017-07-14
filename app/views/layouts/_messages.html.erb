@@ -1,5 +1,5 @@
 <% flash.each do |key, value| %>
-  <% key = 'danger' if (key == 'error') %>
+  <% key = { 'error' => 'danger', 'notice' => 'info' }.fetch(key, key) %>
   <div class="alert alert-<%= key %>">
     <a href="#" data-dismiss="alert" class="close">×</a>
     <%= value %>
