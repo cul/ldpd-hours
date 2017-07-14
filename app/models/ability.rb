@@ -29,6 +29,7 @@ class Ability
     # See the wiki for details:
     # https://github.com/ryanb/cancan/wiki/Defining-Abilities
 
+    user ||= User.new # guest user (not logged in)
     user.permissions.each do |permission|
       permission_class = (permission.subject_class.match(/:?all/i)) ?
                             :all : permission.subject_class.constantize
