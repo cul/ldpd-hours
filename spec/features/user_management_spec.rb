@@ -5,14 +5,14 @@ describe "User management", js: true do
 
   describe "visiting index page" do
      include_examples 'not authorized when non-admin logged in' do
-       let(:request) { visit "/admin/users" }
+       let(:request) { visit "/users" }
      end
 
     context 'when admin is logged in' do
       include_context 'login admin user'
 
       it "renders index page" do
-        visit "/admin/users"
+        visit "/users"
         expect(page).to have_text("All Users")
       end
     end
@@ -20,7 +20,7 @@ describe "User management", js: true do
 
   describe "adding users" do
     include_examples 'not authorized when non-admin logged in' do
-      let(:request) { visit "/admin/users/new" }
+      let(:request) { visit "/users/new" }
     end
 
     context 'when admin is logged in' do
@@ -32,7 +32,7 @@ describe "User management", js: true do
       end
 
       it "can add a new user" do
-        visit "/admin/users/new"
+        visit "/users/new"
 
         fill_in "UNI", with: "def456"
         choose "user_permissions_admin_true"
@@ -46,14 +46,14 @@ describe "User management", js: true do
 
   describe "deleting user" do
     include_examples 'not authorized when non-admin logged in' do
-      let(:request) { visit "/admin/users/#{user.id}/edit" }
+      let(:request) { visit "/users/#{user.id}/edit" }
     end
 
     context 'when an admin is logged in' do
       include_context 'login admin user'
 
       it "can delete user from edit page" do
-        visit "/admin/users/#{user.id}/edit"
+        visit "/users/#{user.id}/edit"
         click_on "Delete User"
         expect(page).to have_content("User successfully deleted")
         expect(page).not_to have_content("def456")
@@ -61,7 +61,7 @@ describe "User management", js: true do
 
       it "can delete users from index page" do
         user
-        visit "/admin/users"
+        visit "/users"
         find("#delete_#{user.uid}").trigger('click')
         expect(page).not_to have_content 'def456'
       end
@@ -73,7 +73,7 @@ describe "User management", js: true do
       include_context 'login admin user'
 
       it "can add admin privilages" do
-        visit edit_admin_user_path(user)
+        visit edit_user_path(user)
         choose "user_permissions_admin_true"
         click_button "Update User"
         expect(user.admin?).to eq true
@@ -81,7 +81,7 @@ describe "User management", js: true do
 
       it "can add location edit permissions" do
         butler = FactoryGirl.create(:butler)
-        visit edit_admin_user_path(user)
+        visit edit_user_path(user)
         check 'Butler'
         click_button 'Update User'
         expect(page).to have_content 'User successfully updated'
@@ -91,7 +91,7 @@ describe "User management", js: true do
       it "can change location edit permissions" do
         butler, lehman = FactoryGirl.create(:butler), FactoryGirl.create(:lehman)
         user.update_permissions(location_ids: [butler.id])
-        visit edit_admin_user_path(user)
+        visit edit_user_path(user)
         check 'Lehman'
         uncheck 'Butler'
         click_button 'Update User'
@@ -101,7 +101,7 @@ describe "User management", js: true do
 
       it "can remove all edit and admin permissions" do
         user.update_permissions(location_ids: [FactoryGirl.create(:butler).id])
-        visit edit_admin_user_path(user.id)
+        visit edit_user_path(user.id)
         uncheck "Butler"
         click_button 'Update User'
         expect(user.admin?).to eql false

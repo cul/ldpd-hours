@@ -1,4 +1,4 @@
-class Admin::UsersController < ApplicationController
+class UsersController < ApplicationController
   def new
     @user = User.new
   end
@@ -12,7 +12,7 @@ class Admin::UsersController < ApplicationController
     @user.provider = "saml"
     if @user.save && @user.update_permissions(permissions_params)
       flash[:success] = "User successfully added"
-      redirect_to admin_users_path
+      redirect_to users_path
     else
       flash[:error] = @user.errors.full_messages.to_sentence
       render :new
@@ -29,7 +29,7 @@ class Admin::UsersController < ApplicationController
     respond_to do |f|
       f.html {
         flash[:success] = "User successfully deleted"
-        redirect_to admin_users_path
+        redirect_to users_path
       }
       f.json { render json: { message: "removed" }, status: :ok }
     end
@@ -41,7 +41,7 @@ class Admin::UsersController < ApplicationController
       respond_to do |f|
         f.html {
           flash[:success] = "User successfully updated"
-          redirect_to admin_users_path
+          redirect_to users_path
         }
         f.json { render json: { message: "updated" }, status: :ok }
       end

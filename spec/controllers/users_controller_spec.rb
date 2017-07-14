@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Admin::UsersController, type: :controller do
+RSpec.describe UsersController, type: :controller do
   let(:butler) { FactoryGirl.create(:butler) }
   let(:lehman) { FactoryGirl.create(:lehman) }
 
@@ -13,7 +13,7 @@ RSpec.describe Admin::UsersController, type: :controller do
     end
   end
 
-  # PATCH admin/users/:id
+  # PATCH users/:id
   describe "PATCH update" do
     context "when admin logged in" do
       include_context 'mock admin ability'
@@ -48,7 +48,7 @@ RSpec.describe Admin::UsersController, type: :controller do
     end
   end
 
-  # POST admin/users/:id
+  # POST users/:id
   describe "POST create" do
     context "when admin logged in" do
       let(:uid) { 'abc123' }
