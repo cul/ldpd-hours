@@ -29,14 +29,17 @@
     locations.
   </p>
   <div class="form-group row">
-    <%= f.label :admin, 'Administrator', class: "col-sm-2" %>
+    <%= f.label :role, 'Role', class: "col-sm-2" %>
 
     <div class="col-sm-9">
-      <%= radio_button_tag 'user[permissions][admin]', true, @user.admin? %>
-      <%= label_tag :admin_yes, "Yes" %>
+      <%= radio_button_tag 'user[permissions][role]', 'editor', @user.editor? %>
+      <%= label_tag :role_editor, "Editor" %>
       &nbsp;
-      <%= radio_button_tag 'user[permissions][admin]', false, !@user.admin? %>
-      <%= label_tag :admin_no, "No" %>
+      <%= radio_button_tag 'user[permissions][role]', 'manager', @user.manager? %>
+      <%= label_tag :role_manager, "Manager" %>
+      &nbsp;
+      <%= radio_button_tag 'user[permissions][role]', 'administrator', @user.administrator? %>
+      <%= label_tag :role_manager, "Administrator" %>
     </div>
   </div>
 
@@ -46,7 +49,7 @@
       <div class="row">
         <% Location.order(:name).each do |lib| %>
           <div class="col-sm-6">
-            <%= check_box_tag "user[permissions][location_ids][]", lib.id, @user.can?(:edit, lib),
+            <%= check_box_tag "user[permissions][location_ids][]", lib.id, @user.ability.can?(:edit, lib),
                               class: 'chk-edit-permissions', id: "user_permissions_location_ids_#{lib.id}" %>
             <%= label_tag "user[permissions][location_ids][#{lib.id}]", lib.name %>
           </div>

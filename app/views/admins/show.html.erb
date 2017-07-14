@@ -23,26 +23,34 @@
   </div>
 
   <div class="col-sm-4">
-    <div class="card mb-3">
-      <div class="card-block">
-        <p class="card-text">
-          <%= link_to '<i class="fa fa-plus" aria-hidden="true"></i> Add New Location'.html_safe, new_location_path %>
-        </p>
+    <% if can? :create, Location %>
+      <div class="card mb-3">
+        <div class="card-block">
+          <p class="card-text">
+            <%= link_to '<i class="fa fa-plus" aria-hidden="true"></i> Add New Location'.html_safe, new_location_path %>
+          </p>
+        </div>
       </div>
-    </div>
-    <div class="card mb-3">
-      <div class="card-block">
-        <p class="card-text">
-          <%= link_to '<i class="fa fa-user-plus" aria-hidden="true"></i> Add User'.html_safe, new_user_path %>
-        </p>
+    <% end %>
+
+    <% if can? :create, User %>
+      <div class="card mb-3">
+        <div class="card-block">
+          <p class="card-text">
+            <%= link_to '<i class="fa fa-user-plus" aria-hidden="true"></i> Add User'.html_safe, new_user_path %>
+          </p>
+        </div>
       </div>
-    </div>
-    <div class="card mb-3">
-      <div class="card-block">
-        <p class="card-text">
-          <%= link_to '<i class="fa fa-users" aria-hidden="true"></i> Manage Users'.html_safe, users_path %>
-        </p>
+    <% end %>
+
+    <% if can? :edit, User %>
+      <div class="card mb-3">
+        <div class="card-block">
+          <p class="card-text">
+            <%= link_to '<i class="fa fa-users" aria-hidden="true"></i> Manage Users'.html_safe, users_path %>
+          </p>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
 </div>

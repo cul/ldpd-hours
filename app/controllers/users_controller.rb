@@ -60,10 +60,10 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :provider, :uid)
+    params.require(:user).permit(:uid)
   end
 
   def permissions_params
-    params.require(:user).require(:permissions).permit(:admin, location_ids: [])
+    params.require(:user).require(:permissions).permit(:role, location_ids: [])
   end
 end

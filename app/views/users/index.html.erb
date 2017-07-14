@@ -13,7 +13,7 @@
           <th>Name</th>
           <th>UNI</th>
           <th>Editor for</th>
-          <th class="text-center">Admin</th>
+          <th>Role</th>
           <th></th>
           <th></th>
         </tr>
@@ -25,16 +25,15 @@
             <td><%= user.name %></td>
             <td><%= user.uid %></td>
             <td>
-              <% if user.admin? %>
+              <% if user.administrator? || user.manager? %>
                 all locations
               <% else %>
                 <%= sanitize(user.editable_locations.map(&:name).join('<br>')) %>
               <% end %>
             </td>
-            <td class="text-center">
-              <% if user.admin? %>
-                <i class='fa fa-user-circle admin-color' aria-hidden='true'></i>
-              <% end %>
+            <td>
+              <% role = user.role %>
+              <%= (role) ? role.titlecase : 'None' %>
             </td>
             <td>
               <%= link_to "<i class='fa fa-pencil text-info' aria-hidden='true'></i>".html_safe, edit_user_path(user) %>

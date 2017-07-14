@@ -4,11 +4,6 @@ $(document).ready(function(){
     $(this).parent().parent().remove();
   });
 
-  // update and remove superadmin status
-  $('ul li i.fa-user-circle').on('click', function(data, status, xhr){
-    $(this).toggleClass("admin-color");
-  });
-
   // Calendar add selected days to ul
   $("#selectable").selectable({
     filter:'tbody tr td',
