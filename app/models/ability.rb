@@ -10,7 +10,7 @@ class Ability
     if user.administrator?
       can :manage, :all
     elsif user.manager?
-      can :update, Location
+      can :update, Location # Restricting fields that can be updated via strong params
       can :update_timetable, Timetable
 
       # Further restrictions to restrict manager's to only creating editors
@@ -20,7 +20,7 @@ class Ability
       end
     elsif !(roles = user.permissions.editor_roles).empty?
       roles.map(&:subject_id).each do |id|
-        can :update, Location, id: id
+        can :update, Location, id: id  # Restricting fields that can be updated via strong params
         can :update_timetable, Timetable, location_id: id
       end
     end

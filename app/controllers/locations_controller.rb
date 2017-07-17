@@ -16,7 +16,7 @@ class LocationsController < ApplicationController
   end
 
   def create
-    @location = Location.new(location_params)
+    @location = Location.new(create_params)
     if @location.save
       flash[:success] = "Location successfully created"
       redirect_to admin_url
@@ -27,7 +27,7 @@ class LocationsController < ApplicationController
 
   def update
     @location = Location.find(params[:id])
-    if @location.update(location_params)
+    if @location.update(update_params)
       flash[:success] = "Location successfully updated"
       redirect_to admin_url
     else
@@ -55,7 +55,15 @@ class LocationsController < ApplicationController
 
   private
 
-  def location_params
+  def create_params
     params.require(:location).permit(:name, :code, :comment, :comment_two, :url, :summary)
+  end
+
+  def update_params
+    if current_user.administrator?
+      params.require(:location).permit(:name, :comment, :comment_two, :url, :summary)
+    else
+      params.require(:location).permit(:comment, :comment_two, :url, :summary)
+    end
   end
 end
