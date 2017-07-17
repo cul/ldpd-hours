@@ -9,11 +9,13 @@
           <table class="table">
             <tbody>
               <% @locations.each do |lib| %>
-              <tr>
-                <td><%= link_to lib.name, edit_location_path(lib) %></td>
-                <td><%= link_to 'Set Hours', exceptional_edit_location_timetables_path(lib)%></td>
-                <td><%= link_to 'Batch Edit Hours', batch_edit_location_timetables_path(lib)%></td>
-              </tr>
+                <% if can? :edit, lib %>
+                  <tr>
+                    <td><%= link_to lib.name, edit_location_path(lib) %></td>
+                    <td><%= link_to 'Set Hours', exceptional_edit_location_timetables_path(lib)%></td>
+                    <td><%= link_to 'Batch Edit Hours', batch_edit_location_timetables_path(lib)%></td>
+                  </tr>
+                <% end %>
               <% end %>
             </tbody>
           </table>
