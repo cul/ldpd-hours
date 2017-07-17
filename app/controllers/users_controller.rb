@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :managers_only_create_editors!, only: [:create, :update]
+
   def new
     @user = User.new
   end
@@ -37,6 +39,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
+
     if @user.update(user_params) && @user.update_permissions(permissions_params)
       respond_to do |f|
         f.html {
@@ -58,6 +61,12 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def managers_only_create_editors!
+    if current_user.manager? && permissions_params[:role] != Permission::EDITOR
+      raise CanCan::AccessDenied, "Managers can only create Editors"
+    end
+  end
 
   def user_params
     params.require(:user).permit(:uid)

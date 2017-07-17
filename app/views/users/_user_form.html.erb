@@ -23,10 +23,7 @@
 
   <h4>Permissions</h4>
   <p>
-    Administrators can add/edit/remove locations, users and timetables (hours).
-    Editors can only edit location information and hours for the locations they
-    have edit privilages to. Editors can have edit permissions for one or more
-    locations.
+    BLURB NEEDED HERE
   </p>
   <div class="form-group row">
     <%= f.label :role, 'Role', class: "col-sm-2" %>
@@ -35,11 +32,13 @@
       <%= radio_button_tag 'user[permissions][role]', 'editor', @user.editor? %>
       <%= label_tag :role_editor, "Editor" %>
       &nbsp;
-      <%= radio_button_tag 'user[permissions][role]', 'manager', @user.manager? %>
-      <%= label_tag :role_manager, "Manager" %>
-      &nbsp;
-      <%= radio_button_tag 'user[permissions][role]', 'administrator', @user.administrator? %>
-      <%= label_tag :role_manager, "Administrator" %>
+      <% unless current_user.manager? %>
+        <%= radio_button_tag 'user[permissions][role]', 'manager', @user.manager? %>
+        <%= label_tag :role_manager, "Manager" %>
+        &nbsp;
+        <%= radio_button_tag 'user[permissions][role]', 'administrator', @user.administrator? %>
+        <%= label_tag :role_manager, "Administrator" %>
+      <% end %>
     </div>
   </div>
 
