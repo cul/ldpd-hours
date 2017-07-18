@@ -9,7 +9,7 @@ describe "User management", js: true do
      end
 
     context 'when admin is logged in' do
-      include_context 'login admin user'
+      include_context 'login admin'
 
       it "renders index page" do
         visit "/users"
@@ -24,7 +24,7 @@ describe "User management", js: true do
     end
 
     context 'when admin is logged in' do
-      include_context 'login admin user'
+      include_context 'login admin'
 
       before :each do
         entry = double('entry', name: 'John Doe', email: "def456@columbia.edu")
@@ -35,7 +35,7 @@ describe "User management", js: true do
         visit "/users/new"
 
         fill_in "UNI", with: "def456"
-        choose "user_permissions_admin_true"
+        choose "user_permissions_role_administrator"
 
         click_button "Create User"
         expect(page).to have_content("User successfully added")
@@ -50,7 +50,7 @@ describe "User management", js: true do
     end
 
     context 'when an admin is logged in' do
-      include_context 'login admin user'
+      include_context 'login admin'
 
       it "can delete user from edit page" do
         visit "/users/#{user.id}/edit"
@@ -70,18 +70,19 @@ describe "User management", js: true do
 
   describe "edit users permissions" do
     context "when an admin is logged in" do
-      include_context 'login admin user'
+      include_context 'login admin'
 
       it "can add admin privilages" do
         visit edit_user_path(user)
-        choose "user_permissions_admin_true"
+        choose "user_permissions_role_administrator"
         click_button "Update User"
-        expect(user.admin?).to eq true
+        expect(user.administrator?).to eq true
       end
 
       it "can add location edit permissions" do
         butler = FactoryGirl.create(:butler)
         visit edit_user_path(user)
+        choose 'user_permissions_role_editor'
         check 'Butler'
         click_button 'Update User'
         expect(page).to have_content 'User successfully updated'
@@ -92,6 +93,7 @@ describe "User management", js: true do
         butler, lehman = FactoryGirl.create(:butler), FactoryGirl.create(:lehman)
         user.update_permissions(location_ids: [butler.id])
         visit edit_user_path(user)
+        choose 'user_permissions_role_editor'
         check 'Lehman'
         uncheck 'Butler'
         click_button 'Update User'
@@ -104,7 +106,7 @@ describe "User management", js: true do
         visit edit_user_path(user.id)
         uncheck "Butler"
         click_button 'Update User'
-        expect(user.admin?).to eql false
+        expect(user.administrator?).to eql false
         expect(user.editor?).to eql false
       end
     end

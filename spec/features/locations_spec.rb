@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe "Locations" do
+  include_context 'login admin'
+
   before(:each) do
     @location = FactoryGirl.create(:lehman)
   end
@@ -12,6 +14,7 @@ describe "Locations" do
   end
 
   it "adding a location" do
+
     visit new_location_path
 
     fill_in "Name", with: "Test Lib"

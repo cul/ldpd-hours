@@ -10,7 +10,7 @@ describe "Timetables", js: true do
     end
 
     context "when admin is logged in" do
-      include_context 'login admin user'
+      include_context 'login admin'
 
       it "should display a calendar" do
         visit(exceptional_edit_location_timetables_path(lehman))
@@ -39,7 +39,7 @@ describe "Timetables", js: true do
 
   describe "editing the calendar", js: true do
     context 'when admin is logged in' do
-      include_context 'login admin user'
+      include_context 'login admin'
 
       it "should add dates to the sidebar when clicked" do
         visit(exceptional_edit_location_timetables_path(lehman))
