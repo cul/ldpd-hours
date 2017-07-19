@@ -4,15 +4,6 @@ RSpec.describe UsersController, type: :controller do
   let(:butler) { FactoryGirl.create(:butler) }
   let(:lehman) { FactoryGirl.create(:lehman) }
 
-  # shared_context 'mock admin ability' do
-  #   before do
-  #     ability = Object.new
-  #     ability.extend(CanCan::Ability)
-  #     allow(controller).to receive(:current_ability).and_return(ability)
-  #     ability.can :manage, :all
-  #   end
-  # end
-
   shared_context 'mock admin user' do
     before do
       @admin = double(User)
@@ -27,7 +18,6 @@ RSpec.describe UsersController, type: :controller do
   describe "PATCH update" do
     context "when admin logged in" do
       include_context 'mock admin user'
-      # include_context 'mock admin ability'
 
       let(:jane) { User.create(uid: 'abc123', email: 'abc123@columbia.edu') }
 
