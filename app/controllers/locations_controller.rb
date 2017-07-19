@@ -21,6 +21,8 @@ class LocationsController < ApplicationController
       flash[:success] = "Location successfully created"
       redirect_to admin_url
     else
+      error = @location.errors.full_messages.to_sentence
+      flash[:error] = error
       render :new
     end
   end
