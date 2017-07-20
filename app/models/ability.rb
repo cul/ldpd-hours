@@ -15,7 +15,8 @@ class Ability
 
       # Further restrictions to restrict manager's to only creating editors
       # will be implemented in the controller method for create/update.
-      can [:read, :create, :update, :destroy], User do |u|
+      can :create, User
+      can [:read, :update, :destroy], User do |u|
         u.editor?
       end
     elsif !(roles = user.permissions.editor_roles).empty?
