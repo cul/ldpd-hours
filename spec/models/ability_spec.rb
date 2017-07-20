@@ -76,7 +76,6 @@ RSpec.describe Ability, type: :model do
     it { is_expected.to     be_able_to(:read, User.new) }
     it { is_expected.to     be_able_to(:update, User.new) }
     it { is_expected.to     be_able_to(:destroy, User.new) }
-
   end
 
   context "when is an editor" do
@@ -88,7 +87,7 @@ RSpec.describe Ability, type: :model do
     it { is_expected.not_to be_able_to(:update, User.new) }
     it { is_expected.not_to be_able_to(:destroy, User.new) }
     it { is_expected.not_to be_able_to(:show, User.new) }
-    
+
     it { is_expected.not_to be_able_to(:batch_edit, Timetable.new) }
     it { is_expected.not_to be_able_to(:exceptional_edit, Timetable.new) }
     it { is_expected.not_to be_able_to(:batch_update, Timetable.new) }

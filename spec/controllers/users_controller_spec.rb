@@ -4,22 +4,81 @@ RSpec.describe UsersController, type: :controller do
   let(:butler) { FactoryGirl.create(:butler) }
   let(:lehman) { FactoryGirl.create(:lehman) }
 
-  shared_context 'mock admin user' do
-    before do
-      @admin = double(User)
-      allow(@admin).to receive(:administrator?).and_return(true)
-      allow(@admin).to receive(:manager?).and_return(false)
-      allow(@request.env['warden']).to receive(:authenticate!).and_return(@admin)
-      allow(controller).to receive(:current_user).and_return(@admin)
-    end
-  end
+  let(:jane) { User.create(uid: 'xyz123', email: 'xyz123@columbia.edu') }
 
-  # PATCH users/:id
-  describe "PATCH update" do
+  # POST /users/:id
+  describe "#create" do
+    let(:uid) { 'xyz123' }
+
+    include_context 'mock ldap'
+
+    before :each do
+      entry = double('entry', name: 'Jane Doe', email: "janedoe@columbia.edu")
+      allow(ldap).to receive(:find_by_uni).with(uid).and_return(entry)
+    end
+
     context "when admin logged in" do
       include_context 'mock admin user'
 
-      let(:jane) { User.create(uid: 'abc123', email: 'abc123@columbia.edu') }
+      it "creates user with admin privilages" do
+        post :create, params: { user: { uid: uid, permissions: { role: 'administrator' } } }
+        user = User.find_by(uid: uid)
+        expect(user.administrator?).to eql true
+      end
+
+      it "creates user with editor privilages" do
+        post :create, params: { user: { uid: uid, permissions: { role: 'editor', location_ids: [butler.id] } } }
+        user = User.find_by(uid: uid)
+        expect(user.permissions.count).to eql 1
+        expect(user.permissions.first.subject_id).to eql butler.id
+      end
+
+      it "throws error if location id invalid" do
+        post :create, params: { user: { uid: uid, permissions: { role: 'editor', location_ids: [1] } } }
+        expect(controller).to set_flash[:error].to('Permissions one or more of the location ids given is invalid')
+      end
+
+      it "creates user with no permissions" do
+        post :create, params: { user: { uid: uid, permissions: { role: 'editor' } } }
+        user = User.find_by(uid: uid)
+        expect(user.permissions.count).to eql 0
+      end
+    end
+
+    context 'when manager logged in' do
+      include_context 'mock manager user'
+
+      it "creates user with editor privilages" do
+        post :create, params: { user: { uid: uid, permissions: { role: 'editor', location_ids: [butler.id] } } }
+        user = User.find_by(uid: uid)
+        expect(user).not_to be nil
+        expect(user.editor?).to be true
+        expect(user.permissions.count).to eql 1
+        expect(user.permissions.first.attributes).to include(
+          'role' => 'editor', 'subject_class' => 'Location', 'subject_id' => butler.id
+        )
+      end
+
+      it "throws error if creating administrator" do
+        expect {
+          post :create, params: { user: { uid: uid, permissions: { role: 'administrator' } } }
+        }.to raise_error CanCan::AccessDenied
+        expect(User.find_by(uid: uid)).to be nil
+      end
+
+      it "throws error if creating manager" do
+        expect {
+          post :create, params: { user: { uid: uid, permissions: { role: 'manager' } } }
+        }.to raise_error CanCan::AccessDenied
+        expect(User.find_by(uid: uid)).to be nil
+      end
+    end
+  end
+
+  # PATCH /users/:id
+  describe "#update" do
+    context "when admin logged in" do
+      include_context 'mock admin user'
 
       it "can updates user's admin status" do
         patch :update, params: { id: jane.id, user: { permissions: { role: 'administrator' } } }
@@ -47,45 +106,87 @@ RSpec.describe UsersController, type: :controller do
         )
       end
     end
+
+    context 'when manager logged in' do
+      include_context 'mock manager user'
+
+      it 'cannot update managers' do
+        jane.update_permissions(role: 'manager')
+        expect {
+          patch :update, params: { id: jane.id, user: { permissions: { role: 'editor' } } }
+        }.to raise_error CanCan::AccessDenied
+      end
+
+      it 'cannot update administrators' do
+         jane.update_permissions(role: 'administrator')
+         expect {
+           patch :update, params: { id: jane.id, user: { permissions: { role: 'editor' } } }
+         }.to raise_error CanCan::AccessDenied
+       end
+
+      it 'cannot make editors into managers' do
+        jane.update_permissions(role: 'editor', location_ids: [butler.id])
+        expect {
+          patch :update, params: { id: jane.id, user: { permissions: { role: 'manager' } } }
+        }.to raise_error CanCan::AccessDenied, "Managers can only create Editors"
+      end
+
+      it 'cannot make editors into administrators' do
+        jane.update_permissions(role: 'editor', location_ids: [butler.id])
+        expect {
+          patch :update, params: { id: jane.id, user: { permissions: { role: 'administrator' } } }
+        }.to raise_error CanCan::AccessDenied, "Managers can only create Editors"
+      end
+    end
   end
 
-  # POST users/:id
-  describe "POST create" do
-    context "when admin logged in" do
-      let(:uid) { 'abc123' }
+  # DELETE /users/:id
+  describe '#destroy' do
+    context "when administrator logged in" do
+      include_context 'mock admin user'
 
-      # include_context 'mock admin ability'
-            include_context 'mock admin user'
-
-      include_context 'mock ldap'
-
-      before :each do
-        entry = double('entry', name: 'Jane Doe', email: "janedoe@columbia.edu")
-        allow(ldap).to receive(:find_by_uni).with(uid).and_return(entry)
+      it "can delete editors" do
+        jane.update_permissions(role: 'editor', location_ids: [butler.id])
+        delete :destroy, params: { id: jane.id }
+        expect(User.exists?(jane.id)).to be false
       end
 
-      it "creates user with admin privilages" do
-        post :create, params: { user: { uid: uid, permissions: { role: 'administrator' } } }
-        user = User.find_by(uid: uid)
-        expect(user.administrator?).to eql true
+      it "can delete managers" do
+        jane.update_permissions(role: 'manager')
+        delete :destroy, params: { id: jane.id }
+        expect(User.exists?(jane.id)).to be false
       end
 
-      it "creates user with editor privilages" do
-        post :create, params: { user: { uid: uid, permissions: { role: 'editor', location_ids: [butler.id] } } }
-        user = User.find_by(uid: uid)
-        expect(user.permissions.count).to eql 1
-        expect(user.permissions.first.subject_id).to eql butler.id
+      it "can delete administators" do
+        jane.update_permissions(role: 'administrator')
+        delete :destroy, params: { id: jane.id }
+        expect(User.exists?(jane.id)).to be false
+      end
+    end
+
+    context 'when manager logged in' do
+      include_context 'mock manager user'
+
+      it "can delete editors" do
+        jane.update_permissions(role: 'editor', location_ids: [butler.id])
+        delete :destroy, params: { id: jane.id }
+        expect(User.exists?(jane.id)).to be false
       end
 
-      it "throws error if location id invalid" do
-        post :create, params: { user: { uid: uid, permissions: { role: 'editor', location_ids: [1] } } }
-        expect(flash[:error]).to eq 'Permissions one or more of the location ids given is invalid'
+      it "cannot delete managers" do
+        jane.update_permissions(role: 'manager')
+        expect {
+          delete :destroy, params: { id: jane.id }
+        }.to raise_error CanCan::AccessDenied
+        expect(User.exists?(jane.id)).to be true
       end
 
-      it "creates user with no permissions" do
-        post :create, params: { user: { uid: uid, permissions: { role: 'editor' } } }
-        user = User.find_by(uid: uid)
-        expect(user.permissions.count).to eql 0
+      it "cannot delete administators" do
+        jane.update_permissions(role: 'administrator')
+        expect {
+          delete :destroy, params: { id: jane.id }
+        }.to raise_error CanCan::AccessDenied
+        expect(User.exists?(jane.id)).to be true
       end
     end
   end

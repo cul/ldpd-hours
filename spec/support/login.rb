@@ -44,23 +44,23 @@ shared_context 'mock ldap' do
 end
 
 shared_context 'mock admin user' do
-  let(:admin) { double(User) }
+  let(:logged_in_user) { double(User) }
 
   before do
-    allow(admin).to receive(:administrator?).and_return(true)
-    allow(admin).to receive(:manager?).and_return(false)
-    allow(@request.env['warden']).to receive(:authenticate!).and_return(admin)
-    allow(controller).to receive(:current_user).and_return(admin)
+    allow(logged_in_user).to receive(:administrator?).and_return(true)
+    allow(logged_in_user).to receive(:manager?).and_return(false)
+    allow(@request.env['warden']).to receive(:authenticate!).and_return(logged_in_user)
+    allow(controller).to receive(:current_user).and_return(logged_in_user)
   end
 end
 
 shared_context 'mock manager user' do
-  let(:manager) { double(User) }
+  let(:logged_in_user) { double(User) }
 
   before do
-    allow(manager).to receive(:administrator?).and_return(true)
-    allow(manager).to receive(:manager?).and_return(false)
-    allow(@request.env['warden']).to receive(:authenticate!).and_return(manager)
-    allow(controller).to receive(:current_user).and_return(manager)
+    allow(logged_in_user).to receive(:administrator?).and_return(false)
+    allow(logged_in_user).to receive(:manager?).and_return(true)
+    allow(@request.env['warden']).to receive(:authenticate!).and_return(logged_in_user)
+    allow(controller).to receive(:current_user).and_return(logged_in_user)
   end
 end
