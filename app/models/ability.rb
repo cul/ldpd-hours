@@ -17,7 +17,7 @@ class Ability
       # will be implemented in the controller method for create/update.
       can :create, User
       can [:read, :update, :destroy], User do |u|
-        u.editor?
+        u.editor? || u.role.blank?
       end
     elsif !(roles = user.permissions.editor_roles).empty?
       roles.map(&:subject_id).each do |id|

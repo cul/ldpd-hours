@@ -11,6 +11,7 @@ RSpec.describe Ability, type: :model do
     it { is_expected.not_to be_able_to(:create, Location) }
     it { is_expected.not_to be_able_to(:destroy, lehman) }
     it { is_expected.to     be_able_to(:update, lehman) }
+
     it { is_expected.to     be_able_to(:batch_edit, timetable) }
     it { is_expected.to     be_able_to(:batch_update, timetable) }
     it { is_expected.to     be_able_to(:exceptional_edit, timetable)}
@@ -23,10 +24,12 @@ RSpec.describe Ability, type: :model do
     it { is_expected.to be_able_to(:update, Location.new) }
     it { is_expected.to be_able_to(:read, Location.new) }
     it { is_expected.to be_able_to(:destroy, Location.new) }
+
     it { is_expected.to be_able_to(:create, User.new) }
     it { is_expected.to be_able_to(:update, User.new) }
     it { is_expected.to be_able_to(:read, User.new) }
     it { is_expected.to be_able_to(:destroy, User.new) }
+
     it { is_expected.to be_able_to(:update, Timetable.new) }
     it { is_expected.to be_able_to(:batch_edit, Timetable.new) }
     it { is_expected.to be_able_to(:batch_update, Timetable.new) }
@@ -35,6 +38,11 @@ RSpec.describe Ability, type: :model do
 
   context "when is a manager" do
     let(:role) { Permission.new(role: Permission::MANAGER) }
+    let(:admin) {
+      FactoryGirl.create(:user,
+      uid: 'lmn123', email: "lmn123@columbia.edu",
+      permissions: [Permission.new(role: Permission::ADMINISTRATOR)])
+    }
     let(:manager) {
       FactoryGirl.create(:user,
       uid: 'lmn123', email: "lmn123@columbia.edu",
@@ -47,20 +55,27 @@ RSpec.describe Ability, type: :model do
     }
 
     include_examples 'editor/manager permissions'
+    it { is_expected.not_to be_able_to(:read, admin) }
+    it { is_expected.not_to be_able_to(:update, admin) }
+    it { is_expected.not_to be_able_to(:destroy, admin) }
 
-    it { is_expected.not_to be_able_to(:read, User.new) }
-    it { is_expected.not_to be_able_to(:update, User.new) }
-    it { is_expected.not_to be_able_to(:destroy, User.new) }
     it { is_expected.not_to be_able_to(:read, manager) }
     it { is_expected.not_to be_able_to(:update, manager) }
     it { is_expected.not_to be_able_to(:destroy, manager) }
+
     it { is_expected.to     be_able_to(:read, editor) }
     it { is_expected.to     be_able_to(:update, editor) }
     it { is_expected.to     be_able_to(:destroy, editor) }
-    it { is_expected.to     be_able_to(:create, User) }
+
     it { is_expected.to     be_able_to(:batch_edit, Timetable) }
     it { is_expected.to     be_able_to(:exceptional_edit, Timetable) }
     it { is_expected.to     be_able_to(:batch_update, Timetable) }
+
+    # Can CRUD users that don't have a role set
+    it { is_expected.to     be_able_to(:create, User.new) }
+    it { is_expected.to     be_able_to(:read, User.new) }
+    it { is_expected.to     be_able_to(:update, User.new) }
+    it { is_expected.to     be_able_to(:destroy, User.new) }
 
   end
 
@@ -73,6 +88,7 @@ RSpec.describe Ability, type: :model do
     it { is_expected.not_to be_able_to(:update, User.new) }
     it { is_expected.not_to be_able_to(:destroy, User.new) }
     it { is_expected.not_to be_able_to(:show, User.new) }
+    
     it { is_expected.not_to be_able_to(:batch_edit, Timetable.new) }
     it { is_expected.not_to be_able_to(:exceptional_edit, Timetable.new) }
     it { is_expected.not_to be_able_to(:batch_update, Timetable.new) }

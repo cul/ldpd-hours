@@ -28,6 +28,10 @@ class User < ApplicationRecord
     Permission::VALID_ROLES.find { |role| send("#{role}?") }
   end
 
+  def has_role?
+    !role.blank?
+  end
+
   def editable_locations
     self.permissions
       .editor_roles
