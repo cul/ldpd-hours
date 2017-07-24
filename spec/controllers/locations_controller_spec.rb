@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe LocationsController, type: :controller do
   let(:lehman) { FactoryGirl.create(:lehman) }
 
-  describe 'PATCH /locations/:id' do
+  # PATCH /locations/:id
+  describe '#update' do
     context "when administrator logged in" do
       include_context 'mock admin user'
 
