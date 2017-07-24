@@ -1,4 +1,8 @@
 class TimetablesController < ApplicationController
+  skip_load_and_authorize_resource
+  load_and_authorize_resource :location
+  load_and_authorize_resource through: :location
+
   def exceptional_edit
     @location = Location.find(params["location_id"])
     @date = params[:date] ? Date.parse(params[:date]) : Date.current
@@ -24,15 +28,18 @@ class TimetablesController < ApplicationController
     adjust_times_if_closed(params)
 
     Timetable.batch_update_or_create(params, @open, @close)
-    render json: {message: "success"}, status: :ok
-  rescue ArgumentError, MySql::Error, ArgumentError, StandardError
-    render json: {message: "error"}, status: :error
+    render json: { message: "success" }, status: :ok
+  rescue ArgumentError, MySql2::Error => e
+    render json: { message: "ERROR #{e.message}" }, status: :error
   end
 
   private
 
   def timetable_params
-    params.require(:timetable).permit("open(4i)", "open(5i)", "close(4i)", "close(5i)", :closed, :tbd, :note, :location_id, :start_date, :end_date, :days, dates: [])
+    params.require(:timetable).permit(
+      "open(4i)", "open(5i)", "close(4i)", "close(5i)", :closed, :tbd, :note,
+      :location_id, :start_date, :end_date, :days, dates: []
+    )
   end
 
   def format_dates(params)
