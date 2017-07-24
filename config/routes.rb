@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   resources :locations do
     get :open_now, on: :collection
 
-    resources :timetables do
+    resources :timetables, only: [] do
       collection do
         get :exceptional_edit
         get :batch_edit
