@@ -64,3 +64,5 @@ gem 'cancancan'
 gem 'coveralls', require: false
 
 gem 'gaffe'
+
+gem "cul-ldap", :github => "cul/cul-ldap"

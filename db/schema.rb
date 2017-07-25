@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170627151458) do
+ActiveRecord::Schema.define(version: 20170716230430) do
 
   create_table "locations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -25,8 +25,8 @@ ActiveRecord::Schema.define(version: 20170627151458) do
 
   create_table "permissions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "user_id"
-    t.string "action", null: false
-    t.string "subject_class", null: false
+    t.string "role", null: false
+    t.string "subject_class"
     t.integer "subject_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20170627151458) do
     t.string "uid"
     t.string "provider"
     t.string "email", default: "", null: false
+    t.string "name"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

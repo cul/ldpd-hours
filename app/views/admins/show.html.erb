@@ -9,11 +9,13 @@
           <table class="table">
             <tbody>
               <% @locations.each do |lib| %>
-              <tr>
-                <td><%= link_to lib.name, edit_location_path(lib) %></td>
-                <td><%= link_to 'Set Hours', exceptional_edit_location_timetables_path(lib)%></td>
-                <td><%= link_to 'Batch Edit Hours', batch_edit_location_timetables_path(lib)%></td>
-              </tr>
+                <% if can? :edit, lib %>
+                  <tr>
+                    <td><%= link_to lib.name, edit_location_path(lib) %></td>
+                    <td><%= link_to 'Set Hours', exceptional_edit_location_timetables_path(lib)%></td>
+                    <td><%= link_to 'Batch Edit Hours', batch_edit_location_timetables_path(lib)%></td>
+                  </tr>
+                <% end %>
               <% end %>
             </tbody>
           </table>
@@ -23,26 +25,34 @@
   </div>
 
   <div class="col-sm-4">
-    <div class="card mb-3">
-      <div class="card-block">
-        <p class="card-text">
-          <%= link_to '<i class="fa fa-plus" aria-hidden="true"></i> Add New Location'.html_safe, new_location_path %>
-        </p>
+    <% if can? :create, Location %>
+      <div class="card mb-3">
+        <div class="card-block">
+          <p class="card-text">
+            <%= link_to '<i class="fa fa-plus" aria-hidden="true"></i> Add New Location'.html_safe, new_location_path %>
+          </p>
+        </div>
       </div>
-    </div>
-    <div class="card mb-3">
-      <div class="card-block">
-        <p class="card-text">
-          <%= link_to '<i class="fa fa-user-plus" aria-hidden="true"></i> Add User'.html_safe, new_admin_user_path %>
-        </p>
+    <% end %>
+
+    <% if can? :create, User %>
+      <div class="card mb-3">
+        <div class="card-block">
+          <p class="card-text">
+            <%= link_to '<i class="fa fa-user-plus" aria-hidden="true"></i> Add User'.html_safe, new_user_path %>
+          </p>
+        </div>
       </div>
-    </div>
-    <div class="card mb-3">
-      <div class="card-block">
-        <p class="card-text">
-          <%= link_to '<i class="fa fa-users" aria-hidden="true"></i> Manage Users'.html_safe, admin_users_path %>
-        </p>
+    <% end %>
+
+    <% if can? :edit, User %>
+      <div class="card mb-3">
+        <div class="card-block">
+          <p class="card-text">
+            <%= link_to '<i class="fa fa-users" aria-hidden="true"></i> Manage Users'.html_safe, users_path %>
+          </p>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
 </div>

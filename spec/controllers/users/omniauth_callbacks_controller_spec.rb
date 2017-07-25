@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Users::OmniauthCallbacksController, type: :controller do
+  include_context 'mock ldap'
+
   let(:uid) { 'abc123' }
   let(:email) { 'abc123@columbia.edu' }
   let(:saml_hash) do
@@ -12,6 +14,8 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
     OmniAuth.config.mock_auth[:saml] = saml_hash
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:saml]
+    entry = double('entry', name: 'Jane Doe', email: email)
+    allow(ldap).to receive(:find_by_uni).with(uid).and_return(entry)
   end
 
   # GET :saml
@@ -30,5 +34,4 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
       expect(jane.email).to eq 'abc123@columbia.edu'
     end
   end
-
 end

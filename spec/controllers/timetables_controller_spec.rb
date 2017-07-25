@@ -1,6 +1,41 @@
 require 'rails_helper'
 
 RSpec.describe TimetablesController, type: :controller do
+  let(:butler) { FactoryGirl.create(:butler) }
+  let(:lehman) { FactoryGirl.create(:lehman) }
+
+  # POST /locations/:location_id/timetables/batch_update(.:format)
+  describe '#batch_update' do
+    describe 'when editor for lehman logged in' do
+      let(:logged_in_user) { User.create(uid: 'abc123', email: 'abc123@columbia.edu', provider: 'saml') }
+
+      before do
+        logged_in_user.update_permissions(role: Permission::EDITOR, location_ids: [lehman.id])
+        allow(@request.env['warden']).to receive(:authenticate!).and_return(logged_in_user)
+        allow(controller).to receive(:current_user).and_return(logged_in_user)
+      end
+
+      it 'cannot update times for butler' do
+        expect {
+          post :batch_update, params: { location_id: butler.id }
+        }.to raise_error CanCan::AccessDenied
+      end
+
+      it 'cannot visit set hours page' do
+        expect {
+          get :exceptional_edit, params: { location_id: butler.id }
+        }.to raise_error CanCan::AccessDenied
+      end
+
+      it 'cannot visit batch hours page' do
+        expect {
+          get :batch_edit, params: { location_id: butler.id }
+        }.to raise_error CanCan::AccessDenied
+      end
+    end
+
+    describe 'when editor for butler logged in'
+  end
 
   describe "#format_dates" do
     it "returns an array of date objects" do
@@ -16,7 +51,7 @@ RSpec.describe TimetablesController, type: :controller do
       expect(controller.send(:opens_before_close, {closed: false, tbd: false})).to eql(true)
     end
 
-    it "rasies and error if the open time is not before close time" do
+    it "raises an error if the open time is not before close time" do
       controller.instance_variable_set(:@open, "2:30PM")
       controller.instance_variable_set(:@close, "1:30PM")
       expect{controller.send(:opens_before_close, {closed: false, tbd: false})}.to raise_error(ArgumentError)
@@ -48,5 +83,4 @@ RSpec.describe TimetablesController, type: :controller do
       expect(result.count).to eql(1)
     end
   end
-
 end

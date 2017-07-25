@@ -3,7 +3,7 @@ class User < ApplicationRecord
 
   has_many :permissions, dependent: :destroy
 
-  before_validation :add_email
+  before_validation :add_ldap_info
 
   def password
     Devise.friendly_token[0,20]
@@ -12,58 +12,89 @@ class User < ApplicationRecord
   def password=(*val)
   end
 
-  def admin?
-    can? :manage, :all
+  def administrator?
+    !self.permissions.admin_roles.blank?
+  end
+
+  def manager?
+    !self.permissions.manager_roles.blank?
   end
 
   def editor?
-    !editable_locations.count.zero?
+    !self.permissions.editor_roles.blank?
+  end
+
+  def role
+    Permission::VALID_ROLES.find { |role| send("#{role}?") }
+  end
+
+  def has_role?
+    !role.blank?
   end
 
   def editable_locations
     self.permissions
-      .where(action: 'edit', subject_class: Location.to_s)
-      .where.not(subject_id: nil)
+      .editor_roles
       .map{ |p| Location.find(p.subject_id) }
   end
 
   # Updating permissions. Destroys all previously definited permissions.
-  # Recreates them based on the paramters given. If admin flag is true,
-  # adds adnub access (can :manage, all). If not admin, recreates editor
-  # permissions using the array given.
+  # Recreates them based on the paramters given. If 'administrator' or 'manager'
+  # role is given, adds in corresponding permission for user. If 'editor' is
+  # passed in as the role editor permissions are added based on the the list if
+  # location_ids given. location_ids are ignored if passed in with
+  # 'administrator' or 'manager' role.
+  #
+  # @return [true] if updating permissions was successful
+  # @return [false] if updating permissions failed
   def update_permissions(params)
-    admin = params.fetch(:admin, false)
+    role = params.fetch(:role, nil)
     location_ids = params.fetch(:location_ids, [])
 
-    admin = ActiveRecord::Type::Boolean.new.cast(admin) # Convert to bool.
-    return if(admin && self.admin?)
-
-    self.permissions.destroy_all
-
-    # Check that all location ids are valid.
-    begin
-      Location.find(location_ids)
-    rescue ActiveRecord::RecordNotFound => e
-      errors.add(:permissions, :invalid, message: "one or more of the location ids given is invalid") # TODO: could probably use e to find out what the invalid record is
+    if role.blank?
+      errors.add(:permissions, :invalid, message: "role cannot be blank")
+      return false
+    elsif !Permission::VALID_ROLES.include?(role)
+      errors.add(:permissions, :invalid, message: "role not valid")
       return false
     end
 
-    if admin
-      permissions.create(action: 'manage', subject_class: 'all')
-    else
-      location_ids.each do |id|
-        permissions.create(action: 'edit', subject_class: Location.to_s, subject_id: id)
+    # If correct role is already set, skip.
+    return true if (role == Permission::ADMINISTRATOR) && self.administrator?
+    return true if (role == Permission::MANAGER) && self.manager?
+
+    if role == Permission::EDITOR
+      # Check that all location ids are valid.
+      begin
+        Location.find(location_ids)
+      rescue ActiveRecord::RecordNotFound => e
+        errors.add(:permissions, :invalid, message: "one or more of the location ids given is invalid") # TODO: could probably use e to find out what the invalid record is
+        return false
       end
     end
 
-    return true
+    self.permissions.destroy_all
+
+    case role
+    when Permission::ADMINISTRATOR, Permission::MANAGER
+      permissions.create(role: role)
+    when Permission::EDITOR
+      location_ids.each do |id|
+        permissions.create(role: role, subject_class: Location.to_s, subject_id: id)
+      end
+    end
+
+    true
   end
 
-  def add_email
-    if self.uid.present?
-      self.email = self.uid + "@columbia.edu"
-    else
-      return false
+  private
+
+  def add_ldap_info
+    return false unless self.uid.present?
+    ldap = Cul::LDAP.new
+    if entry = ldap.find_by_uni(self.uid)
+      self.email = entry.email
+      self.name = entry.name
     end
   end
 end

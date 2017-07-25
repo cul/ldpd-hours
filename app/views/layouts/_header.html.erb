@@ -22,7 +22,7 @@
     </ul>
 
     <ul class="navbar-nav my-2 my-lg-0">
-      <% if @current_user && (@current_user.admin? || @current_user.editor?) %>
+      <% if @current_user %>
         <li class="nav-item">
           <%= link_to "Sign out #{current_user.uid}", destroy_user_session_path, class: "nav-link my-lg-0" %>
         </li>

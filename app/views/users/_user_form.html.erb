@@ -1,5 +1,14 @@
-<%= form_for [:admin, @user] do |f| %>
+<%= form_for @user do |f| %>
   <h4>Information</h4>
+
+  <% unless @user.new_record? %>
+    <div class="form-group row">
+      <%= f.label :name, "Name", class: "col-sm-2" %>
+      <div class="col-sm-10">
+        <p class="static-control-form"><%= @user.name %></p>
+      </div>
+    </div>
+  <% end %>
 
   <div class="form-group row">
     <%= f.label :uid, "UNI", class: "col-sm-2" %>
@@ -14,20 +23,22 @@
 
   <h4>Permissions</h4>
   <p>
-    Administrators can add/edit/remove locations, users and timetables (hours).
-    Editors can only edit location information and hours for the locations they
-    have edit privilages to. Editors can have edit permissions for one or more
-    locations.
+    BLURB NEEDED HERE
   </p>
   <div class="form-group row">
-    <%= f.label :admin, 'Administrator', class: "col-sm-2" %>
+    <%= f.label :role, 'Role', class: "col-sm-2" %>
 
     <div class="col-sm-9">
-      <%= radio_button_tag 'user[permissions][admin]', true, @user.admin? %>
-      <%= label_tag :admin_yes, "Yes" %>
+      <%= radio_button_tag 'user[permissions][role]', 'editor', @user.editor? %>
+      <%= label_tag :role_editor, "Editor" %>
       &nbsp;
-      <%= radio_button_tag 'user[permissions][admin]', false, !@user.admin? %>
-      <%= label_tag :admin_no, "No" %>
+      <% unless current_user.manager? %>
+        <%= radio_button_tag 'user[permissions][role]', 'manager', @user.manager? %>
+        <%= label_tag :role_manager, "Manager" %>
+        &nbsp;
+        <%= radio_button_tag 'user[permissions][role]', 'administrator', @user.administrator? %>
+        <%= label_tag :role_manager, "Administrator" %>
+      <% end %>
     </div>
   </div>
 
@@ -37,7 +48,7 @@
       <div class="row">
         <% Location.order(:name).each do |lib| %>
           <div class="col-sm-6">
-            <%= check_box_tag "user[permissions][location_ids][]", lib.id, @user.can?(:edit, lib),
+            <%= check_box_tag "user[permissions][location_ids][]", lib.id, @user.ability.can?(:edit, lib),
                               class: 'chk-edit-permissions', id: "user_permissions_location_ids_#{lib.id}" %>
             <%= label_tag "user[permissions][location_ids][#{lib.id}]", lib.name %>
           </div>
@@ -49,7 +60,7 @@
   <div class="row">
     <div class="col-sm-6">
       <% unless @user.new_record? %>
-        <%= link_to "Delete User", admin_user_path(@user), method: :delete,
+        <%= link_to "Delete User", user_path(@user), method: :delete,
                     class: "btn btn-danger btn-sm",
                     data: {confirm: "Are you sure you want to delete this user?"} %>
       <% end %>
