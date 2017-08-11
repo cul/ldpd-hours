@@ -30,8 +30,8 @@ RSpec.describe Timetable, type: :model do
   describe "#open_at?" do
     let(:butler_today) {
       FactoryGirl.create(
-        :butler_today, open: (Time.current - 1.hour).hour.to_s,
-        close: (Time.current + 3.hours).hour.to_s
+        :butler_today, open: (Time.current - 1.hour),
+        close: (Time.current + 3.hours)
       )
     }
 

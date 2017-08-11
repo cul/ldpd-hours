@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "Locations" do
+describe "Locations", type: :feature do
   let(:lehman) { FactoryGirl.create(:lehman) }
 
   context 'when user without role logged in' do

@@ -48,8 +48,10 @@ class LocationsController < ApplicationController
 
   def open_now
     @now = Time.current
-    @open = Timetable.where(date: Date.current)
-                     .where.not(open: nil, close: nil)
+    open_range = (@now - 1.day)..@now
+    close_range = (@now)..(@now + 1.day)
+    @open = Timetable.where(open: open_range)
+                     .where(close: close_range)
                      .includes(:location)
                      .order('locations.name')
                      .select { |t| t.open_at?(@now) }

@@ -44,20 +44,6 @@ RSpec.describe TimetablesController, type: :controller do
     end
   end
 
-  describe "#opens_before_close" do
-    it "returns true if the open time is before close time" do
-      controller.instance_variable_set(:@close, "2:30PM")
-      controller.instance_variable_set(:@open, "1:30PM")
-      expect(controller.send(:opens_before_close, {closed: false, tbd: false})).to eql(true)
-    end
-
-    it "raises an error if the open time is not before close time" do
-      controller.instance_variable_set(:@open, "2:30PM")
-      controller.instance_variable_set(:@close, "1:30PM")
-      expect{controller.send(:opens_before_close, {closed: false, tbd: false})}.to raise_error(ArgumentError)
-    end
-  end
-
   describe "#get_dates" do
     it "returns all mon-thurs when selected" do
       params = {"days" => "mon-thurs", "start_date" => "07/03/2017", "end_date" => "07/10/2017"}
