@@ -10,7 +10,8 @@ saml: &SAML
   provider: saml
   service_validate_url: /cas/samlValidate
 
-development: *SAML
+development:
+  provider: developer
 test: *SAML
 hours_dev: *SAML
 hours_test: *SAML
