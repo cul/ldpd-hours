@@ -32,7 +32,7 @@ class CalendarBuilder < Struct.new(:view, :date, :callback)
         hours, note = 'TBD', ''
       else
         hours = timetable.display_str
-        note = content_tag(:span, todays_hours.note) unless timetable.note.blank?
+        note = content_tag(:span, timetable.note) unless timetable.note.blank?
       end
       
       content_tag :td, class: day_classes(day) do
