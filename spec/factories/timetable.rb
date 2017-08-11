@@ -1,15 +1,23 @@
 FactoryGirl.define do
+  today = Date.current
   factory :butler_today, class: Timetable do
-    date        Date.current
-    open        '09:00'
-    close       '17:00'
+    date        today
+    open        Time.parse('09:00', today.to_time)
+    close       Time.parse('17:00', today.to_time)
     association :location, factory: :butler
   end
 
   factory :lehman_today, class: Timetable do
-    date        Date.current
-    open        '08:00'
-    close       '20:00'
+    date        today
+    open        Time.parse('08:00', today.to_time)
+    close       Time.parse('20:00', today.to_time)
     association :location, factory: :lehman
+  end
+
+  factory :miskatonic_today, class: Timetable do
+    date        today
+    open        Time.parse('18:00', today.to_time)
+    close       Time.parse('06:00', (today + 1.day).to_time)
+    association :location, factory: :miskatonic
   end
 end
