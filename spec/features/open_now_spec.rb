@@ -1,15 +1,15 @@
 require 'rails_helper'
 
 describe 'locations open now', type: :feature do
-  let(:now) { Time.now }
+  let(:now) { Time.current }
   let(:tomorrow) { now + 1.day }
-  let(:fourAM) { Time.local(tomorrow.year, tomorrow.month, tomorrow.day , 4, 0, 0) }
-  let(:threePM) { Time.local(now.year, now.month, now.day, 15, 0, 0) }
-  let(:sevenPM) { Time.local(now.year, now.month, now.day, 19, 0, 0) }
+  let(:fourAM) { Time.zone.local(tomorrow.year, tomorrow.month, tomorrow.day , 4, 0, 0) }
+  let(:threePM) { Time.zone.local(now.year, now.month, now.day, 15, 0, 0) }
+  let(:sevenPM) { Time.zone.local(now.year, now.month, now.day, 19, 0, 0) }
 
   after do
-    allow(Date).to receive(:current).and_return(now.to_date)
-    allow(Time).to receive(:current).and_return(now)
+    allow(Date).to receive(:current).and_call_original
+    allow(Time).to receive(:current).and_call_original
   end
   context 'afternoon' do
     before do

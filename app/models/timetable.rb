@@ -11,11 +11,11 @@ class Timetable < ApplicationRecord
 
   def generate_time(open_or_close)
     return nil if date.blank? || open_or_close.blank?
-    open_or_close.localtime
+    open_or_close.in_time_zone
   end
 
   def open_at?(time)
-    (open_time < time) && (close_time > time)
+    (open_time < time.in_time_zone) && (close_time > time.in_time_zone)
   end
 
   def self.batch_update_or_create(timetable_params, open, close)
@@ -23,13 +23,14 @@ class Timetable < ApplicationRecord
     (timetable_params["dates"].count).times{ params.push("(?,?,?,?,?,?,?,?,?)")}
     overnight = open && open > close
     timetable_params["dates"].each do |day|
+      time = day.to_time.in_time_zone
       if open
         if overnight
-          open_time = Time.parse(open, day.to_time)
-          close_time = Time.parse(close, (day + 1.day).to_time)
+          open_time = Time.zone.parse(open, time)
+          close_time = Time.zone.parse(close, time.change(day: 1))
         else
-          open_time = Time.parse(open, day.to_time)
-          close_time = Time.parse(close, day.to_time)
+          open_time = Time.zone.parse(open, time)
+          close_time = Time.zone.parse(close, time)
         end
       else
         open_time = nil
