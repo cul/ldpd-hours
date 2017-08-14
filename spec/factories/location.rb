@@ -8,4 +8,9 @@ FactoryGirl.define do
     code 'lehman'
     name 'Lehman'
   end
+
+  factory :miskatonic, class: Location do
+    code 'miskat'
+    name 'Miskatonic'
+  end
 end

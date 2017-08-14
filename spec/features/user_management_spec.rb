@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "User management", js: true do
+describe "User management", type: :feature, js: true do
   let(:user) { User.create(uid: 'def456', email: "def456@columbia.edu") }
   let(:butler) { FactoryGirl.create(:butler) }
   let(:lehman) { FactoryGirl.create(:lehman) }

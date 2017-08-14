@@ -48,6 +48,12 @@ $(document).ready(function(){
     $("#timetable_note").val('');
     $("div.body-contain").prepend("<div class='alert alert-danger'><a href='#' data-dismiss='alert' class='close'>×</a><ul><li>Please Enter Valid Data</li></ul></div>");
   });
+  $('form#new_timetable').on('ajax:success', function(event, jqxhr, settings, exception){
+    resp =  jQuery.parseJSON(event.detail[2].responseText);
+    if (resp['status'] == 'warning') {
+      $("div.body-contain").prepend("<div class='alert alert-warning'><a href='#' data-dismiss='alert' class='close'>×</a><ul><li>" + resp['message'] + "</li></ul></div>");
+    }
+  });
 
   function location_hours(){
     var open = $("#timetable_open_4i option:selected").text().split(" ")[0] + ":" +
@@ -64,7 +70,12 @@ $(document).ready(function(){
   });
 
   $('form#batch_edit').on('ajax:success', function(event, jqxhr, settings, exception){
-    $("div.body-contain").prepend("<div class='alert alert-success'><a href='#' data-dismiss='alert' class='close'>×</a><ul><li>Dates Successfully Added</li></ul></div>");
+    resp =  jQuery.parseJSON(event.detail[2].responseText);
+    if (resp['status'] == 'warning') {
+      $("div.body-contain").prepend("<div class='alert alert-warning'><a href='#' data-dismiss='alert' class='close'>×</a><ul><li>" + resp['message'] + "</li></ul></div>");
+    } else {
+      $("div.body-contain").prepend("<div class='alert alert-success'><a href='#' data-dismiss='alert' class='close'>×</a><ul><li>Dates Successfully Added</li></ul></div>");
+    }
   });
 
 });

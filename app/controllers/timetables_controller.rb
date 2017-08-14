@@ -23,13 +23,16 @@ class TimetablesController < ApplicationController
     @open = "#{params['open(4i)']}:#{params['open(5i)']}"
     @close = "#{params['close(4i)']}:#{params['close(5i)']}"
 
-    opens_before_close(params)
     format_dates(params)
     adjust_times_if_closed(params)
 
     Timetable.batch_update_or_create(params, @open, @close)
-    render json: { message: "success" }, status: :ok
-  rescue ArgumentError, MySql2::Error => e
+    if @open && @close < @open
+      render json: { message: "overnight schedule set", status: :warning }, status: :ok
+    else
+      render json: { message: "success" }, status: :ok
+    end
+  rescue ArgumentError, Mysql2::Error => e
     render json: { message: "ERROR #{e.message}" }, status: :error
   end
 
@@ -44,16 +47,6 @@ class TimetablesController < ApplicationController
 
   def format_dates(params)
     params["dates"].map!{|selected_date| Date.parse(selected_date) }
-  end
-
-  def opens_before_close(params)
-    if (params["closed"] == "1" || params["tbd"] == "1")
-      return true
-    elsif !(Time.parse(@open, Time.current) < Time.parse(@close, Time.current))
-      raise ArgumentError, "End time cannot be before start time"
-    else
-      return true
-    end
   end
 
   def adjust_times_if_closed(params)

@@ -28,20 +28,21 @@ RSpec.describe Timetable, type: :model do
   end
 
   describe "#open_at?" do
+    let(:now) { Time.current }
     let(:butler_today) {
       FactoryGirl.create(
-        :butler_today, open: (Time.current - 1.hour).hour.to_s,
-        close: (Time.current + 3.hours).hour.to_s
+        :butler_today, open: (now - 1.hour),
+        close: (now + 3.hours)
       )
     }
 
     it 'returns true when library open' do
-      expect(butler_today.open_at?(Time.current)).to be true
+      expect(butler_today.open_at?(now)).to be true
     end
 
     it 'returns false when library closed' do
-      butler_today.update(open: (Time.current + 2.hours).hour.to_s)
-      expect(butler_today.open_at?(Time.current)).to be false
+      butler_today.update(open: (now + 2.hours))
+      expect(butler_today.open_at?(now)).to be false
     end
   end
 

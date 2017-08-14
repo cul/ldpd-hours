@@ -53,6 +53,8 @@ Because updating our hours uses a MySQL specific flavor of a batch upsert, if th
  - date: valid params are `today` or a date in `YYYY-MM-DD` format following the `w3cdtf` specification.
  - start_date: For a range of dates, provide a start date in `YYYY-MM-DD` format
  - end_date: For a range of date, provide an end date in `YYYY-MM-DD` format
+#### Query Restrictions
+ - start_date and end_date params can be no more than one year apart
 
 #### Response Examples
 ##### `GET /v1/locations/avery?date=today`
@@ -65,7 +67,7 @@ Because updating our hours uses a MySQL specific flavor of a batch upsert, if th
     "note": "Intersession",
     "tbd": false,
     "closed": false,
-    "formated_date": "9:00AM-10:00PM"
+    "formatted_date": "9:00AM-10:00PM"
   }
 }
 ```
@@ -82,7 +84,7 @@ Because updating our hours uses a MySQL specific flavor of a batch upsert, if th
       "note": "Intersession",
       "tbd": false,
       "closed": false,
-      "formated_date": "9:00AM-10:00PM"
+      "formatted_date": "9:00AM-10:00PM"
     },
     {
       "date": "2017-09-28",
@@ -91,7 +93,7 @@ Because updating our hours uses a MySQL specific flavor of a batch upsert, if th
       "note": "Intersession",
       "tbd": false,
       "closed": true,
-      "formated_date": "Closed"
+      "formatted_date": "Closed"
     },
     {
       "date": "2017-09-29",
@@ -100,7 +102,7 @@ Because updating our hours uses a MySQL specific flavor of a batch upsert, if th
       "note": "Intersession",
       "tbd": true,
       "closed": false,
-      "formated_date": "TBD"
+      "formatted_date": "TBD"
     }
   ]
 }

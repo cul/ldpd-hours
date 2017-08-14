@@ -1,7 +1,8 @@
 require 'rails_helper'
 
-describe "Timetables", js: true do
+describe "Timetables", type: :feature, js: true do
   let(:lehman) { FactoryGirl.create(:lehman) }
+  let(:miskatonic) { FactoryGirl.create(:miskatonic) }
 
   shared_examples 'view the page' do
     it "should display a calendar" do
@@ -45,15 +46,15 @@ describe "Timetables", js: true do
       expect(page).to have_content("07:30AM-06:30PM")
     end
 
-    it "should not save dates with invalid hours" do
-      visit(exceptional_edit_location_timetables_path(lehman))
+    it "should warn when hours run overnight" do
+      visit(exceptional_edit_location_timetables_path(miskatonic))
       find(:xpath, "//td[not(contains(@class, 'not-month'))]", :text => "25").click
       select "07 PM", :from => "timetable_open_4i"
       select "30", :from => "timetable_open_5i"
       select "06 PM", :from => "timetable_close_4i"
       select "30", :from => "timetable_close_5i"
       click_button("Update Hours")
-      expect(find("div .alert-danger ul li").text).to have_content("Please Enter Valid Data")
+      expect(find("div .alert-warning ul li").text).to have_content("overnight schedule")
     end
 
     it "should display closed on calendar if closed" do
@@ -96,7 +97,7 @@ describe "Timetables", js: true do
   describe 'when lehman editor logged in' do
     include_context 'login user'
     before :each do
-      logged_in_user.update_permissions(role: 'editor', location_ids: [lehman.id])
+      logged_in_user.update_permissions(role: 'editor', location_ids: [lehman.id, miskatonic.id])
     end
 
     include_examples 'view the page'
@@ -108,7 +109,7 @@ describe "Timetables", js: true do
 
     include_context 'login user'
     before :each do
-      logged_in_user.update_permissions(role: 'editor', location_ids: [butler.id])
+      logged_in_user.update_permissions(role: 'editor', location_ids: [butler.id, miskatonic.id])
     end
 
     it 'cannot view set hours page' do
