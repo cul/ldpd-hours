@@ -8,3 +8,6 @@
 
 Location.create(name: "Butler", code: "butler")
 Location.create(name: "Avery", code: "avery")
+
+admin = User.create(email: "admin@example.com", provider: :developer, name: "Test Admin")
+admin.update_permissions(role: Permission::ADMINISTRATOR)

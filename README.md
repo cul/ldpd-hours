@@ -13,6 +13,14 @@
 - `$ rake db:migrate`
 - If you don't have yarn currently installed please run `brew install yarn`
 - `$ yarn`
+- `$ rake db:seed`
+
+   Seeds the db with two locations and an administrative user. Administrative credentials are:
+   ```
+   name: Test User
+   email: admin@example.com
+   ```
+- `$ rails s`
 - Navigate to `localhost:3000`
 
 
@@ -34,12 +42,12 @@ Because updating our hours uses a MySQL specific flavor of a batch upsert, if th
   For a specific calendar:
   - can change time information
   - can edit notes and url for calendar
- 
+
 #### Manager
 - can do everything an Editor can do, for all locations
 - can add/delete Editor
 - can assign Editors to locations
- 
+
 #### Administrator
 - can do everything a Manager can do
 - can edit all user permissions (Can create editors, managers and administrators)
@@ -59,7 +67,7 @@ Because updating our hours uses a MySQL specific flavor of a batch upsert, if th
 #### Response Examples
 ##### `GET /v1/locations/avery?date=today`
 ```
-{ 
+{
   "avery": {
     "date": "2017-07-14",
     "open_time": "09:00",
@@ -127,4 +135,3 @@ Because updating our hours uses a MySQL specific flavor of a batch upsert, if th
  }     
 }
 ```
-     
