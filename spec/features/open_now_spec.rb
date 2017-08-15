@@ -68,4 +68,23 @@ describe 'locations open now', type: :feature do
       expect(page).not_to have_content 'Lehman'
     end
   end
+  context 'primary closed' do
+    before do
+      allow(Date).to receive(:current).and_return(now.to_date)
+      allow(Time).to receive(:current).and_return(threePM)
+      FactoryGirl.create(:butler_today).update(closed: true)
+      FactoryGirl.create(:lehman_today)
+      FactoryGirl.create(:underbutler_today)
+      visit '/locations/open_now'
+    end
+
+    it "correctly displays open library" do
+      expect(page).to have_content 'Lehman'
+    end
+
+    it "does not display closed libraries" do
+      expect(page).not_to have_content 'Butler'
+      expect(page).not_to have_content 'Library Under'
+    end
+  end
 end

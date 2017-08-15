@@ -10,7 +10,7 @@ FactoryGirl.define do
     code 'underb'
     name 'Library Under Butler'
     primary false
-    association :primary_location, factory: :butler
+    association :primary_location, factory: :butler, strategy: :find_or_create
   end
 
   factory :lehman, class: Location do
@@ -31,6 +31,6 @@ FactoryGirl.define do
     code 'sorcer'
     name 'Sorcery and Necromancy Library'
     primary false
-    association :primary_location, factory: :miskatonic
+    association :primary_location, factory: :miskatonic, strategy: :find_or_create
   end
 end

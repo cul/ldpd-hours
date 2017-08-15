@@ -74,3 +74,27 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 end
+
+
+class FindOrCreateStrategy
+  def initialize
+    @strategy = FactoryGirl.strategy_by_name(:create).new
+  end
+
+  delegate :association, to: :@strategy
+
+  def result(evaluation)
+    props = evaluation.hash
+    result = evaluation.object.class.find_by(props)
+    evaluation.object.tap do |instance|
+      obj = result ? result : instance
+      evaluation.notify(:after_build, obj)
+      evaluation.notify(:before_create, obj)
+      evaluation.create(obj) unless result
+      evaluation.notify(:after_create, obj)
+    end
+    result || evaluation.object
+  end
+end
+
+FactoryGirl.register_strategy(:find_or_create, FindOrCreateStrategy)
