@@ -33,12 +33,13 @@ describe "Locations", type: :feature do
 
       fill_in "Name", with: "Test Lib"
       fill_in "Code", with: "Test Code"
-
+      check "Primary"
       click_on "Create Location"
       expect(page).to have_content("Location successfully created")
       expect(Location.count).to eql 1
       expect(Location.first.name).to eql 'Test Lib'
       expect(Location.first.code).to eql 'Test Code'
+      expect(Location.first.primary).to eql true
     end
 
     it "displays error when missing code" do
