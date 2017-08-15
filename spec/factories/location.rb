@@ -3,6 +3,7 @@ FactoryGirl.define do
     code 'butler'
     name 'Butler'
     primary true
+    primary_location nil
   end
 
   factory :underbutler, class: Location do
@@ -16,16 +17,18 @@ FactoryGirl.define do
     code 'lehman'
     name 'Lehman'
     primary true
+    primary_location nil
   end
 
   factory :miskatonic, class: Location do
     code 'miskat'
     name 'Miskatonic'
     primary true
+    primary_location nil
   end
 
   factory :sorcery, class: Location do
-    code 'sorcery'
+    code 'sorcer'
     name 'Sorcery and Necromancy Library'
     primary false
     association :primary_location, factory: :miskatonic

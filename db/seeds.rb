@@ -6,8 +6,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Location.create(name: "Butler", code: "butler")
-Location.create(name: "Avery", code: "avery")
+butler = Location.create(name: "Butler", code: "butler", primary: true)
+avery = Location.create(name: "Avery", code: "avery", primary: true)
+rbml = Location.create(name: "Rare Books", code: "rbml", primary_location: butler)
 
 admin = User.create(email: "admin@example.com", provider: :developer, name: "Test Admin")
 admin.update_permissions(role: Permission::ADMINISTRATOR)

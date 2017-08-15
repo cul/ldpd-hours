@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 describe "Locations", type: :feature do
-  let(:lehman) { FactoryGirl.create(:lehman) }
-
+  let(:lehman) { Location.find_by(code: :lehman) || FactoryGirl.create(:lehman) }
+  let(:underbutler) { Location.find_by(code: :underbutler) || FactoryGirl.create(:underbutler) }
+  let(:butler) { underbutler.primary_location }
   context 'when user without role logged in' do
     before { lehman }
 
@@ -15,6 +16,12 @@ describe "Locations", type: :feature do
       visit("/locations")
       first("li a").click
       expect(page).to have_css("tr")
+    end
+    it "shows the primary and secondary locations" do
+      visit("/locations/#{butler.id}")
+      click_on underbutler.name
+      expect(page).to have_css("h2", text: underbutler.name)
+      expect(page).to have_css("h3", text: butler.name)
     end
   end
 

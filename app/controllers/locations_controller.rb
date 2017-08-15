@@ -42,6 +42,7 @@ class LocationsController < ApplicationController
 
   def show
     @location = Location.find(params[:id])
+    @secondary_locations = Location.where(primary_location: @location).load
     @date = params[:date] ? Date.parse(params[:date]) : Date.current
     render layout: "public"
   end
