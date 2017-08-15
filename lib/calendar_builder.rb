@@ -21,7 +21,7 @@ class CalendarBuilder < Struct.new(:view, :date, :callback)
       weeks.map do |week|
         content_tag :tr do
           week.map do |day|
-            day_cell(day, timetable.find_by(date: day))
+            day_cell(day, timetable.find { |t| t.date == day })
           end.join.html_safe
         end
       end.join.html_safe
