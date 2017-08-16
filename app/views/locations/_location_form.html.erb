@@ -1,5 +1,5 @@
 <div>
-  <%= form_for(@location) do |f| %>
+  <%= form_for(@location, url: @location.new_record? ? locations_path : location_path(@location.code)) do |f| %>
     <div class="form-group">
       <%= f.label :name %>
       <% if current_user.administrator? %>
@@ -11,7 +11,7 @@
 
     <div class="form-group">
       <%= f.label :code %>
-      <% if @location.new_record? %>
+      <% if @location.new_record? || current_user.administrator? %>
         <%= f.text_field :code, :class => "form-control" %>
       <% else %>
         <p class="static-control-form"><%= @location.code %></p>

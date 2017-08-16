@@ -2,7 +2,7 @@
   <div class="card-block">
     <h4 class="card-title">Edit Hours</h4>
     <div class="card-text">
-      <%= form_for @timetable, :url => batch_update_location_timetables_path(@location, @timetable), remote: true do |f| %>
+      <%= form_for @timetable, :url => batch_update_location_timetables_path(location_code: @location.code), remote: true do |f| %>
         <div class="form-group">
           <%= f.label :open %>
           <%= time_select("timetable", "open", {ignore_date: true, ampm: true}) %>
@@ -26,7 +26,6 @@
           <%= f.text_field :note %>
         </div>
 
-        <%= f.hidden_field :location_id, value: @location.id %>
         <%= f.submit "Update Hours", class: "btn btn-primary btn-sm" %>
 
         <hr>

@@ -45,7 +45,7 @@ class Timetable < ApplicationRecord
 
     bulk_insert_users_sql_arr = ["REPLACE INTO timetables (location_id,date,open,close,closed,tbd,note,created_at,updated_at) VALUES #{params.join(", ")}"] + values
     sql = ActiveRecord::Base.send(:sanitize_sql_array, bulk_insert_users_sql_arr)
-    ActiveRecord::Base.connection.exec_query(sql)
+    ActiveRecord::Base.connection.exec_update(sql)
   end
 
   def display_str

@@ -1,5 +1,5 @@
 <div class="col-md-12">
-	<%= form_with model: Timetable.new, url: :batch_update_location_timetables, id: "batch_edit" do |f| %>
+	<%= form_with model: Timetable.new, url:batch_update_location_timetables_path(location_code: @location.code), id: "batch_edit" do |f| %>
 
 		<div class="form-group">
 			<%= f.label :days %>
@@ -26,7 +26,6 @@
       <%= time_select("timetable", "close", {ignore_date: true, ampm: true}) %>
     </div>
 
-    <%= f.hidden_field :location_id, value: @location.id %>
     <%= f.submit class: "btn btn-primary btn-sm" %>
 
 	<% end %>
