@@ -49,12 +49,16 @@ class LocationsController < ApplicationController
 
   def open_now
     @now = Time.current
-    @open = Timetable.where("open < ?" , @now)
+    all_open = Timetable.where("open < ?" , @now)
                      .where("close > ?" , @now)
                      .where(closed: false)
+                     .where(tbd: false)
                      .includes(:location)
-                     .order('locations.name')
-                     .select { |t| t.open_at?(@now) }
+                     .order('locations.name').load
+    @open = all_open.select do |t|
+      pli = t.location.primary_location_id
+      pli ? all_open.detect { |t2| t2.location_id == pli } : true
+    end
     render layout: "public"
   end
 

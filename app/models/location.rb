@@ -7,14 +7,6 @@ class Location < ApplicationRecord
 
   # TODO: when a location is deleted any permissions related to that location should also be deleted
 
-  def open_at?(time)
-    result = timetables.where("open < ?" , time.in_time_zone)
-      .where("close > ?" , time.in_time_zone)
-      .where(closed: false).present?
-    result &&= primary_location.open_at?(time) if primary_location
-    result
-  end
-
   def primary_location_must_be_primary
     if primary_location
       if primary
