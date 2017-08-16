@@ -1,0 +1,11 @@
+<div class="col-md-12 text-center">
+<% unless @secondary_locations.empty? %>
+  <div class="well">
+    <ul>
+    <% @secondary_locations.each do |location| %>
+      <li><%= link_to location.name, location %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+</div>

@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 describe "Locations", type: :feature do
-  let(:lehman) { FactoryGirl.create(:lehman) }
-
+  let(:lehman) { Location.find_by(code: :lehman) || FactoryGirl.create(:lehman) }
+  let(:underbutler) { Location.find_by(code: :underbutler) || FactoryGirl.create(:underbutler) }
+  let(:butler) { underbutler.primary_location }
   context 'when user without role logged in' do
     before { lehman }
 
@@ -16,6 +17,12 @@ describe "Locations", type: :feature do
       first("li a").click
       expect(page).to have_css("tr")
     end
+    it "shows the primary and secondary locations" do
+      visit("/locations/#{butler.id}")
+      click_on underbutler.name
+      expect(page).to have_css("h2", text: underbutler.name)
+      expect(page).to have_css("h3", text: butler.name)
+    end
   end
 
   context 'when administrator logged in' do
@@ -26,12 +33,13 @@ describe "Locations", type: :feature do
 
       fill_in "Name", with: "Test Lib"
       fill_in "Code", with: "Test Code"
-
+      check "Primary"
       click_on "Create Location"
       expect(page).to have_content("Location successfully created")
       expect(Location.count).to eql 1
       expect(Location.first.name).to eql 'Test Lib'
       expect(Location.first.code).to eql 'Test Code'
+      expect(Location.first.primary).to eql true
     end
 
     it "displays error when missing code" do

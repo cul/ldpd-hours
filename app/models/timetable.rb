@@ -15,7 +15,11 @@ class Timetable < ApplicationRecord
   end
 
   def open_at?(time)
-    (open_time < time.in_time_zone) && (close_time > time.in_time_zone)
+    result = (open_time < time.in_time_zone) && (close_time > time.in_time_zone)
+    if result && location.primary_location
+      return result && location.primary_location.open_at?(time)
+    end
+    result
   end
 
   def self.batch_update_or_create(timetable_params, open, close)
