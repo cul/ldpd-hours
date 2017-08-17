@@ -1,20 +1,20 @@
 GIT
-  remote: https://github.com/Oneill38/cul_omniauth.git
-  revision: 7f1246c07cfdb888351582d4d06ac0506050c9f9
-  branch: rails_5
-  specs:
-    cul_omniauth (0.5.2)
-      cancancan (~> 1.10)
-      devise-guests (~> 0.3)
-      omniauth-cas
-      rails (~> 5.0)
-
-GIT
   remote: https://github.com/cul/cul-ldap.git
   revision: 05b387850cb11db0dd0792ffea78464d2ef4ce52
   specs:
     cul-ldap (0.1.0)
       net-ldap (>= 0.16.0)
+
+GIT
+  remote: https://github.com/cul/cul_omniauth.git
+  revision: 2681f76ed13bfd3b38479372d86b9e00ff43fd6e
+  branch: rails-5
+  specs:
+    cul_omniauth (0.5.2)
+      cancancan (~> 2.0)
+      devise-guests (~> 0.3)
+      omniauth-cas
+      rails (~> 5.0)
 
 GIT
   remote: https://github.com/thoughtbot/shoulda-matchers.git
@@ -73,7 +73,7 @@ GEM
     bindex (0.5.0)
     builder (3.2.3)
     byebug (9.0.6)
-    cancancan (1.17.0)
+    cancancan (2.0.0)
     capistrano (3.8.1)
       airbrussh (>= 1.0.0)
       i18n
@@ -131,7 +131,7 @@ GEM
       rails (>= 4.0.0)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
-    hashie (3.5.5)
+    hashie (3.5.6)
     i18n (0.8.6)
     jbuilder (2.6.3)
       activesupport (>= 3.0.0, < 5.2)
@@ -291,7 +291,7 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
-  cancancan
+  cancancan (~> 2.0)
   capistrano (~> 3.8)
   capistrano-bundler (~> 1.1)
   capistrano-passenger (~> 0.1)
