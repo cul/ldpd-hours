@@ -19,18 +19,44 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-static-top navbar-inverse">
-      <h1 class="container logo-contain">
-        <%= link_to "Library Hours", root_path, id: "logo" %>
-      </h1>
-    </nav>
+	<%= render :partial => 'layouts/topnavbar' %>
+	<div class="container" id="outer-wrapper">
 
-    <div class="container body-contain">
-      <%= render 'layouts/messages' %>
-      <%= yield %>
-    </div>
 
-    <%= render 'layouts/footer' %>
+		<div id="site-banner">
+			<div class="row">
+			 <div id="site-banner-inner">
+			  <div class="col-sm-9">
+				<h1>
+					<%= link_to(image_tag("/assets/cul-banner-hours.png", :alt => "logo", :title => "Hours Home"), "/") %>
+				</h1>
+			  </div>
+			  <div class="col-sm-3 hidden-xs">
+			   <div id="site-banner-left"><a href="https://blogs.cul.columbia.edu/spotlights/"><img class="spotlight" src="http://library.columbia.edu/content/libraryweb/srcdoc/homepage_spotlight/_jcr_content/layout_par_main_1/image_v2.img.jpg/1370032412527.jpg" alt="Spotlight Blog"></a></div>
+			  </div>
+			 </div>
+			</div><!--/row-->
+		</div> <!--/#site-banner-->
+
+		<div id="culnav" class="navbar well-mini">
+			<div class="navbar-inner square-all">
+				<div class="container-fluid">
+						<ul id="culnav-main" class="nav navbar-nav">
+							<li><a href="http://library.columbia.edu"><i class="glyphicon glyphicon-home"></i> Libraries Home</a></li>
+							<li class="divider-vertical"></li>
+							<li><a href="/"><i class="glyphicon glyphicon-time"></i> Hours Home</a></li>
+						</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="container body-contain">
+		  <%= render 'layouts/messages' %>
+		  <%= yield %>
+		</div>
+
+		<%= render 'layouts/footer' %>
+	</div> <!-- /#outer-wrapper -->
   </body>
 
 </html>
