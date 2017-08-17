@@ -14,7 +14,7 @@ describe "Locations", type: :feature do
 
     it "should have a calendar on show page" do
       visit("/locations")
-      first("li a").click
+      first("li.location-item a").click
       expect(page).to have_css("tr")
     end
     it "shows the primary and secondary locations" do
