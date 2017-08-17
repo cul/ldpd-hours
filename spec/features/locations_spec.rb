@@ -5,8 +5,6 @@ describe "Locations", type: :feature do
   let(:underbutler) { Location.find_by(code: :underbutler) || FactoryGirl.create(:underbutler) }
   let(:butler) { underbutler.primary_location }
   context 'when user without role logged in' do
-    before { lehman }
-
     it "can visit index page" do
       visit("/locations")
       expect(page).to have_css("ul")
@@ -32,13 +30,13 @@ describe "Locations", type: :feature do
       visit new_location_path
 
       fill_in "Name", with: "Test Lib"
-      fill_in "Code", with: "Test Code"
+      fill_in "Code", with: "testco"
       check "Primary"
       click_on "Create Location"
       expect(page).to have_content("Location successfully created")
       expect(Location.count).to eql 1
       expect(Location.first.name).to eql 'Test Lib'
-      expect(Location.first.code).to eql 'Test Code'
+      expect(Location.first.code).to eql 'testco'
       expect(Location.first.primary).to eql true
     end
 
@@ -54,7 +52,7 @@ describe "Locations", type: :feature do
     it "displays error when missing name" do
       visit new_location_path
 
-      fill_in "Code", with: "Test code"
+      fill_in "Code", with: "testco"
 
       click_on "Create Location"
       expect(page).to have_content("Name can't be blank")
