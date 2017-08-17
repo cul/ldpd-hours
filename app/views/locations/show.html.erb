@@ -1,9 +1,25 @@
-<div class="location col-sm-12">
-  <h2><%= @location.name %></h2>
-  <% if @location.primary_location %>
-    <h3><%= link_to @location.primary_location.name, @location.primary_location %></h3>
-  <% end %>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="location-primary-comment">
+      <%= @location.comment.html_safe %>
+    </div>
+  </div>
+</div>
+<div class="location row">
+    <h2 class="location-name"><%= link_to @location.name, @location.url %></h2>
+    <% if @location.primary_location %>
+      <h3><%= link_to @location.primary_location.name, @location.primary_location %></h3>
+    <% end %>
 
-  <%= render "timetables/timetable" %>
-  <%= render "timetables/secondaries" %>
+    <%= render "timetables/timetable" %>
+    <%= render "timetables/secondaries" %>
+
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+      <div class="location-secondary-comment">
+        <%= @location.comment_two %>
+      </div>
+    </div>
 </div>

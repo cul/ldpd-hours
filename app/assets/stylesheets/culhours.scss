@@ -1,6 +1,6 @@
 //colors
 $color_0: #fff;
-$color_1: #5cb85c;
+$color_1: #828F88;
 $color_2: #ccc;
 $color_3: #f8f8f8;
 $color_4: #aaa;
@@ -15,7 +15,7 @@ $color_12: #0077b3;
 $color_13: #2a2aa5;
 $color_14: #08c;
 $color_22: #777;
-$color_27: #c72048;
+$color_27: #336699;
 $color_29: #bbb;
 
 //fonts
@@ -205,7 +205,35 @@ body {
 		}
 	}
 }
-
+#locations-list {
+	padding: 10px;
+	margin:0;
+	border:1px solid $color_2;
+	border-radius: 4px;
+	.location-item {
+		padding:.61em;
+		-webkit-column-break-inside: avoid;
+		&:nth-child(even) {
+			background-color: $color_3;
+		}
+		.closes-at {
+			text-transform: uppercase;
+			font-size: 80%;
+			color: $color_22;
+		}
+	}
+}
+.location {
+		h2.location-name {
+			a {
+				color: $color_7;
+				&:hover {
+					color: lighten($color_7, 30%);
+					text-decoration: none;
+				}
+			}
+		}
+}
 // calendar table
 table {
 	&.calendar {
@@ -216,9 +244,29 @@ table {
 		td {
 			width: 14%;
 			height:125px;
+			overflow:hidden;
+			line-height:2em;
 			&.today {
-				background-color: lighten($color_6, 25%);
+				background-color: lighten($color_6, 33%);
+				.day-date {
+					color: $color_8;
+				}
 			}
+			&.not-month {
+				opacity:.4;
+			}
+		}
+		.day-date {
+			color: $color_1;
+    	font-family: Helvetica, Arial, sans-serif;
+    	font-size: 210%;
+
+		}
+		.day-note {
+			font-size: 90%;
+			font-weight: bold;
+			margin:1em 0 0;
+			color: $color_27;
 		}
 	}
 }
@@ -236,6 +284,11 @@ table {
 	#topnavbar .topbarlogo {
 		display: inline-block;
 		letter-spacing: 0;
+	}
+	#locations-list {
+		column-count:2;
+		column-gap:2em;
+		column-rule: 1px solid $color_2;
 	}
 	table {
 		&.calendar {
@@ -345,4 +398,7 @@ table {
 }
 a, a:visited {
   color: $color_14;
+}
+.trajanpro {
+	font-family: $font_0, $font_1, $font_2;
 }

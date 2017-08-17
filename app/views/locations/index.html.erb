@@ -1,8 +1,11 @@
-<div>
-  <h2>Select a Location</h2>
-  <ul>
+<div id="home-toc">
+  <h2 class="lead trajanpro text-center">Select a Library Location</h2>
+  <ul id="locations-list">
     <% @locations.each do |location| %>
-      <li><%= link_to location.name, location_path(location.id) %></li>
+      <li class="location-item">
+          <%= link_to location.name, location_path(location.id) %>
+          <span class="closes-at pull-right">Open until 5:00 pm</span>
+      </li>
     <% end %>
   </ul>
 </div>
