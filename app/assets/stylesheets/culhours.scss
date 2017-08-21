@@ -180,8 +180,8 @@ body {
     padding: 3px 0;
 	min-height:0;
     margin-bottom: 1em;
-    margin-left: -10px;
-    margin-right: -10px;
+    margin-left: -20px;
+    margin-right: -20px;
     border-color: $color_29;
     border-right: 0;
     border-left: 0;
@@ -227,15 +227,18 @@ body {
 	}
 }
 .location {
-		h2.location-name {
-			a {
-				color: $color_7;
-				&:hover {
-					color: lighten($color_7, 30%);
-					text-decoration: none;
-				}
+	h2.location-name {
+		a {
+			color: $color_7;
+			&:hover {
+				color: lighten($color_7, 30%);
+				text-decoration: none;
 			}
 		}
+	}
+	.location-primary-comment {
+		padding:1em 0;
+	}
 }
 // calendar table
 table {
@@ -400,26 +403,29 @@ table {
 	#culnav-main {
 		text-align: center;
 	}
-	table {
+	table.calendar {
 		width:100%;
-	}
-	thead {
-		display: none;
-	}
-	//tr:nth-of-type(2n) {background-color: inherit;}
-	//tr td:first-child {background: #f0f0f0; font-weight:bold;font-size:1.3em;}
-	tbody td {
-		display: block;
-		text-align:center;
-		height: auto;
-		&.not-month {
-			display:none;
+		thead {
+			display: none;
 		}
-		&:before {
-		    content: attr(data-th);
-		    display: block;
-		    text-align:center;
-	  }
+		//tr:nth-of-type(2n) {background-color: inherit;}
+		//tr td:first-child {background: #f0f0f0; font-weight:bold;font-size:1.3em;}
+		tbody td {
+			display: block;
+			text-align:center;
+			height: auto;
+			&.not-month {
+				display:none;
+			}
+			//&:before {
+			.day-date:before {
+			    content: attr(data-dayoftheweek);
+			    display: block;
+			    text-align:center;
+					font-size:.4em;
+					color: $color_29;
+		  }
+		}
 	}
 }
 a, a:visited {

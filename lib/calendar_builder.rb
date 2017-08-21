@@ -13,7 +13,7 @@ class CalendarBuilder < Struct.new(:view, :date, :callback)
     def header
       content_tag :thead do
         content_tag :tr do
-          HEADER.map { |day| content_tag :th, day }.join.html_safe
+          HEADER.map { |day| content_tag :th, day}.join.html_safe
         end
       end
     end
@@ -38,7 +38,9 @@ class CalendarBuilder < Struct.new(:view, :date, :callback)
       end
 
       content_tag :td, class: day_classes(day) do
-        view.capture(day, &callback) + content_tag(:p, day, class: "hidden") + content_tag(:div, hours, class: "day-hours") + note
+        dayoftheweek = HEADER[day.wday]
+        view.capture(day, &callback) + content_tag(:div, day.mday, class: "day-date", :"data-dayoftheweek" =>  dayoftheweek) +
+          content_tag(:div, day, class: "hidden") + content_tag(:div, hours, class: "day-hours") + note
       end
     end
 

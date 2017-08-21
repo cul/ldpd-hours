@@ -1,9 +1,9 @@
-<div class="col-md-12 text-center">
-  <div class="well controls">
+<div class="col-md-12">
+  <div class="well controls text-center">
     <%= link_to location_path(date: @date - 1.month), class: "btn btn-default" do %>
       <i class="fa fa-arrow-left" aria-hidden="true"></i>
     <% end %>
-    <span class="lead"><%= "#{@date.strftime("%B")} #{@date.year}" %></span>
+    <span class="lead trajanpro"><%= "#{@date.strftime("%B")} #{@date.year}" %></span>
     <%= link_to location_path(date: @date + 1.month), class: "btn btn-default" do %>
       <i class="fa fa-arrow-right" aria-hidden="true"></i>
     <% end %>
@@ -12,6 +12,5 @@
 
 <div class="col-md-12">
     <%= calendar_builder @date do |date| %>
-      <div class="day-date"><%= date.day %></div>
     <% end %>
 </div>
