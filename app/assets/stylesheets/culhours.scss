@@ -34,8 +34,6 @@ $url_5: url(//cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.
 $url_6: url(//cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.ttf);
 $url_7: url(//cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.svg#TrajanProRegular);
 
-$min_width: 767px;
-
 @font-face {
 	font-family: $font_0;
 	src: $url_3;
@@ -52,7 +50,7 @@ body {
 	padding-top: 0;
 	padding-bottom: 2em;
 	margin-bottom: 2em;
-	min-width:$min_width;
+	//min-width: 767px;
 	border: 1px solid $color_4;
 	border-top: 0;
 	background-color: $color_0;
@@ -60,7 +58,6 @@ body {
 }
 #topnavbar {
 	min-height: 50px;
-	min-width:$min_width;
 	font-size: 13px;
 	color: $color_0;
 	background: $color_6;
@@ -96,6 +93,11 @@ body {
 				font-weight: normal;
 				font-family: $font_0, $font_1, $font_2;
 				margin-top: 2px;
+			}
+		}
+		#cul_top-right {
+			.dropdown-toggle:hover, .dropdown-toggle:focus {
+				background-color:$color_7;
 			}
 		}
 		.dropdown-menu {
@@ -210,6 +212,7 @@ body {
 	margin:0;
 	border:1px solid $color_2;
 	border-radius: 4px;
+	font-size:1.1em;
 	.location-item {
 		padding:.61em;
 		-webkit-column-break-inside: avoid;
@@ -242,8 +245,8 @@ table {
 			text-transform: uppercase;
 		}
 		td {
-			width: 14%;
-			height:125px;
+			//width: 14%;
+			//height:125px;
 			overflow:hidden;
 			line-height:2em;
 			&.today {
@@ -264,9 +267,8 @@ table {
 		}
 		.day-note {
 			font-size: 90%;
-			font-weight: bold;
 			margin:1em 0 0;
-			color: $color_27;
+			color: $color_22;
 		}
 	}
 }
@@ -395,10 +397,37 @@ table {
 	#topnavbar .topbarlogo {
 		display: none;
 	}
+	#culnav-main {
+		text-align: center;
+	}
+	table {
+		width:100%;
+	}
+	thead {
+		display: none;
+	}
+	//tr:nth-of-type(2n) {background-color: inherit;}
+	//tr td:first-child {background: #f0f0f0; font-weight:bold;font-size:1.3em;}
+	tbody td {
+		display: block;
+		text-align:center;
+		height: auto;
+		&.not-month {
+			display:none;
+		}
+		&:before {
+		    content: attr(data-th);
+		    display: block;
+		    text-align:center;
+	  }
+	}
 }
 a, a:visited {
-  color: $color_14;
+  color: $color_27;
 }
 .trajanpro {
 	font-family: $font_0, $font_1, $font_2;
+}
+.nomar {
+	padding:0;
 }
