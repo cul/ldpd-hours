@@ -10,7 +10,7 @@ $(document).ready(function(){
     selected: function(event, ui){
       $( ".days-list" ).empty();
       $( ".ui-selected", this ).each(function() {
-        var date = $(this).children("p").text();
+        var date = $(this).children(".fulldate").text();
         $(".days-list").append("<li>" + date + "</li>").append("<input type='hidden' name='timetable[dates][]' value='" + date + "'>")
       });
     }
@@ -21,17 +21,17 @@ $(document).ready(function(){
     $( ".days-list" ).empty();
     $(".ui-selected").each(function(){
       var that = this;
-      $.when($(this).children("span").remove()).then(function(){
+      $.when($(this).children(".day-hours").remove()).then(function(){
         if($("input#timetable_closed").is(":checked")){
-          $(that).append("<span>Closed</span>");
+          $(that).append('<div class="day-hours">Closed</div>');
         }else if($("input#timetable_tbd").is(":checked")){
-          $(that).append("<span>TBD</span>");
+          $(that).append('<div class="day-hours">TBD</div>');
         }else{
           $(that).append(location_hours);
         }
 
         if($("#timetable_note").val()){
-          $(that).append("<span>" + $("#timetable_note").val() + "</span>");
+          $(that).append('<div class="day-hours">' + $("#timetable_note").val() + "</div>");
           $("#timetable_note").val('');
         }
       });
@@ -42,7 +42,7 @@ $(document).ready(function(){
   $('form#new_timetable').on('ajax:error', function(event, jqxhr, settings, exception){
     $( ".days-list" ).empty();
     $(".ui-selected").each(function(){
-      $(this).children("span").remove();
+      $(this).children(".day-hours").remove();
     });
     $("td").removeClass("ui-selected");
     $("#timetable_note").val('');
@@ -62,7 +62,7 @@ $(document).ready(function(){
     var close = $("#timetable_close_4i option:selected").text().split(" ")[0] + ":" +
                 $("#timetable_close_5i option:selected").text() +
                 $("#timetable_close_4i option:selected").text().split(" ")[1]
-    return "<span>" + open + "-" + close + "</span>"
+    return '<div class="day-hours">' + open + "-" + close + "</div>"
   }
 
   $('form#batch_edit').on('ajax:error', function(event, jqxhr, settings, exception){
