@@ -50,7 +50,6 @@ body {
 	padding-top: 0;
 	padding-bottom: 2em;
 	margin-bottom: 2em;
-	//min-width: 767px;
 	border: 1px solid $color_4;
 	border-top: 0;
 	background-color: $color_0;
@@ -428,6 +427,22 @@ table {
 					font-size:.4em;
 					color: $color_29;
 		  }
+		}
+	}
+}
+// don't even bother with edge
+@supports (-ms-ime-align: auto) {
+	@media(min-width: 641px) {
+		#outer-wrapper {
+			min-width: 992px;
+		}
+	}
+}
+// don't even bother with ie
+@media (-ms-high-contrast: none), (-ms-high-contrast: active) {
+	@media(min-width: 641px) {
+		#outer-wrapper {
+			min-width: 992px;
 		}
 	}
 }
