@@ -1,10 +1,12 @@
 <div id="home-toc">
-  <h2 class="lead trajanpro text-center">Select a Library Location</h2>
+  <h2 class="lead trajanpro text-center">Select a Library Location, or view <%= link_to "Study Spaces Open Now", open_now_locations_path %></h2>
   <ul id="locations-list">
     <% @locations.each do |location| %>
       <li class="location-item">
           <%= link_to location.name, location_path(location.id) %>
-          <span class="closes-at pull-right">Open until 5:00 pm</span>
+          <%# //for later
+            <span class="closes-at pull-right">Open until 5:00 pm</span>
+          %>
       </li>
     <% end %>
   </ul>

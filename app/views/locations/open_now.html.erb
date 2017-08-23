@@ -1,8 +1,9 @@
-<h3>Open Now</h3>
-<h4> <%= @now.strftime('%B %e, %Y') %></h4>
-
-<% @open.each do |timetable| %>
-  <%= link_to timetable.location.name, timetable.location.url %>
-  Until <%= timetable.close_time.strftime("%l:%M %P") %>
-  <br/>
-<% end %>
+<h2 class="lead trajanpro text-center">Study Spaces Open Now</h2>
+<p class="text-center"> <%= @now.strftime('%B %e, %Y') %></p>
+<ul id="locations-list">
+  <% @open.each do |timetable| %>
+  <li class="location-item">
+    <%= link_to timetable.location.name, timetable.location.url %>
+    <span class="closes-at pull-right">Open until <%= timetable.close_time.strftime("%l:%M %P") %></span>
+  </li>
+  <% end %>
