@@ -206,7 +206,7 @@ body {
 		}
 	}
 }
-#locations-list {
+.list-2col {
 	padding: 10px;
 	margin:0;
 	border:1px solid $color_2;
@@ -292,7 +292,7 @@ table {
 		display: inline-block;
 		letter-spacing: 0;
 	}
-	#locations-list {
+	.list-2col {
 		column-count:2;
 		column-gap:2em;
 		column-rule: 1px solid $color_2;
@@ -454,4 +454,10 @@ a, a:visited {
 }
 .nomar {
 	padding:0;
+}
+.nopad {
+	padding:0;
+}
+.noborder {
+	border:0;
 }

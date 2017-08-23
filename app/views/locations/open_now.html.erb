@@ -1,6 +1,6 @@
 <h2 class="lead trajanpro text-center">Study Spaces Open Now</h2>
 <p class="text-center"> <%= @now.strftime('%B %e, %Y') %></p>
-<ul id="locations-list">
+<ul class="list-2col">
   <% @open.each do |timetable| %>
   <li class="location-item">
     <%= link_to timetable.location.name, timetable.location.url %>
