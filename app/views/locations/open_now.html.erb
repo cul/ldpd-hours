@@ -1,5 +1,5 @@
 <h2 class="lead trajanpro text-center">Study Spaces Open Now</h2>
-<p class="text-center"> <%= @now.strftime('%B %e, %Y') %></p>
+<div class="well well-sm text-center"> <%= @now.strftime('%B %e, %Y') %></div>
 <ul class="list-2col">
   <% @open.each do |timetable| %>
   <li class="location-item">
