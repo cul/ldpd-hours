@@ -1,6 +1,7 @@
 class LocationsController < ApplicationController
+  before_action :load_location
+  skip_before_action :load_location, only: [:index, :open_now, :new, :create]
   skip_before_action :authenticate_user!, only: [:index, :show, :open_now]
-  skip_load_and_authorize_resource only: [:index, :show, :open_now]
 
   def index
     @locations = Location.all
@@ -8,15 +9,17 @@ class LocationsController < ApplicationController
   end
 
   def new
+    authorize! :new, Location
     @location = Location.new
   end
 
   def edit
-    @location = Location.find(params[:id])
+    authorize! :edit, @location
   end
 
   def create
     @location = Location.new(create_params)
+    authorize! :create, @location
     if @location.save
       flash[:success] = "Location successfully created"
       redirect_to admin_url
@@ -28,8 +31,7 @@ class LocationsController < ApplicationController
   end
 
   def update
-    @location = Location.find(params[:id])
-
+    authorize! :update, @location
     if @location.update(update_params)
       flash[:success] = "Location successfully updated"
       redirect_to admin_url
@@ -40,8 +42,11 @@ class LocationsController < ApplicationController
     end
   end
 
+  def destroy
+    authorize! :destroy, @location
+  end
+
   def show
-    @location = Location.find(params[:id])
     @secondary_locations = Location.where(primary_location: @location).load
     @date = params[:date] ? Date.parse(params[:date]) : Date.current
     render layout: "public"
@@ -62,6 +67,10 @@ class LocationsController < ApplicationController
     render layout: "public"
   end
 
+  def load_location
+    @location = Location.find_by!(code: params['code'])
+  end
+
   private
 
   def create_params
@@ -70,7 +79,7 @@ class LocationsController < ApplicationController
 
   def update_params
     if current_user.administrator?
-      params.require(:location).permit(:name, :comment, :comment_two, :url, :summary, :primary, :primary_location_id)
+      params.require(:location).permit(:name, :code, :comment, :comment_two, :url, :summary, :primary, :primary_location_id)
     else
       params.require(:location).permit(:comment, :comment_two, :url, :summary)
     end

@@ -7,5 +7,4 @@ class ApplicationController < ActionController::Base
   # Authenticating and Authorizing each user for every request. Skipping this
   # steps for the few routes that are public.
   before_action :authenticate_user!
-  load_and_authorize_resource
 end

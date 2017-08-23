@@ -18,4 +18,8 @@ class Location < ApplicationRecord
       end
     end
   end
+
+  def self.attributes_protected_by_default
+    [] # override ["id"]
+  end
 end

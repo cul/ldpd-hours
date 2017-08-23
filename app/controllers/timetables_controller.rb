@@ -1,20 +1,21 @@
 class TimetablesController < ApplicationController
-  skip_load_and_authorize_resource
-  load_and_authorize_resource :location
-  load_and_authorize_resource through: :location
+  before_action :load_location
+  load_resource
 
   def exceptional_edit
-    @location = Location.find(params["location_id"])
+    @timetable = Timetable.new(location_id: @location.id)
+    authorize! :bulk_edit, @timetable
     @date = params[:date] ? Date.parse(params[:date]) : Date.current
-    @timetable = Timetable.new
   end
 
   def batch_edit
-    @location = Location.find(params["location_id"])
-    @timetable = Timetable.new
+    @timetable = Timetable.new(location_id: @location.id)
+    authorize! :bulk_edit, @timetable
   end
 
   def batch_update
+    @timetable = Timetable.new(location_id: @location.id)
+    authorize! :update, @timetable
     params = timetable_params.to_hash
     if params["start_date"] && params["end_date"]
       params["dates"] = get_dates(params)
@@ -26,7 +27,7 @@ class TimetablesController < ApplicationController
     format_dates(params)
     adjust_times_if_closed(params)
 
-    Timetable.batch_update_or_create(params, @open, @close)
+    Timetable.batch_update_or_create(params.merge('location_id' => @location.id), @open, @close)
     if @open && @close < @open
       render json: { message: "overnight schedule set", status: :warning }, status: :ok
     else
@@ -34,6 +35,10 @@ class TimetablesController < ApplicationController
     end
   rescue ArgumentError, Mysql2::Error => e
     render json: { message: "ERROR #{e.message}" }, status: :error
+  end
+
+  def load_location
+    @location = Location.find_by!(code: params["location_code"])
   end
 
   private

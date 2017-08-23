@@ -3,7 +3,7 @@
   <div class="well">
     <ul class="list-2col noborder">
     <% @secondary_locations.each do |location| %>
-      <li><%= link_to location.name, location %></li>
+      <li><%= link_to location.name, location_path(location.code) %></li>
     <% end %>
     </ul>
   </div>

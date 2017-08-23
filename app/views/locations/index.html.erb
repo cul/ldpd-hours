@@ -2,12 +2,7 @@
   <h2 class="lead trajanpro text-center">Select a Library Location, or view <%= link_to "Study Spaces Open Now", open_now_locations_path %></h2>
   <ul class="list-2col">
     <% @locations.each do |location| %>
-      <li class="location-item">
-          <%= link_to location.name, location_path(location.id) %>
-          <%# //for later
-            <span class="closes-at pull-right">Open until 5:00 pm</span>
-          %>
-      </li>
+      <li class="location-item"><%= link_to location.name, location_path(location.code) %></li>
     <% end %>
   </ul>
 </div>

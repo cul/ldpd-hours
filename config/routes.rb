@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     get 'sign_out', to: 'users/sessions#destroy', as: :destroy_user_session
   end
 
-  resources :locations do
+  resources :locations, param: :code do
     get :open_now, on: :collection
 
     resources :timetables, only: [] do

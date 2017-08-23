@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 describe "Locations", type: :feature do
-  let(:lehman) { Location.find_by(code: :lehman) || FactoryGirl.create(:lehman) }
-  let(:underbutler) { Location.find_by(code: :underbutler) || FactoryGirl.create(:underbutler) }
+  let(:lehman) { FactoryGirl.create(:lehman) }
+  let(:underbutler) { FactoryGirl.create(:underbutler) }
   let(:butler) { underbutler.primary_location }
   context 'when user without role logged in' do
+    # initialize at least one library
     before { lehman }
-
     it "can visit index page" do
       visit("/locations")
       expect(page).to have_css("ul")
@@ -18,7 +18,7 @@ describe "Locations", type: :feature do
       expect(page).to have_css("tr")
     end
     it "shows the primary and secondary locations" do
-      visit("/locations/#{butler.id}")
+      visit("/locations/#{butler.code}")
       click_on underbutler.name
       expect(page).to have_css("h2", text: underbutler.name)
       expect(page).to have_css("h3", text: butler.name)
@@ -32,13 +32,13 @@ describe "Locations", type: :feature do
       visit new_location_path
 
       fill_in "Name", with: "Test Lib"
-      fill_in "Code", with: "Test Code"
+      fill_in "Code", with: "testco"
       check "Primary"
       click_on "Create Location"
       expect(page).to have_content("Location successfully created")
       expect(Location.count).to eql 1
       expect(Location.first.name).to eql 'Test Lib'
-      expect(Location.first.code).to eql 'Test Code'
+      expect(Location.first.code).to eql 'testco'
       expect(Location.first.primary).to eql true
     end
 
@@ -54,7 +54,7 @@ describe "Locations", type: :feature do
     it "displays error when missing name" do
       visit new_location_path
 
-      fill_in "Code", with: "Test code"
+      fill_in "Code", with: "testco"
 
       click_on "Create Location"
       expect(page).to have_content("Name can't be blank")
@@ -63,7 +63,7 @@ describe "Locations", type: :feature do
     it "can delete location"
 
     it "can update location name" do
-      visit edit_location_path(lehman.id)
+      visit edit_location_path(lehman.code)
       fill_in "Name", with: "NEW Lehman"
       click_on "Update Location"
       expect(page).to have_content("Location successfully updated")
@@ -71,7 +71,7 @@ describe "Locations", type: :feature do
     end
 
     it "can update comments" do
-      visit edit_location_path(lehman.id)
+      visit edit_location_path(lehman.code)
       fill_in "Comment", with: "Blah blah"
       click_on "Update Location"
       expect(page).to have_content("Location successfully updated")
@@ -85,7 +85,7 @@ describe "Locations", type: :feature do
     include_context 'login manager'
 
     it "can update location comments" do
-      visit edit_location_path(lehman.id)
+      visit edit_location_path(lehman.code)
       fill_in "Comment", with: "Blah blah"
       click_on "Update Location"
       expect(page).to have_content("Location successfully updated")
@@ -103,24 +103,22 @@ describe "Locations", type: :feature do
   context 'when editor logged in' do
     include_context "login user"
 
-    let(:butler) { FactoryGirl.create(:butler) }
-
     before :each do
       logged_in_user.update_permissions(role: Permission::EDITOR, location_ids: [lehman.id])
     end
 
     it "cannot edit another library" do
-      visit edit_location_path(butler.id)
+      visit edit_location_path(butler.code)
       expect(page).to have_content 'Unauthorized'
     end
 
     it "can edit lehman" do
-      visit edit_location_path(lehman.id)
+      visit edit_location_path(lehman.code)
       expect(page).to have_content 'Lehman'
     end
 
     it "can edit lehman comment" do
-      visit edit_location_path(lehman.id)
+      visit edit_location_path(lehman.code)
       fill_in 'Comment', with: "blah blah blah blah"
       click_on "Update Location"
       expect(page).to have_content 'Location successfully updated'

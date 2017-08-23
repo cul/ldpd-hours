@@ -3,7 +3,7 @@
 <ul class="list-2col">
   <% @open.each do |timetable| %>
   <li class="location-item">
-    <%= link_to timetable.location.name, timetable.location.url %>
+    <%= link_to timetable.location.name, location_path(timetable.location.code) %>
     <span class="closes-at pull-right">Open until <%= timetable.close_time.strftime("%l:%M %P") %></span>
   </li>
   <% end %>

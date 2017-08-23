@@ -5,7 +5,7 @@
     <div class="col-md-12">
       <div class="location-primary-comment">
         <% if @location.primary_location %>
-          <p>Check hours for: <strong class="text-center"><%= link_to @location.primary_location.name, @location.primary_location %></strong></p>
+          <p>Check hours for: <strong class="text-center"><%= link_to @location.primary_location.name, location_path(@location.primary_location.code) %></strong></p>
         <% end %>
         <%= @location.comment.html_safe if @location.comment %>
       </div>
