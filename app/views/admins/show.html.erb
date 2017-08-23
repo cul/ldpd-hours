@@ -11,9 +11,9 @@
               <% @locations.each do |lib| %>
                 <% if can? :edit, lib %>
                   <tr>
-                    <td><%= link_to lib.name, edit_location_path(lib) %></td>
-                    <td><%= link_to 'Set Hours', exceptional_edit_location_timetables_path(lib)%></td>
-                    <td><%= link_to 'Batch Edit Hours', batch_edit_location_timetables_path(lib)%></td>
+                    <td><%= link_to lib.name, edit_location_path(lib.code) %></td>
+                    <td><%= link_to 'Set Hours', exceptional_edit_location_timetables_path(lib.code)%></td>
+                    <td><%= link_to 'Batch Edit Hours', batch_edit_location_timetables_path(lib.code)%></td>
                   </tr>
                 <% end %>
               <% end %>

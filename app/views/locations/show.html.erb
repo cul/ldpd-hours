@@ -1,7 +1,7 @@
 <div class="location col-sm-12">
   <h2><%= @location.name %></h2>
   <% if @location.primary_location %>
-    <h3><%= link_to @location.primary_location.name, @location.primary_location %></h3>
+    <h3><%= link_to @location.primary_location.name, location_path(@location.primary_location.code) %></h3>
   <% end %>
 
   <%= render "timetables/timetable" %>

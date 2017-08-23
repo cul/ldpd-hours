@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :managers_only_create_editors!, only: [:create, :update]
+  load_and_authorize_resource
 
   def new
     @user = User.new

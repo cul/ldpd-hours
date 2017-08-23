@@ -6,37 +6,37 @@ describe "Timetables", type: :feature, js: true do
 
   shared_examples 'view the page' do
     it "should display a calendar" do
-      visit(exceptional_edit_location_timetables_path(lehman))
+      visit(exceptional_edit_location_timetables_path(location_code: lehman.code))
       expect(page).to have_css("table.calendar")
     end
 
     it "should display tbd in boxes with a blank cal" do
-      visit(exceptional_edit_location_timetables_path(lehman))
+      visit(exceptional_edit_location_timetables_path(location_code: lehman.code))
       expect(page).to have_content("TBD")
     end
 
     it "should display hours that have previously been set" do
-      visit(exceptional_edit_location_timetables_path(lehman))
+      visit(exceptional_edit_location_timetables_path(location_code: lehman.code))
       find("td", :text => "16").click
       select "07 AM", :from => "timetable_open_4i"
       select "30", :from => "timetable_open_5i"
       select "06 PM", :from => "timetable_close_4i"
       select "30", :from => "timetable_close_5i"
       click_button("Update Hours")
-      visit(exceptional_edit_location_timetables_path(lehman))
+      visit(exceptional_edit_location_timetables_path(location_code: lehman.code))
       expect(find("td", :text => "16")).to have_content("7:30AM-6:30PM")
     end
   end
 
   shared_examples 'edit the calendar' do
     it "should add dates to the sidebar when clicked" do
-      visit(exceptional_edit_location_timetables_path(lehman))
+      visit(exceptional_edit_location_timetables_path(location_code: lehman.code))
       first("tr td").click
       expect(page).to have_css('.days-list li', count: 1)
     end
 
     it "should save dates" do
-      visit(exceptional_edit_location_timetables_path(lehman))
+      visit(exceptional_edit_location_timetables_path(location_code: lehman.code))
       find(:xpath, "//td[not(contains(@class, 'not-month'))]", :text => "25").click
       select "07 AM", :from => "timetable_open_4i"
       select "30", :from => "timetable_open_5i"
@@ -47,7 +47,7 @@ describe "Timetables", type: :feature, js: true do
     end
 
     it "should warn when hours run overnight" do
-      visit(exceptional_edit_location_timetables_path(miskatonic))
+      visit(exceptional_edit_location_timetables_path(location_code: miskatonic.code))
       find(:xpath, "//td[not(contains(@class, 'not-month'))]", :text => "25").click
       select "07 PM", :from => "timetable_open_4i"
       select "30", :from => "timetable_open_5i"
@@ -58,7 +58,7 @@ describe "Timetables", type: :feature, js: true do
     end
 
     it "should display closed on calendar if closed" do
-      visit(exceptional_edit_location_timetables_path(lehman))
+      visit(exceptional_edit_location_timetables_path(location_code: lehman.code))
       find("input#timetable_closed").click
       find("td", :text => "15").click
       click_button("Update Hours")
@@ -66,7 +66,7 @@ describe "Timetables", type: :feature, js: true do
     end
 
     it "should display note if one is added" do
-      visit(exceptional_edit_location_timetables_path(lehman))
+      visit(exceptional_edit_location_timetables_path(location_code: lehman.code))
       find("input#timetable_closed").click
       find("td", :text => "15").click
       fill_in "Note", with: "Holiday"
@@ -113,12 +113,12 @@ describe "Timetables", type: :feature, js: true do
     end
 
     it 'cannot view set hours page' do
-      visit exceptional_edit_location_timetables_path(lehman)
+      visit exceptional_edit_location_timetables_path(location_code: lehman.code)
       expect(page).to have_content 'Unauthorized'
     end
 
     it 'cannot view batch hours page' do
-      visit batch_edit_location_timetables_path(lehman)
+      visit batch_edit_location_timetables_path(location_code: lehman.code)
       expect(page).to have_content 'Unauthorized'
     end
   end
@@ -127,12 +127,12 @@ describe "Timetables", type: :feature, js: true do
     include_context 'login user'
 
     it 'cannot view set hours page' do
-      visit exceptional_edit_location_timetables_path(lehman)
+      visit exceptional_edit_location_timetables_path(location_code: lehman.code)
       expect(page).to have_content 'Unauthorized'
     end
 
     it 'cannot view batch hours page' do
-      visit batch_edit_location_timetables_path(lehman)
+      visit batch_edit_location_timetables_path(location_code: lehman.code)
       expect(page).to have_content 'Unauthorized'
     end
   end

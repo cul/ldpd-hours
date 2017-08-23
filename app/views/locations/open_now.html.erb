@@ -2,7 +2,7 @@
 <h4> <%= @now.strftime('%B %e, %Y') %></h4>
 
 <% @open.each do |timetable| %>
-  <%= link_to timetable.location.name, timetable.location.url %>
+  <%= link_to timetable.location.name, location_path(timetable.location.code) %>
   Until <%= timetable.close_time.strftime("%l:%M %P") %>
   <br/>
 <% end %>
