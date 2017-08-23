@@ -244,38 +244,34 @@ body {
 	}
 }
 // calendar table
-table {
-	&.calendar {
-		th {
-			font-size:.7em;
-			text-transform: uppercase;
-		}
-		td {
-			//width: 14%;
-			//height:125px;
-			overflow:hidden;
-			line-height:2em;
-			&.today {
-				background-color: lighten($color_6, 33%);
-				.day-date {
-					color: $color_8;
-				}
-			}
-			&.not-month {
-				opacity:.4;
+.calendar {
+	th {
+		font-size:.7em;
+		text-transform: uppercase;
+	}
+	td {
+		overflow:hidden;
+		line-height:2em;
+		&.today {
+			background-color: lighten($color_6, 33%);
+			.day-date {
+				color: $color_8;
 			}
 		}
-		.day-date {
-			color: $color_1;
-    	font-family: Helvetica, Arial, sans-serif;
-    	font-size: 210%;
+		&.not-month {
+			opacity:.4;
+		}
+	}
+	.day-date {
+		color: $color_1;
+  	font-family: Helvetica, Arial, sans-serif;
+  	font-size: 210%;
 
-		}
-		.day-note {
-			font-size: 90%;
-			margin:1em 0 0;
-			color: $color_22;
-		}
+	}
+	.day-note {
+		font-size: 90%;
+		margin:1em 0 0;
+		color: $color_22;
 	}
 }
 
@@ -298,12 +294,10 @@ table {
 		column-gap:2em;
 		column-rule: 1px solid $color_2;
 	}
-	table {
-		&.calendar {
-			td {
-				width: 14%;
-				height:125px;
-			}
+	.calendar {
+		td {
+			width: 14%;
+			height:125px;
 		}
 	}
 }
@@ -337,12 +331,10 @@ table {
 			width: 1px;
 		}
 	}
-	table {
-		&.calendar {
-			td {
-				width: 14%;
-				height:125px;
-			}
+	.calendar {
+		td {
+			width: 14%;
+			height:125px;
 		}
 	}
 }
@@ -381,12 +373,10 @@ table {
 			background-color:transparent;
 		}
 	}
-	table {
-		&.calendar {
-			td {
-				width: 14%;
-				height:154px;
-			}
+	.calendar {
+		td {
+			width: 14%;
+			height:154px;
 		}
 	}
 }
@@ -406,7 +396,7 @@ table {
 	#culnav-main {
 		text-align: center;
 	}
-	table.calendar {
+	.calendar {
 		//width:100%;
 		thead {
 			display: none;
