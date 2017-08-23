@@ -21,7 +21,7 @@ describe "Locations", type: :feature do
       visit("/locations/#{butler.code}")
       click_on underbutler.name
       expect(page).to have_css("h2", text: underbutler.name)
-      expect(page).to have_css("h3", text: butler.name)
+      expect(page).to have_css("p", text: butler.name)
     end
   end
 
