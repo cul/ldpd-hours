@@ -206,7 +206,7 @@ body {
 		}
 	}
 }
-.list-2col {
+.lib-list {
 	padding: 10px;
 	margin:0;
 	border:1px solid $color_2;
@@ -289,7 +289,7 @@ body {
 		display: inline-block;
 		letter-spacing: 0;
 	}
-	.list-2col {
+	.lib-list {
 		column-count:2;
 		column-gap:2em;
 		column-rule: 1px solid $color_2;
@@ -389,7 +389,7 @@ body {
 		margin-top: -1px;
 	}
 }
-@media(max-width: 640px) {
+@media screen and (max-width: 640px) {
 	#topnavbar .topbarlogo {
 		display: none;
 	}
@@ -435,6 +435,11 @@ body {
 		#outer-wrapper {
 			min-width: 992px;
 		}
+	}
+}
+@media print {
+	a[href]:after {
+		content: "" !important;
 	}
 }
 a, a:visited {
