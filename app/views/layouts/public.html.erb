@@ -3,7 +3,6 @@
   <head>
     <title>Columbia University Libraries | Location Hours</title>
     <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
     <!-- Mobile viewport optimization h5bp.com/ad -->
     <meta name="HandheldFriendly" content="True">
@@ -19,18 +18,19 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-static-top navbar-inverse">
-      <h1 class="container logo-contain">
-        <%= link_to "Library Hours", root_path, id: "logo" %>
-      </h1>
-    </nav>
+	<%= render :partial => 'layouts/topnavbar' %>
+	<div class="container" id="outer-wrapper">
 
-    <div class="container body-contain">
-      <%= render 'layouts/messages' %>
-      <%= yield %>
-    </div>
+    <%= render :partial => 'layouts/banner' %>
+  	<%= render :partial => 'layouts/culnav' %>
 
-    <%= render 'layouts/footer' %>
+		<div class="body-contain">
+		  <%= render 'layouts/messages' %>
+		  <%= yield %>
+		</div>
+
+		<%= render 'layouts/footer' %>
+	</div> <!-- /#outer-wrapper -->
   </body>
 
 </html>

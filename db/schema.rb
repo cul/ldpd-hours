@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20170814194528) do
   end
 
   create_table "permissions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "user_id"
+    t.bigint "user_id"
     t.string "role", null: false
     t.string "subject_class"
     t.integer "subject_id"
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20170814194528) do
     t.boolean "tbd", default: false
     t.boolean "closed", default: false
     t.string "note"
-    t.integer "location_id"
+    t.bigint "location_id"
     t.index ["location_id", "date"], name: "index_timetables_on_location_id_and_date", unique: true
     t.index ["location_id"], name: "index_timetables_on_location_id"
   end
@@ -71,4 +71,5 @@ ActiveRecord::Schema.define(version: 20170814194528) do
   end
 
   add_foreign_key "locations", "locations", column: "primary_location_id"
+  add_foreign_key "timetables", "locations"
 end

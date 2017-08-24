@@ -1,7 +1,7 @@
-<div class="col-md-12 text-center">
+<div class="col-md-12">
 <% unless @secondary_locations.empty? %>
   <div class="well">
-    <ul>
+    <ul class="lib-list noborder">
     <% @secondary_locations.each do |location| %>
       <li><%= link_to location.name, location_path(location.code) %></li>
     <% end %>

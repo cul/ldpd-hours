@@ -1,8 +1,8 @@
-<div>
-  <h2>Select a Location</h2>
-  <ul>
+<div id="home-toc">
+  <h2 class="lead trajanpro text-center">Select a Library Location, or view <%= link_to "Study Spaces Open Now", open_now_locations_path %></h2>
+  <ul class="lib-list">
     <% @locations.each do |location| %>
-      <li><%= link_to location.name, location_path(location.code) %></li>
+      <li class="location-item"><%= link_to location.name, location_path(location.code) %></li>
     <% end %>
   </ul>
 </div>

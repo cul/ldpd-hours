@@ -3,8 +3,6 @@ locationhtml {
 }
 
 body{
-  font-size: 16px;
-  padding: 0;
 }
 
 li{
@@ -55,6 +53,7 @@ ul.user-login li  {
 
 /* nav bar */
 
+/*
 .bottom-nav {
   background: #c4d8e2;
   border: none;
@@ -80,6 +79,7 @@ ul.user-login li  {
 .navbar .btn {
   margin: 0;
 }
+*/
 
 /* main content well */
 
