@@ -5,7 +5,7 @@
     <% @locations.each do |location| %>
       <%- status = until_or_closed(location, @open) %>
       <li class="location-item">
-        <span class="closes-at pull-right<%= " is-closed" if status == 'CLOSED'%>"><%= until_or_closed(location, @open) %></span>
+        <span class="closes-at pull-right<%= " is-closed" if status == 'CLOSED'%>"><%= status %></span>
         <%= link_to location.name, location_path(location.code) %>
       </li>
     <% end %>
