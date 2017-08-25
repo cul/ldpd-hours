@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170825181238) do
+ActiveRecord::Schema.define(version: 20170825181931) do
 
   create_table "locations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -23,6 +23,9 @@ ActiveRecord::Schema.define(version: 20170825181238) do
     t.datetime "updated_at", null: false
     t.bigint "primary_location_id"
     t.boolean "primary", default: false
+    t.boolean "front_page", default: false, null: false
+    t.index ["code"], name: "index_locations_on_code"
+    t.index ["front_page"], name: "index_locations_on_front_page"
     t.index ["primary"], name: "index_locations_on_primary"
     t.index ["primary_location_id"], name: "index_locations_on_primary_location_id"
   end
