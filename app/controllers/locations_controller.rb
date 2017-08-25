@@ -4,9 +4,13 @@ class LocationsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show, :open_now]
 
   def index
-    @locations = Location.all
+    home_page = begin
+      path = request.original_fullpath.split('?')[0]
+      path.blank? or path == '/'
+    end
+    @locations = home_page ? Location.where(front_page: true) : Location.all
     @now = Time.current
-    @open = all_open
+    @open = all_open(home_page)
     render layout: "public"
   end
 
@@ -64,13 +68,14 @@ class LocationsController < ApplicationController
     @location = Location.find_by!(code: params['code'])
   end
 
-  def all_open
+  def all_open(home_page = false)
     all_open = Timetable.where("open < ?" , @now)
                      .where("close > ?" , @now)
                      .where(closed: false)
                      .where(tbd: false)
                      .includes(:location)
-                     .order('locations.name').load
+    all_open = all_open.where(locations: {front_page: true}) if home_page
+    all_open = all_open.order('locations.name').load
     all_open.select do |t|
       pli = t.location.primary_location_id
       pli ? all_open.detect { |t2| t2.location_id == pli } : true
@@ -85,7 +90,7 @@ class LocationsController < ApplicationController
 
   def update_params
     if current_user.administrator?
-      params.require(:location).permit(:name, :code, :comment, :comment_two, :url, :summary, :primary, :primary_location_id)
+      params.require(:location).permit(:name, :code, :comment, :comment_two, :url, :summary, :primary, :primary_location_id, :front_page)
     else
       params.require(:location).permit(:comment, :comment_two, :url, :summary)
     end
