@@ -5,6 +5,8 @@ class LocationsController < ApplicationController
 
   def index
     @locations = Location.all
+    @now = Time.current
+    @open = all_open
     render layout: "public"
   end
 
@@ -54,21 +56,25 @@ class LocationsController < ApplicationController
 
   def open_now
     @now = Time.current
+    @open = all_open
+    render layout: "public"
+  end
+
+  def load_location
+    @location = Location.find_by!(code: params['code'])
+  end
+
+  def all_open
     all_open = Timetable.where("open < ?" , @now)
                      .where("close > ?" , @now)
                      .where(closed: false)
                      .where(tbd: false)
                      .includes(:location)
                      .order('locations.name').load
-    @open = all_open.select do |t|
+    all_open.select do |t|
       pli = t.location.primary_location_id
       pli ? all_open.detect { |t2| t2.location_id == pli } : true
     end
-    render layout: "public"
-  end
-
-  def load_location
-    @location = Location.find_by!(code: params['code'])
   end
 
   private

@@ -1,8 +1,13 @@
 <div id="home-toc">
-  <h2 class="lead trajanpro text-center">Select a Library Location, or view <%= link_to "Study Spaces Open Now", open_now_locations_path %></h2>
+  <h2 class="lead trajanpro text-center">Select a Library Location</h2>
+  <div class="well well-sm text-center"> <%= @now.strftime('%B %e, %Y') %></div>
   <ul class="lib-list">
     <% @locations.each do |location| %>
-      <li class="location-item"><%= link_to location.name, location_path(location.code) %></li>
+      <%- status = until_or_closed(location, @open) %>
+      <li class="location-item">
+        <span class="closes-at pull-right<%= " is-closed" if status == 'CLOSED'%>"><%= status %></span>
+        <%= link_to location.name, location_path(location.code) %>
+      </li>
     <% end %>
   </ul>
 </div>
