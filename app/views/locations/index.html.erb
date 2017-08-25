@@ -3,8 +3,9 @@
   <div class="well well-sm text-center"> <%= @now.strftime('%B %e, %Y') %></div>
   <ul class="lib-list">
     <% @locations.each do |location| %>
+      <%- status = until_or_closed(location, @open) %>
       <li class="location-item">
-        <span class="closes-at pull-right"><%= until_or_closed(location, @open) %></span>
+        <span class="closes-at pull-right<%= " is-closed" if status == 'CLOSED'%>"><%= until_or_closed(location, @open) %></span>
         <%= link_to location.name, location_path(location.code) %>
       </li>
     <% end %>
