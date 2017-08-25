@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170825181931) do
+ActiveRecord::Schema.define(version: 20170825183009) do
 
   create_table "locations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -51,8 +51,11 @@ ActiveRecord::Schema.define(version: 20170825181931) do
     t.boolean "closed", default: false
     t.string "note"
     t.integer "location_id"
+    t.index ["close"], name: "index_timetables_on_close"
+    t.index ["date"], name: "index_timetables_on_date"
     t.index ["location_id", "date"], name: "index_timetables_on_location_id_and_date", unique: true
     t.index ["location_id"], name: "index_timetables_on_location_id"
+    t.index ["open"], name: "index_timetables_on_open"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
