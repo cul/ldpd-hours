@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170814194528) do
+ActiveRecord::Schema.define(version: 20170825181238) do
 
   create_table "locations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20170814194528) do
   end
 
   create_table "permissions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "user_id"
+    t.integer "user_id"
     t.string "role", null: false
     t.string "subject_class"
     t.integer "subject_id"
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20170814194528) do
     t.boolean "tbd", default: false
     t.boolean "closed", default: false
     t.string "note"
-    t.bigint "location_id"
+    t.integer "location_id"
     t.index ["location_id", "date"], name: "index_timetables_on_location_id_and_date", unique: true
     t.index ["location_id"], name: "index_timetables_on_location_id"
   end
@@ -68,8 +68,9 @@ ActiveRecord::Schema.define(version: 20170814194528) do
     t.string "email", default: "", null: false
     t.string "name"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider"
+    t.index ["uid"], name: "index_users_on_uid"
   end
 
   add_foreign_key "locations", "locations", column: "primary_location_id"
-  add_foreign_key "timetables", "locations"
 end
