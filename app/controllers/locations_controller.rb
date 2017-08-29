@@ -55,7 +55,19 @@ class LocationsController < ApplicationController
   def show
     @secondary_locations = Location.where(primary_location: @location).load
     @date = params[:date] ? Date.parse(params[:date]) : Date.current
-    render layout: "public"
+    respond_to do |format|
+      format.html { render layout: "public" }
+      format.json do
+        if params[:callback]
+          # this is support for a legacy API to be retired before v2
+          schedule = Timetable.find_by(date: @date, location_id: @location.id)
+          hours = schedule ? schedule.display_str : "TBD"
+          render json: "#{params[:callback]}({\"hours\":\"#{hours}\"})"
+        else
+          render json: @location.to_json
+        end
+      end
+    end
   end
 
   def open_now
