@@ -2,7 +2,7 @@ class LocationsController < ApplicationController
   before_action :load_location
   skip_before_action :load_location, only: [:index, :open_now, :new, :create]
   skip_before_action :authenticate_user!, only: [:index, :show, :open_now]
-
+  skip_before_action :verify_authenticity_token, only: :show
   def index
     home_page = begin
       path = request.original_fullpath.split('?')[0]
@@ -57,15 +57,13 @@ class LocationsController < ApplicationController
     @date = params[:date] ? Date.parse(params[:date]) : Date.current
     respond_to do |format|
       format.html { render layout: "public" }
-      format.json do
-        if params[:callback]
-          # this is support for a legacy API to be retired before v2
-          schedule = Timetable.find_by(date: @date, location_id: @location.id)
-          hours = schedule ? schedule.display_str : "TBD"
-          render json: "#{params[:callback]}({\"hours\":\"#{hours}\"})"
-        else
-          render json: @location.to_json
-        end
+      format.json { render json: @location.to_json }
+      format.js do
+        # this is support for a legacy API to be retired before v2
+        schedule = Timetable.find_by(date: @date, location_id: @location.id)
+        hours = schedule ? schedule.display_str : "TBD"
+        hours.sub!('-','&mdash;')
+        render js: "#{params[:callback]}({\"hours\":\"#{hours}\"})"
       end
     end
   end
