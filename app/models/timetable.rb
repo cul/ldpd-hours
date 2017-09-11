@@ -26,6 +26,8 @@ class Timetable < ApplicationRecord
     params, values = [],[]
     (timetable_params["dates"].count).times{ params.push("(?,?,?,?,?,?,?,?,?)")}
     overnight = open && open > close
+    timetable_params["tbd"] = "0" if timetable_params["tbd"].blank?
+    timetable_params["closed"] = "0" if timetable_params["closed"].blank?
     timetable_params["dates"].each do |day|
       time = day.to_time.in_time_zone
       if open

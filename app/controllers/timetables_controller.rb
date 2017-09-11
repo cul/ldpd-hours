@@ -58,6 +58,8 @@ class TimetablesController < ApplicationController
     if (params["closed"] == "1" || params["tbd"] == "1")
       @open, @close = nil, nil
     end
+    params["closed"] = "0" if params["closed"].blank?
+    params["tbd"] = "0" if params["tbd"].blank?
   end
 
   def get_dates(params)
