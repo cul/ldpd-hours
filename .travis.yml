@@ -26,5 +26,6 @@ before_script:
   - yarn install
 before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS hours_test;'
+  - mysql -u root -e "GRANT ALL PRIVILEGES ON hours_test.* TO 'travis'@'%';";
 script:
   - bundle exec rspec spec/
