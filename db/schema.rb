@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170825183009) do
+ActiveRecord::Schema.define(version: 20170911151824) do
 
   create_table "locations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -47,8 +47,8 @@ ActiveRecord::Schema.define(version: 20170825183009) do
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "tbd", default: false
-    t.boolean "closed", default: false
+    t.boolean "tbd", default: false, null: false
+    t.boolean "closed", default: false, null: false
     t.string "note"
     t.integer "location_id"
     t.index ["close"], name: "index_timetables_on_close"
