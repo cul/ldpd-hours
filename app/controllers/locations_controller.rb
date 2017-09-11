@@ -8,7 +8,7 @@ class LocationsController < ApplicationController
       path = request.original_fullpath.split('?')[0]
       path.blank? or path == '/'
     end
-    @locations = home_page ? Location.where(front_page: true) : Location.all
+    @locations = (home_page ? Location.where(front_page: true) : Location.all).order(:name)
     @now = Time.current
     @open = all_open(home_page)
     render layout: "public"
