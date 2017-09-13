@@ -33,4 +33,14 @@ FactoryGirl.define do
     primary false
     association :primary_location, factory: :miskatonic, strategy: :find_or_create
   end
+
+  factory :butler_five_days, class: Location do
+    code 'butlerfivedays'
+    name 'Butler Five Days'
+    primary true
+    primary_location nil
+    after :create do |t|
+      create_list :the_five_days_after_moon_landing, 5, location: t
+    end
+  end
 end

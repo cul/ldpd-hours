@@ -1,0 +1,137 @@
+require 'rails_helper'
+
+describe "locations API", :type => :request do
+  describe 'open_hours' do
+    describe "non-existent location" do
+      describe "with date=today" do
+        it "returns an error" do
+          api_url = "/api/v1/locations/supercalifragilisticexpialidocious?date=today"
+          get api_url
+          expect(response).not_to be_success
+          actual_json_as_hash = JSON.parse response.body
+          expect(actual_json_as_hash).to eq({"error" => "404: location not found"})
+        end
+      end
+      describe "with date range" do
+        it "returns an error" do
+          api_url = "/api/v1/locations/supercalifragilisticexpialidocious?start_date=1969-07-21&end_date=1969-07-21"
+          get api_url
+          expect(response).not_to be_success
+          actual_json_as_hash = JSON.parse response.body
+          expect(actual_json_as_hash).to eq({"error" => "404: location not found"})
+        end
+      end
+    end
+    describe "location with 1 timetable for today" do
+      describe "with date=today" do
+        let(:butler_today) { FactoryGirl.create(:butler_today) }
+        let(:butler_today_json) { file_fixture("api_v1_butler_today.json").read }
+        it "retrieves today's hours for given location code" do
+          location_code=butler_today.location.code
+          api_url = "/api/v1/locations/#{location_code}?date=today"
+          get api_url
+          expect(response).to be_success
+          actual_json_as_hash = JSON.parse response.body
+          expected_json_as_hash = JSON.parse file_fixture("api_v1_butler_today.json").read
+          # update expected_json_as_hash with today's date
+          expected_json_as_hash['butler'].first['date'] = Date.today.strftime("%F")
+          expect(actual_json_as_hash).to eq(expected_json_as_hash)
+        end
+      end
+    end
+    describe "location with 5 consecutive-days timetables" do
+      let(:day_after_moon_landing) { Date.parse('1969-07-21') }
+      # location represented by butler_five_days contains 5 timetables for dates
+      # 1969-07-21 thru 1969-07-25.
+      let(:butler_five_days) { FactoryGirl.create(:butler_five_days) }
+      describe "bad date format" do
+        it "returns an error" do
+          start_date = (day_after_moon_landing + 1).strftime("%F")
+          end_date = (day_after_moon_landing).strftime("%F")
+          api_url = "/api/v1/locations/#{butler_five_days.code}?start_date=iamnotadate&end_date=#{end_date}"
+          get api_url
+          expect(response).not_to be_success
+          actual_json_as_hash = JSON.parse response.body
+          expect(actual_json_as_hash).to eq({"error" => "400: invalid date"})
+        end
+      end
+      describe "with start date larger (later) than end date" do
+        it "returns an error" do
+          # Given the starting and ending date given below, API call should return
+          # an error since the start date is later than the end date
+          start_date = (day_after_moon_landing + 1).strftime("%F")
+          end_date = (day_after_moon_landing).strftime("%F")
+          api_url = "/api/v1/locations/#{butler_five_days.code}?start_date=#{start_date}&end_date=#{end_date}"
+          get api_url
+          expect(response).not_to be_success
+          actual_json_as_hash = JSON.parse response.body
+          expect(actual_json_as_hash).to eq({"error" => "400: start_date greater than end_date"})
+        end
+        it "with requested range matching middle 3 location timetables" do
+          # Given the starting and ending date  below, API call should return
+          # the second and third dates from the location's timetables
+          start_date = (day_after_moon_landing + 1).strftime("%F")
+          end_date = (day_after_moon_landing + 3).strftime("%F")
+          api_url = "/api/v1/locations/#{butler_five_days.code}?start_date=#{start_date}&end_date=#{end_date}"
+          get api_url
+          expect(response).to be_success
+          actual_json_as_hash = JSON.parse response.body
+          expected_json_as_hash = JSON.parse file_fixture("api_v1_butler_five_days_1.json").read
+          expect(actual_json_as_hash).to eq(expected_json_as_hash)
+        end
+        it "with requested range matching first two location timetables" do
+          # Given the starting and ending date given below, API call should return
+          # the first and second dates from the location's timetables;
+          # the first date in the requested range has not been set for this location
+          start_date = (day_after_moon_landing - 1).strftime("%F")
+          end_date = (day_after_moon_landing + 1).strftime("%F")
+          api_url = "/api/v1/locations/#{butler_five_days.code}?start_date=#{start_date}&end_date=#{end_date}"
+          get api_url
+          expect(response).to be_success
+          actual_json_as_hash = JSON.parse response.body
+          expected_json_as_hash = JSON.parse file_fixture("api_v1_butler_five_days_2.json").read
+          expect(actual_json_as_hash).to eq(expected_json_as_hash)
+        end
+        it "with requested range matching last two location timetables" do
+          # Given the starting and ending date given below, API call should return
+          # the fourth and fifth dates from the location's timetables;
+          # the last date in the requested has not been set for this location
+          start_date = (day_after_moon_landing + 3).strftime("%F")
+          end_date = (day_after_moon_landing + 5).strftime("%F")
+          api_url = "/api/v1/locations/#{butler_five_days.code}?start_date=#{start_date}&end_date=#{end_date}"
+          get api_url
+          expect(response).to be_success
+          actual_json_as_hash = JSON.parse response.body
+          expected_json_as_hash = JSON.parse file_fixture("api_v1_butler_five_days_3.json").read
+          expect(actual_json_as_hash).to eq(expected_json_as_hash)
+        end
+      end
+      describe "reqested range is 11 days" do
+        it "with requested range matching all the location timetables" do
+          # Given the starting and ending date given below, API call should return
+          # all of the location's timetables
+          start_date = (day_after_moon_landing - 5).strftime("%F")
+          end_date = (day_after_moon_landing + 5).strftime("%F")
+          api_url = "/api/v1/locations/#{butler_five_days.code}?start_date=#{start_date}&end_date=#{end_date}"
+          get api_url
+          expect(response).to be_success
+          actual_json_as_hash = JSON.parse response.body
+          expected_json_as_hash = JSON.parse file_fixture("api_v1_butler_five_days_4.json").read
+          expect(actual_json_as_hash).to eq(expected_json_as_hash)
+        end
+        it "with requested range matching none the location timetables" do
+          # Given the starting and ending date given below, API call should return
+          # none of the location's timetables
+          start_date = (day_after_moon_landing + 5).strftime("%F")
+          end_date = (day_after_moon_landing + 10).strftime("%F")
+          api_url = "/api/v1/locations/#{butler_five_days.code}?start_date=#{start_date}&end_date=#{end_date}"
+          get api_url
+          expect(response).to be_success
+          actual_json_as_hash = JSON.parse response.body
+          expected_json_as_hash = { "butlerfivedays" => [] }
+          expect(actual_json_as_hash).to eq(expected_json_as_hash)
+        end
+      end
+    end
+  end
+end

@@ -83,4 +83,75 @@ RSpec.describe Timetable, type: :model do
     end
   end
 
+  describe "api_response_hash" do
+    let(:butler_today) { FactoryGirl.create(:butler_today) }
+    let(:expected_api_response_hash) do
+      {
+        date: Date.today.strftime("%F"),
+        closed: false,
+        tbd: false,
+        open_time: "09:00",
+        close_time: "17:00",
+        notes: "Hello!",
+        formatted_date: "09:00AM-05:00PM"
+      }
+      end
+    describe "should return hash of formatted values for existing timetable" do
+      it "that has hours, a note, and closed = tbd = false" do
+        # add a nice note
+        butler_today.notes = "Hello!"
+        expect(butler_today.api_response_hash).to eq(expected_api_response_hash)
+      end
+      it "that has hours, a note, and closed = false, tbd = true" do
+        # add a nice note
+        butler_today.notes = expected_api_response_hash[:notes] = "Still thinking about it..."
+        # set tbd to true for timetable, which should be reflected in the generated hash
+        butler_today.tbd = expected_api_response_hash[:tbd] = true
+        # setting butler_today.tbd to true should entail the following formatted_date
+        expected_api_response_hash[:formatted_date] = "TBD"
+        expect(butler_today.api_response_hash).to eq(expected_api_response_hash)
+      end
+      it "that has hours, a note, and closed = true, tbd = false" do
+        # add a nice note
+        butler_today.notes = expected_api_response_hash[:notes] = "Sorry, we are closed."
+        # set closed to true for timetable, which should be reflected in the generated hash
+        butler_today.closed = expected_api_response_hash[:closed] = true
+        # setting butler_today.closed to true should entail the following formatted_date
+        expected_api_response_hash[:formatted_date] = "Closed"
+        expect(butler_today.api_response_hash).to eq(expected_api_response_hash)
+      end
+      it "that has hours, a note, and closed = tbd = true, closed wins out" do
+        # add a nice note
+        butler_today.notes = expected_api_response_hash[:notes] = "So confused..."
+        # set closed to true for timetable, which should be reflected in the generated hash
+        butler_today.closed = expected_api_response_hash[:closed] = true
+        # set tbd to true for timetable, which should be reflected in the generated hash
+        butler_today.tbd = expected_api_response_hash[:tbd] = true
+        # if both butler_today.closed and butler_today.tbd are set to true
+        # the 'closed' attribute takes precedence, which is reflected in the
+        # formatted_date
+        expected_api_response_hash[:formatted_date] = "Closed"
+        expect(butler_today.api_response_hash).to eq(expected_api_response_hash)
+      end
+    end
+  end
+
+  describe "default_api_response_hash" do
+    let(:expected_api_response_hash) do
+      {
+        date: Date.today.strftime("%F"),
+        closed: false,
+        tbd: true,
+        open_time: nil,
+        close_time: nil,
+        notes: '',
+        formatted_date: 'TBD'
+        }
+    end
+
+    it "should return hash of default values for non-existent timetable" do
+      api_response_hash = Timetable.default_api_response_hash Date.today
+      expect(api_response_hash).to eq(expected_api_response_hash)
+    end
+  end
 end

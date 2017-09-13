@@ -22,4 +22,15 @@ class Location < ApplicationRecord
   def self.attributes_protected_by_default
     [] # override ["id"]
   end
+
+  # Note: To build an API response for a single date value,
+  # call this method with both the start_date and
+  # end_date set to the single date value.
+  def build_api_response(start_date, end_date)
+    if start_date > end_date
+      raise RangeError.new("build_api_response: start_date is larger than end_date.")
+    end
+    # date_range is a scope defined in timetable.rb
+    timetables.date_range(start_date,end_date).map {|t| t.api_response_hash}
+  end
 end

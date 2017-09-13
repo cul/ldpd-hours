@@ -1,0 +1,24 @@
+{
+    "butlerfivedays" : 
+    [
+	{
+	    "date" : "1969-07-21",
+	    "open_time" : "09:00",
+	    "close_time" : "17:00",
+	    "closed" : false,
+	    "tbd" : false,
+	    "notes" : "Day 0!",
+	    "formatted_date" : "09:00AM-05:00PM"
+	}
+	,
+	{
+	    "date" : "1969-07-22",
+	    "open_time" : "09:00",
+	    "close_time" : "17:00",
+	    "closed" : false,
+	    "tbd" : false,
+	    "notes" : "Day 1!",
+	    "formatted_date" : "09:00AM-05:00PM"
+	}
+    ]
+}
