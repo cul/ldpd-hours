@@ -19,6 +19,15 @@
 	    "tbd" : false,
 	    "notes" : "Day 4!",
 	    "formatted_date" : "09:00AM-05:00PM"
-	}
+	},
+        {
+            "date" : "1969-07-26",
+            "open_time" : null,
+            "close_time" : null,
+            "closed" : false,
+            "tbd" : true,
+            "notes" : "",
+            "formatted_date" : "TBD"
+        }
     ]
 }

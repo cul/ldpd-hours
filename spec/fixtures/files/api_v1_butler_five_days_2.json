@@ -2,6 +2,16 @@
     "butlerfivedays" : 
     [
 	{
+	    "date" : "1969-07-20",
+	    "open_time" : null,
+	    "close_time" : null,
+	    "closed" : false,
+	    "tbd" : true,
+	    "notes" : "",
+	    "formatted_date" : "TBD"
+	}
+	,
+	{
 	    "date" : "1969-07-21",
 	    "open_time" : "09:00",
 	    "close_time" : "17:00",

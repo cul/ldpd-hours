@@ -30,7 +30,21 @@ class Location < ApplicationRecord
     if start_date > end_date
       raise RangeError.new("build_api_response: start_date is larger than end_date.")
     end
-    # date_range is a scope defined in timetable.rb
-    timetables.date_range(start_date,end_date).map {|t| t.api_response_hash}
+
+    # Note: date_range is a scope defined in timetable.rb
+
+    # Old behavior : return nothing for non-existent timetables. Just the
+    # following one-liner, in case want to revert back to that behavior
+    # timetables.date_range(start_date,end_date).map {|t| t.api_response_hash}
+
+    # New behavior: Instead of no-op for non-existent timetables, we want to return
+    # a hash with default values
+    hash = timetables.date_range(start_date,end_date).map do |t|
+      [t.date.strftime("%F"),  t.api_response_hash]
+    end.to_h
+    (start_date..end_date).map do |d|
+      hash.fetch(d.strftime("%F"),
+                 Timetable.default_api_response_hash(d))
+    end
   end
 end

@@ -69,7 +69,7 @@ describe "locations API", :type => :request do
         end
         it "with requested range matching middle 3 location timetables" do
           # Given the starting and ending date  below, API call should return
-          # the second and third dates from the location's timetables
+          # the second, third and fourth dates from the location's timetables
           start_date = (day_after_moon_landing + 1).strftime("%F")
           end_date = (day_after_moon_landing + 3).strftime("%F")
           api_url = "/api/v1/locations/#{butler_five_days.code}?start_date=#{start_date}&end_date=#{end_date}"
@@ -82,7 +82,8 @@ describe "locations API", :type => :request do
         it "with requested range matching first two location timetables" do
           # Given the starting and ending date given below, API call should return
           # the first and second dates from the location's timetables;
-          # the first date in the requested range has not been set for this location
+          # the first date in the requested range has not been set for this location,
+          # and the default hash will be returned for that date
           start_date = (day_after_moon_landing - 1).strftime("%F")
           end_date = (day_after_moon_landing + 1).strftime("%F")
           api_url = "/api/v1/locations/#{butler_five_days.code}?start_date=#{start_date}&end_date=#{end_date}"
@@ -95,7 +96,8 @@ describe "locations API", :type => :request do
         it "with requested range matching last two location timetables" do
           # Given the starting and ending date given below, API call should return
           # the fourth and fifth dates from the location's timetables;
-          # the last date in the requested has not been set for this location
+          # the last date in the requested has not been set for this location,
+          # and the default hash will be returned for that date
           start_date = (day_after_moon_landing + 3).strftime("%F")
           end_date = (day_after_moon_landing + 5).strftime("%F")
           api_url = "/api/v1/locations/#{butler_five_days.code}?start_date=#{start_date}&end_date=#{end_date}"
@@ -121,14 +123,15 @@ describe "locations API", :type => :request do
         end
         it "with requested range matching none the location timetables" do
           # Given the starting and ending date given below, API call should return
-          # none of the location's timetables
+          # none of the location's timetables. Therefore, for each date in the range,
+          # it will return the default hash
           start_date = (day_after_moon_landing + 5).strftime("%F")
           end_date = (day_after_moon_landing + 10).strftime("%F")
           api_url = "/api/v1/locations/#{butler_five_days.code}?start_date=#{start_date}&end_date=#{end_date}"
           get api_url
           expect(response).to be_success
           actual_json_as_hash = JSON.parse response.body
-          expected_json_as_hash = { "butlerfivedays" => [] }
+          expected_json_as_hash = JSON.parse file_fixture("api_v1_butler_five_days_5.json").read
           expect(actual_json_as_hash).to eq(expected_json_as_hash)
         end
       end
