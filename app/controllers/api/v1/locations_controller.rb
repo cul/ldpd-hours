@@ -8,7 +8,10 @@ class Api::V1::LocationsController < Api::V1::BaseController
       if params[:date].eql? 'today' 
         start_date = Date.today
         end_date = Date.today
-      else 
+      elsif params[:date]
+        start_date = Date.parse(params[:date])
+        end_date = Date.parse(params[:date])
+      else
         # Date#parse will raise an ArgumentError if problem with its argument
         start_date = Date.parse(params[:start_date])
         end_date = Date.parse(params[:end_date])
