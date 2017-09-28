@@ -21,6 +21,11 @@ class TimetablesController < ApplicationController
       params["dates"] = get_dates(params)
     end
 
+    if params["dates"].blank?
+      render json: { message: "no dates selected" }, status: :error
+      return
+    end
+
     @open = "#{params['open(4i)']}:#{params['open(5i)']}"
     @close = "#{params['close(4i)']}:#{params['close(5i)']}"
 
