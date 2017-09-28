@@ -33,7 +33,7 @@ class Timetable < ApplicationRecord
       if open
         if overnight
           open_time = Time.zone.parse(open, time)
-          close_time = Time.zone.parse(close, time.change(day: 1))
+          close_time = Time.zone.parse(close, time).next_day
         else
           open_time = Time.zone.parse(open, time)
           close_time = Time.zone.parse(close, time)
