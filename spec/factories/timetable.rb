@@ -14,6 +14,13 @@ FactoryGirl.define do
     association :location, factory: :underbutler, strategy: :find_or_create
   end
 
+  factory :duanereade_today, class: Timetable do
+    date        today
+    open        Time.zone.parse('10:00', today.to_time)
+    close       Time.zone.parse('10:00', today.next_day.to_time)
+    association :location, factory: :duanereade, strategy: :find_or_create
+  end
+
   factory :lehman_today, class: Timetable do
     date        today
     open        Time.zone.parse('08:00', today.to_time)

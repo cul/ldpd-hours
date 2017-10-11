@@ -50,8 +50,17 @@ class Timetable < ApplicationRecord
     ActiveRecord::Base.connection.exec_update(sql)
   end
 
+  def all_day?
+    if self.open and self.close
+      return self.close - self.open == 1.day
+    end
+    false
+  end
+
   def display_str
-    if self.open && self.close
+    if all_day?
+      "Open 24 hours on #{open_time.strftime('%m/%d/%Y')}"
+    elsif self.open && self.close
       "#{open_time.strftime('%l:%M%p')}-#{close_time.strftime('%l:%M%p')}".gsub(/\s+/, "")
     elsif self.closed
       "Closed"

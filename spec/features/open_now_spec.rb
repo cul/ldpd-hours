@@ -56,11 +56,13 @@ describe 'locations open now', type: :feature do
       FactoryGirl.create(:butler_today)
       FactoryGirl.create(:lehman_today)
       FactoryGirl.create(:miskatonic_today)
+      FactoryGirl.create(:duanereade_today)
       visit '/locations/open_now'
     end
 
-    it "correctly displays open library" do
+    it "correctly displays open libraries" do
       expect(page).to have_content 'Miskatonic'
+      expect(page).to have_content 'Drugstore'
     end
 
     it "does not display closed libraries" do

@@ -72,6 +72,12 @@ RSpec.describe Timetable, type: :model do
   describe "display_str" do
     let(:butler) { FactoryGirl.create(:butler) }
 
+    it "should display 24 hour message if all day" do
+      now = Time.current
+      t = Timetable.create(location_id: butler.id, date: now.to_date, open: now, close: now + 1.day)
+      expect(t.display_str).to match("24 hours")
+    end
+
     it "should display closed if closed" do
       t = Timetable.create(location_id: butler.id, date: Date.today, closed: true)
       expect(t.display_str).to eq("Closed")
