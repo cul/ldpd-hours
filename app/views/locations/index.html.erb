@@ -2,9 +2,12 @@
   <h2 class="lead trajanpro text-center"><%= @now.strftime('%B %e, %Y') %></h2>
   <ul class="lib-list">
     <% @locations.each do |location| %>
-      <%- status = until_or_closed(location, @open) %>
+      <%- status = until_or_closed(location, @open)
+          use_class = " is-closed" if status == 'CLOSED'
+          use_class = " is-24" if status == 'OPEN'
+       %>
       <li class="location-item">
-        <span class="closes-at pull-right<%= " is-closed" if status == 'CLOSED'%>"><%= status %></span>
+        <span class="closes-at pull-right<%= use_class %>"><%= status %></span>
         <%= link_to location.name, location_path(location.code) %>
       </li>
     <% end %>

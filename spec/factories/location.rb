@@ -13,6 +13,13 @@ FactoryGirl.define do
     association :primary_location, factory: :butler, strategy: :find_or_create
   end
 
+  factory :duanereade, class: Location do
+    code 'dreade'
+    name 'Corner Drugstore'
+    primary false
+    primary_location nil
+  end
+
   factory :lehman, class: Location do
     code 'lehman'
     name 'Lehman'

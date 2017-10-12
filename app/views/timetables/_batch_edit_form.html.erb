@@ -18,12 +18,12 @@
 
 		<div class="form-group">
       <%= f.label :open %>
-      <%= time_select("timetable", "open", {ignore_date: true, ampm: true}) %>
+      <%= time_select("timetable", "open", {ignore_date: true, ampm: true, minute_step: 15}) %>
     </div>
 
     <div class="form-group">
       <%= f.label :close %>
-      <%= time_select("timetable", "close", {ignore_date: true, ampm: true}) %>
+      <%= time_select("timetable", "close", {ignore_date: true, ampm: true, minute_step: 15}) %>
     </div>
 
     <%= f.submit class: "btn btn-primary btn-sm" %>

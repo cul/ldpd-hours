@@ -33,7 +33,7 @@ class TimetablesController < ApplicationController
     adjust_times_if_closed(params)
 
     Timetable.batch_update_or_create(params.merge('location_id' => @location.id), @open, @close)
-    if @open && @close < @open
+    if @open && @open >= @close
       render json: { message: "overnight schedule set", status: :warning }, status: :ok
     else
       render json: { message: "success" }, status: :ok

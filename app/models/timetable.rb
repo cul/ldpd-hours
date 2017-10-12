@@ -25,7 +25,7 @@ class Timetable < ApplicationRecord
   def self.batch_update_or_create(timetable_params, open, close)
     params, values = [],[]
     (timetable_params["dates"].count).times{ params.push("(?,?,?,?,?,?,?,?,?)")}
-    overnight = open && open > close
+    overnight = open && open >= close
     timetable_params["tbd"] = "0" if timetable_params["tbd"].blank?
     timetable_params["closed"] = "0" if timetable_params["closed"].blank?
     timetable_params["dates"].each do |day|
@@ -50,8 +50,17 @@ class Timetable < ApplicationRecord
     ActiveRecord::Base.connection.exec_update(sql)
   end
 
+  def all_day?
+    if self.open and self.close
+      return self.close - self.open == 1.day
+    end
+    false
+  end
+
   def display_str
-    if self.open && self.close
+    if all_day?
+      "Open 24 hours on #{open_time.strftime('%m/%d/%Y')}"
+    elsif self.open && self.close
       "#{open_time.strftime('%l:%M%p')}-#{close_time.strftime('%l:%M%p')}".gsub(/\s+/, "")
     elsif self.closed
       "Closed"
