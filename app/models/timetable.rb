@@ -25,7 +25,7 @@ class Timetable < ApplicationRecord
   def self.batch_update_or_create(timetable_params, open, close)
     params, values = [],[]
     (timetable_params["dates"].count).times{ params.push("(?,?,?,?,?,?,?,?,?)")}
-    overnight = open && open > close
+    overnight = open && open >= close
     timetable_params["tbd"] = "0" if timetable_params["tbd"].blank?
     timetable_params["closed"] = "0" if timetable_params["closed"].blank?
     timetable_params["dates"].each do |day|
