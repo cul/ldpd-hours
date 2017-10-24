@@ -22,5 +22,6 @@ Rails.application.routes.draw do
 
   resource :admin, only: [:show]
 
+  get 'api/v1/locations/open_now' => 'api/v1/locations#open_now'
   get 'api/v1/locations/:code' => 'api/v1/locations#open_hours'
 end

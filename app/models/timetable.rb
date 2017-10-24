@@ -67,6 +67,7 @@ class Timetable < ApplicationRecord
   # the calling code and inserted into the body of the API response.
   # Any formatting changes to the API response (pertinent to the Timetable info)
   # should be implemented in this method.
+  # fcd1, 9/19/17: may rename this to something like default_day_info_hash
   def api_response_hash
     if closed
       formatted_date = "Closed"
@@ -91,6 +92,7 @@ class Timetable < ApplicationRecord
   # Default hash to be used for a date that does not have
   # an associated instance Timetable.
   # The returned hash will be turned into JSON by the calling code.
+  # fcd1, 9/19/17: may rename this to something like default_day_info_hash
   def self.default_api_response_hash date
     {
       date: date.strftime("%F"),
@@ -100,6 +102,20 @@ class Timetable < ApplicationRecord
       tbd: true,
       notes: "",
       formatted_date: "TBD"
+    }
+  end
+
+  # This method will return a hash with pertinent attributes formatted as specified
+  # in the API specs for a call to open_now. The returned hash will be turned
+  # into JSON by the calling code and inserted into the body of the API response
+  def open_now_hash
+    # should never be nil, but gonna keep the sanity check
+    open_time_val = open.nil? ? nil : open.strftime('%H:%M')
+    close_time_val = close.nil? ? nil : close.strftime('%H:%M')
+    {
+      open_time: open_time_val,
+      close_time: close_time_val,
+      formatted_date: "Until #{close.strftime('%I:%M%p')}"
     }
   end
 end

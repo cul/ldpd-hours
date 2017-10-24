@@ -204,4 +204,60 @@ describe "locations API", :type => :request do
       end  # END of describe with date range of 11 consecutive days
     end # END of describe covering test involving location with five timetables
   end # END of describe covering open_hours
+  # START of describe covering open_now
+  describe 'open_now' do
+    let(:day_after_moon_landing) { Date.parse('1969-07-21') }
+    # let(:butler_five_days) { FactoryGirl.create(:butler_five_days) }
+    let(:avery_five_days) { FactoryGirl.create(:avery_five_days) }
+    let(:butler_open_now) { FactoryGirl.create(:butler_open_now) }
+    let(:lehman_closed_now) { FactoryGirl.create(:lehman_closed_now) }
+    let(:miskatonic_open_now) { FactoryGirl.create(:miskatonic_open_now) }
+    let(:butler_five_days_around_today) { FactoryGirl.create(:butler_five_days_around_today) }
+
+    xit "just testing factories" do
+
+      # just testing the factories for now, this is bogus code
+      start_date = (day_after_moon_landing - 5).strftime("%F")
+      end_date = (day_after_moon_landing + 5).strftime("%F")
+
+      # This should work no prob, this is the original factory for butler
+      api_url = "/api/v1/locations/#{butler_five_days.code}?start_date=#{start_date}&end_date=#{end_date}"
+      get api_url
+      expect(response).to be_success
+      actual_json_as_hash = JSON.parse response.body
+      expected_json_as_hash = JSON.parse file_fixture("api_v1_butler_five_days_4.json").read
+      expect(actual_json_as_hash).to eq(expected_json_as_hash)
+
+      # new factory for avery
+      api_url = "/api/v1/locations/#{avery_five_days.code}?start_date=#{start_date}&end_date=#{end_date}"
+      get api_url
+      expect(response).to be_success
+      actual_json_as_hash = JSON.parse response.body
+      expected_json_as_hash = JSON.parse file_fixture("api_v1_butler_five_days_4.json").read
+      expect(actual_json_as_hash).to eq(expected_json_as_hash)
+
+    end
+
+    xit "returns success (REPHRASE THIS)" do
+      butler_open_now
+      lehman_closed_now
+      miskatonic_open_now
+      api_url = "/api/v1/locations/open_now"
+      get api_url
+      puts Time.now
+      puts Time.current
+      puts Time.now - 3600
+      puts Time.current - 3600
+      puts Time.zone.now
+      # puts Time.zone.current
+      puts Time.zone.now - 3600
+      puts Time.current - 3600
+      expect(response).to be_success
+    end
+
+    xit "test butler five days around today" do
+      puts butler_five_days_around_now_open.timetables.inspect
+      puts miskatonic_open_now.inspect
+    end
+  end
 end # END of describe covering the locations API

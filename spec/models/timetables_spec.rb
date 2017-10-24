@@ -146,12 +146,25 @@ RSpec.describe Timetable, type: :model do
         close_time: nil,
         notes: '',
         formatted_date: 'TBD'
-        }
+      }
     end
-
     it "should return hash of default values for non-existent timetable" do
       api_response_hash = Timetable.default_api_response_hash Date.today
       expect(api_response_hash).to eq(expected_api_response_hash)
+    end
+  end
+
+  describe "open_now_hash" do
+    let(:butler_today) { FactoryGirl.create(:butler_today) }
+    let(:expected_hash) do
+      {
+        open_time: "09:00",
+        close_time: "17:00",
+        formatted_date: "Until 05:00PM"
+      }
+    end
+    it "should return hash with open and close times and until what time the location is open" do
+      expect(butler_today.open_now_hash).to eq(expected_hash)
     end
   end
 end
