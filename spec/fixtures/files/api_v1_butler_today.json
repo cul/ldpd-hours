@@ -1,0 +1,17 @@
+{
+    "error" : null,
+    "data" : {
+	"butler" :
+	[
+	    {
+		"date" : "",
+		"open_time" : "09:00",
+		"close_time" : "17:00",
+		"closed" : false,
+		"tbd" : false,
+		"notes" : null,
+		"formatted_date" : "09:00AM-05:00PM"
+	    }
+	]
+    }
+}

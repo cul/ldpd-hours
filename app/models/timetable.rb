@@ -1,6 +1,8 @@
 class Timetable < ApplicationRecord
   belongs_to :location
 
+  scope :date_range, lambda {|start_date, end_date| where("date >= ? AND date <= ?", start_date, end_date)}
+
   def open_time
     generate_time(open)
   end
@@ -67,5 +69,60 @@ class Timetable < ApplicationRecord
     else
       "TBD"
     end
+  end
+
+  # This method will generate a hash with instance attributes formatted
+  # as specfied in the API specs. The returned hash will be turned into JSON by
+  # the calling code and inserted into the body of the API response.
+  # Any formatting changes to the API response (pertinent to the Timetable info)
+  # should be implemented in this method.
+  def day_info_hash
+    if closed
+      formatted_date = "Closed"
+    elsif tbd
+      formatted_date = "TBD"
+    else
+      formatted_date = "#{open.strftime('%I:%M%p')}-#{close.strftime('%I:%M%p')}"
+    end
+    open_time_val = open.nil? ? nil : open.strftime('%H:%M')
+    close_time_val = close.nil? ? nil : close.strftime('%H:%M')
+    {
+      date: date.strftime("%F"),
+      open_time: open_time_val,
+      close_time: close_time_val,
+      closed: closed,
+      tbd: tbd,
+      notes: notes,
+      formatted_date: formatted_date
+    }
+  end
+
+  # Default hash to be used for a date that does not have
+  # an associated instance Timetable.
+  # The returned hash will be turned into JSON by the calling code.
+  def self.default_day_info_hash date
+    {
+      date: date.strftime("%F"),
+      open_time: nil,
+      close_time: nil,
+      closed: false,
+      tbd: true,
+      notes: "",
+      formatted_date: "TBD"
+    }
+  end
+
+  # This method will return a hash with pertinent attributes formatted as specified
+  # in the API specs for a call to open_now. The returned hash will be turned
+  # into JSON by the calling code and inserted into the body of the API response
+  def open_now_hash
+    # should never be nil, but gonna keep the sanity check
+    open_time_val = open.nil? ? nil : open.strftime('%H:%M')
+    close_time_val = close.nil? ? nil : close.strftime('%H:%M')
+    {
+      open_time: open_time_val,
+      close_time: close_time_val,
+      formatted_date: "Until #{close.strftime('%I:%M%p')}"
+    }
   end
 end

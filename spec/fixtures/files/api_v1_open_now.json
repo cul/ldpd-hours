@@ -1,0 +1,19 @@
+{
+    "error" : null,
+    "data" :
+    {
+	"butler" : 
+	{
+	    "open_time" : null,
+	    "close_time" : null,
+	    "formatted_date" : null
+	}
+	,
+	"miskat" : 
+	{
+	    "open_time" : null,
+	    "close_time" : null,
+	    "formatted_date" : null
+	}
+    }
+}
