@@ -1,6 +1,6 @@
 FactoryGirl.define do
   today = Time.zone.today
-  now = Time.now
+  now = Time.current
   day_after_moon_landing = Date.parse('1969-07-21')
   factory :butler_today, class: Timetable do
     date        today

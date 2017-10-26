@@ -216,18 +216,18 @@ describe "locations API", :type => :request do
     # two_hours_from_now_floor is equal to two hours in the future, with
     # the minutes and seconds zeroed out. So, it is currently 10:14 AM,
     # two_hours_from_now_floor would be equal to the string "12:00"
-    let(:two_hours_from_now_floor) { Time.zone.local(Time.now.year,
-                                                     Time.now.month,
-                                                     Time.now.day,
-                                                     Time.now.hour + 2,
+    let(:two_hours_from_now_floor) { Time.zone.local(Time.current.year,
+                                                     Time.current.month,
+                                                     Time.current.day,
+                                                     Time.current.hour + 2,
                                                      0,
                                                      0)
     }
     # similar to the above, except two hours in the past
-    let(:two_hours_in_the_past_floor) { Time.zone.local(Time.now.year,
-                                                        Time.now.month,
-                                                        Time.now.day,
-                                                        Time.now.hour - 2,
+    let(:two_hours_in_the_past_floor) { Time.zone.local(Time.current.year,
+                                                        Time.current.month,
+                                                        Time.current.day,
+                                                        Time.current.hour - 2,
                                                         0,
                                                         0)
     }
