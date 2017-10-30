@@ -68,15 +68,22 @@ Because updating our hours uses a MySQL specific flavor of a batch upsert, if th
 ##### `GET /v1/locations/avery?date=today`
 ```
 {
-  "avery": {
-    "date": "2017-07-14",
-    "open_time": "09:00",
-    "close_time": "22:00",
-    "note": "Intersession",
-    "tbd": false,
-    "closed": false,
-    "formatted_date": "9:00AM-10:00PM"
-  }
+    "error" : null,
+    "data" :
+    {
+	"butler" : 
+	[
+	    {
+		"date" : "2017-07-23",
+		"open_time" : "09:00",
+		"close_time" : "17:00",
+		"closed" : false,
+		"tbd" : false,
+		"notes" : "Free Donuts!",
+		"formatted_date" : "09:00AM-05:00PM"
+	    }
+	]
+    }
 }
 ```
 
@@ -84,37 +91,46 @@ Because updating our hours uses a MySQL specific flavor of a batch upsert, if th
 
 ```
 {
-  "avery": [
+    "error" : null,
+    "data" :
     {
-      "date": "2017-09-27",
-      "open_time": "09:00",
-      "close_time": "22:00",
-      "note": "Intersession",
-      "tbd": false,
-      "closed": false,
-      "formatted_date": "9:00AM-10:00PM"
-    },
-    {
-      "date": "2017-09-28",
-      "open_time": null,
-      "close_time": null,
-      "note": "Intersession",
-      "tbd": false,
-      "closed": true,
-      "formatted_date": "Closed"
-    },
-    {
-      "date": "2017-09-29",
-      "open_time": null,
-      "close_time": null,
-      "note": "Intersession",
-      "tbd": true,
-      "closed": false,
-      "formatted_date": "TBD"
+	"butler" : 
+	[
+	    {
+		"date" : "2017-07-24",
+		"open_time" : "09:00",
+		"close_time" : "17:00",
+		"closed" : false,
+		"tbd" : false,
+		"notes" : "Movie night!",
+		"formatted_date" : "09:00AM-05:00PM"
+	    }
+	    ,
+	    {
+		"date" : "2017-07-25",
+		"open_time" : "09:00",
+		"close_time" : "17:00",
+		"closed" : false,
+		"tbd" : false,
+		"notes" : "",
+		"formatted_date" : "09:00AM-05:00PM"
+	    }
+	    ,
+            {
+		"date" : "2017-07-26",
+		"open_time" : null,
+		"close_time" : null,
+		"closed" : false,
+		"tbd" : true,
+		"notes" : "",
+		"formatted_date" : "TBD"
+            }
+	]
     }
-  ]
 }
 ```
+
+Note the last date entry in the above JSON structure; This is the default date entry that is returned for a date that does not have any associated data in Hours manager. So, in the above example, there was no information in the hours manager database for 07/26/2017 for location butler, and therefore default values were returned for that date.
 
 ### `GET v1/locations/open_now`
 #### Query Params
@@ -123,15 +139,22 @@ Because updating our hours uses a MySQL specific flavor of a batch upsert, if th
 ##### `GET v1/locations/open_now`
 ```
 {
- "avery": {
-   "open_time": "09:00",
-   "close_time": "22:00",
-   "formatted_date": "Until 10:00PM"
- },
- "butler": {
-   "open_time": "09:00",
-   "close_time": "17:00",
-   "formatted_date": "Until 5:00PM"
- }     
+    "error" : null,
+    "data" :
+    {
+	"butler" : 
+	{
+	    "open_time" : "09:00",
+	    "close_time" : "22:00",
+	    "formatted_date" : "Until 10:00PM"
+	}
+	,
+	"avery" : 
+	{
+	    "open_time" : "09:00",
+	    "close_time" : "22:00",
+	    "formatted_date" : "Until 10:00PM"
+	}
+    }
 }
 ```
