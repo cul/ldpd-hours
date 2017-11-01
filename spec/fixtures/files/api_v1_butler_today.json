@@ -9,7 +9,7 @@
 		"close_time" : "17:00",
 		"closed" : false,
 		"tbd" : false,
-		"notes" : null,
+		"notes" : "",
 		"formatted_date" : "09:00AM-05:00PM"
 	    }
 	]

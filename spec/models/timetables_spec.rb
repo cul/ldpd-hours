@@ -102,11 +102,27 @@ RSpec.describe Timetable, type: :model do
         formatted_date: "09:00AM-05:00PM"
       }
       end
+    let(:expected_day_info_hash_no_note) do
+      {
+        date: Date.today.strftime("%F"),
+        closed: false,
+        tbd: false,
+        open_time: "09:00",
+        close_time: "17:00",
+        notes: "",
+        formatted_date: "09:00AM-05:00PM"
+      }
+      end
     describe "should return hash of formatted values for existing timetable" do
       it "that has hours, a note, and closed = tbd = false" do
         # add a nice note
         butler_today.notes = "Hello!"
         expect(butler_today.day_info_hash).to eq(expected_day_info_hash)
+      end
+      it "that has hours, no note, and closed = tbd = false" do
+        # add a nice note
+        # butler_today.notes = "Hello!"
+        expect(butler_today.day_info_hash).to eq(expected_day_info_hash_no_note)
       end
       it "that has hours, a note, and closed = false, tbd = true" do
         # add a nice note
