@@ -20,7 +20,7 @@ describe "locations API", :type => :request do
       end
       describe "with date set to specific date" do
         it "returns an error" do
-          the_date = Date.today.strftime("%F")
+          the_date = Date.current.strftime("%F")
           api_url = "/api/v1/locations/supercalifragilisticexpialidocious?date=the_date"
           get api_url
           expect(response).not_to be_success
@@ -50,21 +50,21 @@ describe "locations API", :type => :request do
           actual_json_as_hash = JSON.parse response.body
           expected_json_as_hash = JSON.parse file_fixture("api_v1_butler_today.json").read
           # update expected_json_as_hash with today's date
-          expected_json_as_hash['data']['butler'].first['date'] = Date.today.strftime("%F")
+          expected_json_as_hash['data']['butler'].first['date'] = Date.current.strftime("%F")
           expect(actual_json_as_hash).to eq(expected_json_as_hash)
         end
       end
       describe "with date set to a specific date" do
         it "retrieves the dates hours for given location code" do
           location_code=butler_today.location.code
-          the_date = Date.today.strftime("%F")
+          the_date = Date.current.strftime("%F")
           api_url = "/api/v1/locations/#{location_code}?date=#{the_date}"
           get api_url
           expect(response).to be_success
           actual_json_as_hash = JSON.parse response.body
           expected_json_as_hash = JSON.parse file_fixture("api_v1_butler_today.json").read
           # update expected_json_as_hash with today's date
-          expected_json_as_hash['data']['butler'].first['date'] = Date.today.strftime("%F")
+          expected_json_as_hash['data']['butler'].first['date'] = Date.current.strftime("%F")
           expect(actual_json_as_hash).to eq(expected_json_as_hash)
         end
       end

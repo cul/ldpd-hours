@@ -6,8 +6,8 @@ class Api::V1::LocationsController < Api::V1::BaseController
     begin
       location = Location.find_by! code: params[:code]
       if params[:date].eql? 'today' 
-        start_date = Date.today
-        end_date = Date.today
+        start_date = Date.current
+        end_date = Date.current
       elsif params[:date]
         start_date = Date.parse(params[:date])
         end_date = Date.parse(params[:date])
