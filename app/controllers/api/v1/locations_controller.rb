@@ -6,8 +6,8 @@ class Api::V1::LocationsController < Api::V1::BaseController
     begin
       location = Location.find_by! code: params[:code]
       if params[:date].eql? 'today' 
-        start_date = Date.today
-        end_date = Date.today
+        start_date = Date.current
+        end_date = Date.current
       elsif params[:date]
         start_date = Date.parse(params[:date])
         end_date = Date.parse(params[:date])
@@ -31,7 +31,7 @@ class Api::V1::LocationsController < Api::V1::BaseController
   end
 
   def open_now
-    now = Time.current
+    @now = Time.current
     open_locations_hash = {}
     timetables_open_now.each do |t|
       open_locations_hash[t.location.code] = t.open_now_hash
@@ -47,9 +47,8 @@ class Api::V1::LocationsController < Api::V1::BaseController
   # above and put in it's own method. This should help refactor in the
   # future if we decide to merge this method and all_open#LocationsController
   def timetables_open_now
-    now = Time.current
-    open_now = Timetable.where("open < ?" , now)
-      .where("close > ?" , now)
+    open_now = Timetable.where("open < ?" , @now)
+      .where("close > ?" , @now)
       .where(closed: false)
       .where(tbd: false)
       .includes(:location)

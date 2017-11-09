@@ -93,7 +93,7 @@ RSpec.describe Timetable, type: :model do
     let(:butler_today) { FactoryGirl.create(:butler_today) }
     let(:expected_day_info_hash) do
       {
-        date: Date.today.strftime("%F"),
+        date: Date.current.strftime("%F"),
         closed: false,
         tbd: false,
         open_time: "09:00",
@@ -104,7 +104,7 @@ RSpec.describe Timetable, type: :model do
       end
     let(:expected_day_info_hash_no_note) do
       {
-        date: Date.today.strftime("%F"),
+        date: Date.current.strftime("%F"),
         closed: false,
         tbd: false,
         open_time: "09:00",
@@ -161,7 +161,7 @@ RSpec.describe Timetable, type: :model do
   describe "default_day_info_hash" do
     let(:expected_day_info_hash) do
       {
-        date: Date.today.strftime("%F"),
+        date: Date.current.strftime("%F"),
         closed: false,
         tbd: true,
         open_time: nil,
@@ -171,7 +171,7 @@ RSpec.describe Timetable, type: :model do
       }
     end
     it "should return hash of default values for non-existent timetable" do
-      day_info_hash = Timetable.default_day_info_hash Date.today
+      day_info_hash = Timetable.default_day_info_hash Date.current
       expect(day_info_hash).to eq(expected_day_info_hash)
     end
   end
