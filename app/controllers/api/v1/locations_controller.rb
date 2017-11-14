@@ -4,6 +4,9 @@ class Api::V1::LocationsController < Api::V1::BaseController
 
   def open_hours
     begin
+      # params_string used for error message
+      params_string = "Date params: start_date:' #{params[:start_date]}', " +
+        "end_date: '#{params[:end_date]}', date: '#{params[:date]}'"
       location = Location.find_by! code: params[:code]
       if params[:date].eql? 'today' 
         start_date = Date.current
@@ -22,11 +25,12 @@ class Api::V1::LocationsController < Api::V1::BaseController
       # render json: { location.code => location.build_api_response(start_date, end_date) }
       render json: { data: data_value, error: error_value }
     rescue ArgumentError => e
-      render json: { error: "400: #{e.message}", data: nil } , status: 400
+      msg = "400: #{e.message}. #{params_string}"
+      render json: { error: msg, data: nil }, status: 400
     rescue ActiveRecord::RecordNotFound => e
-      render json: { error: "404: location not found", data: nil } , status: 404
+      render json: { error: "404: location not found: #{params[:code]}", data: nil } , status: 404
     rescue RangeError => e
-      render json: { error: "400: #{e.message}", data: nil } , status: 400
+      render json: { error: "400: #{e.message}. #{params_string}", data: nil } , status: 400
     end
   end
 
