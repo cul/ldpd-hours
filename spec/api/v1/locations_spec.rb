@@ -15,8 +15,10 @@ describe "locations API", :type => :request do
           get api_url
           expect(response).not_to be_success
           actual_json_as_hash = JSON.parse response.body
-          expect(actual_json_as_hash).to eq({"error" => "404: location not found: supercalifragilisticexpialidocious",
-                                              "data" => nil })
+          error_msg =
+            "404: Couldn't find Location. Supplied params: " +
+            "location_code:'supercalifragilisticexpialidocious', start_date:'', end_date: '', date: 'today'"
+          expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
         end
       end
       describe "with date set to specific date" do
@@ -26,8 +28,10 @@ describe "locations API", :type => :request do
           get api_url
           expect(response).not_to be_success
           actual_json_as_hash = JSON.parse response.body
-          expect(actual_json_as_hash).to eq({"error" => "404: location not found: supercalifragilisticexpialidocious",
-                                              "data" => nil })
+          error_msg =
+            "404: Couldn't find Location. Supplied params: " +
+            "location_code:'supercalifragilisticexpialidocious', start_date:'', end_date: '', date: 'the_date'"
+          expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
         end
       end
       describe "with date range" do
@@ -36,8 +40,10 @@ describe "locations API", :type => :request do
           get api_url
           expect(response).not_to be_success
           actual_json_as_hash = JSON.parse response.body
-          expect(actual_json_as_hash).to eq({"error" => "404: location not found: supercalifragilisticexpialidocious",
-                                              "data" => nil })
+          error_msg =
+            "404: Couldn't find Location. Supplied params: " +
+            "location_code:'supercalifragilisticexpialidocious', start_date:'1969-07-21', end_date: '1969-07-21', date: ''"
+          expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
         end
       end
     end # END of describe covering bad location code
@@ -85,7 +91,9 @@ describe "locations API", :type => :request do
           get api_url
           expect(response).not_to be_success
           actual_json_as_hash = JSON.parse response.body
-          error_msg = "400: invalid date. Date params: start_date:' ', end_date: '', date: 'iamnotadate'"
+          error_msg =
+            "400: invalid date. Supplied params: " +
+            "location_code:'butlerfivedays', start_date:'', end_date: '', date: 'iamnotadate'"
           expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
         end
         it "in start date of date range returns an error" do
@@ -94,7 +102,9 @@ describe "locations API", :type => :request do
           get api_url
           expect(response).not_to be_success
           actual_json_as_hash = JSON.parse response.body
-          error_msg = "400: invalid date. Date params: start_date:' iamnotadate', end_date: '1969-07-21', date: ''"
+          error_msg =
+            "400: invalid date. Supplied params: " +
+            "location_code:'butlerfivedays', start_date:'iamnotadate', end_date: '1969-07-21', date: ''"
           expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
         end
         it "in end of date range returns an error" do
@@ -103,7 +113,9 @@ describe "locations API", :type => :request do
           get api_url
           expect(response).not_to be_success
           actual_json_as_hash = JSON.parse response.body
-          error_msg = "400: invalid date. Date params: start_date:' 1969-07-22', end_date: 'iamnotadate', date: ''"
+          error_msg =
+            "400: invalid date. Supplied params: " +
+            "location_code:'butlerfivedays', start_date:'1969-07-22', end_date: 'iamnotadate', date: ''"
           expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
         end
       end # END of describe covering bad date formats
@@ -117,7 +129,9 @@ describe "locations API", :type => :request do
           get api_url
           expect(response).not_to be_success
           actual_json_as_hash = JSON.parse response.body
-          error_msg = "400: start_date greater than end_date. Date params: start_date:' 1969-07-22', end_date: '1969-07-21', date: ''"
+          error_msg =
+            "400: start_date greater than end_date. Supplied params: " +
+            "location_code:'butlerfivedays', start_date:'1969-07-22', end_date: '1969-07-21', date: ''"
           expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
         end
       end

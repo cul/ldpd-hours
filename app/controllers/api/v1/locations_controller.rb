@@ -5,8 +5,11 @@ class Api::V1::LocationsController < Api::V1::BaseController
   def open_hours
     begin
       # params_string used for error message
-      params_string = "Date params: start_date:' #{params[:start_date]}', " +
-        "end_date: '#{params[:end_date]}', date: '#{params[:date]}'"
+      params_string =
+        "Supplied params: location_code:'#{params[:code]}', " +
+        "start_date:'#{params[:start_date]}', " +
+        "end_date: '#{params[:end_date]}', " +
+        "date: '#{params[:date]}'"
       location = Location.find_by! code: params[:code]
       if params[:date].eql? 'today' 
         start_date = Date.current
@@ -21,16 +24,23 @@ class Api::V1::LocationsController < Api::V1::BaseController
         raise RangeError, "start_date greater than end_date" if start_date > end_date
       end
       data_value = { location.code => location.build_api_response(start_date, end_date) }
-      error_value = nil
-      # render json: { location.code => location.build_api_response(start_date, end_date) }
-      render json: { data: data_value, error: error_value }
+      error_msg = nil
+      status_code = 201
     rescue ArgumentError => e
-      msg = "400: #{e.message}. #{params_string}"
-      render json: { error: msg, data: nil }, status: 400
+      data_value = nil
+      status_code = 400
     rescue ActiveRecord::RecordNotFound => e
-      render json: { error: "404: location not found: #{params[:code]}", data: nil } , status: 404
+      data_value = nil
+      status_code = 404
     rescue RangeError => e
-      render json: { error: "400: #{e.message}. #{params_string}", data: nil } , status: 400
+      data_value = nil
+      status_code = 400
+    ensure
+      unless e.nil?
+        error_msg = "#{status_code}: #{e.message}. #{params_string}"
+        Rails.logger.error error_msg
+      end
+      render json: { error: error_msg, data: data_value } , status: status_code
     end
   end
 
