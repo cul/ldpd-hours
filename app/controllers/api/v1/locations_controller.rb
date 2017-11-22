@@ -1,6 +1,7 @@
 class Api::V1::LocationsController < Api::V1::BaseController
   skip_before_action :authenticate_user!, only: [:open_hours, :open_now]
   skip_load_and_authorize_resource only: [:open_hours, :open_now]
+  before_action :add_cors_header, only: [:open_hours, :open_now]
 
   def open_hours
     begin
@@ -56,5 +57,9 @@ class Api::V1::LocationsController < Api::V1::BaseController
       pli = t.location.primary_location_id
       pli ? open_now.detect { |t2| t2.location_id == pli } : true
     end
+  end
+
+  def add_cors_header
+    headers['Access-Control-Allow-Origin'] = '*'
   end
 end
