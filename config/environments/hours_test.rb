@@ -37,8 +37,10 @@ Rails.application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
-  config.log_level = :debug
-
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # Logging
+  config.log_formatter = ::Logger::Formatter.new
+  config.log_level = :debug
 end
