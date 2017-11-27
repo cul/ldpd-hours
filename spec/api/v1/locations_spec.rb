@@ -36,6 +36,12 @@ describe "locations API", :type => :request do
           actual_json_as_hash = JSON.parse response.body
           expect(actual_json_as_hash).to eq({"error" => "404: location not found", "data" => nil })
         end
+        it "contains Access-Control-Allow-Origin header set to *" do
+          api_url = "/api/v1/locations/supercalifragilisticexpialidocious?start_date=1969-07-21&end_date=1969-07-21"
+          get api_url
+          expect(response).not_to be_success
+          expect(response.headers['Access-Control-Allow-Origin']).to eq('*')
+        end
       end
     end # END of describe covering bad location code
     # START of describve covering test involving location with one timetable
@@ -52,6 +58,13 @@ describe "locations API", :type => :request do
           # update expected_json_as_hash with today's date
           expected_json_as_hash['data']['butler'].first['date'] = Date.current.strftime("%F")
           expect(actual_json_as_hash).to eq(expected_json_as_hash)
+        end
+        it "contains Access-Control-Allow-Origin header set to *" do
+          location_code=butler_today.location.code
+          api_url = "/api/v1/locations/#{location_code}?date=today"
+          get api_url
+          expect(response).to be_success
+          expect(response.headers['Access-Control-Allow-Origin']).to eq('*')
         end
       end
       describe "with date set to a specific date" do
@@ -260,6 +273,15 @@ describe "locations API", :type => :request do
         expected_json_as_hash = JSON.parse file_fixture("api_v1_open_now_none.json").read
         actual_json_as_hash = JSON.parse response.body
         expect(actual_json_as_hash).to eq(expected_json_as_hash)
+      end
+      it "contains Access-Control-Allow-Origin header set to *" do
+        butler_closed_now
+        lehman_closed_now
+        miskatonic_closed_now
+        api_url = "/api/v1/locations/open_now"
+        get api_url
+        expect(response).to be_success
+        expect(response.headers['Access-Control-Allow-Origin']).to eq('*')
       end
     end
   end # END of describe covering open_now
