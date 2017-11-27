@@ -47,46 +47,36 @@ FactoryGirl.define do
 
   factory :butler_open_now, class: Timetable do
     date        today
-    open        Time.zone.local(now.year, now.month, now.day,
-                                now.hour - 2, 0, 0)
-    close       Time.zone.local(now.year, now.month, now.day,
-                                now.hour + 2, 0, 0)
+    open        (now - 2.hours).beginning_of_hour
+    close       (now + 2.hours).beginning_of_hour
     association :location, factory: :butler, strategy: :find_or_create
   end
 
   factory :butler_closed_now, class: Timetable do
     date        today
-    open        Time.zone.local(now.year, now.month, now.day,
-                                now.hour - 4, 0, 0)
-    close       Time.zone.local(now.year, now.month, now.day,
-                                now.hour - 2, 0, 0)
+    open        (now - 4.hours).beginning_of_hour
+    close       (now - 2.hours).beginning_of_hour
     association :location, factory: :butler, strategy: :find_or_create
   end
 
   factory :miskatonic_open_now, class: Timetable do
     date        today
-    open        Time.zone.local(now.year, now.month, now.day,
-                                now.hour - 2, 0, 0)
-    close       Time.zone.local(now.year, now.month, now.day,
-                                now.hour + 2, 0, 0)
+    open        (now - 2.hours).beginning_of_hour
+    close       (now + 2.hours).beginning_of_hour
     association :location, factory: :miskatonic, strategy: :find_or_create
   end
 
   factory :miskatonic_closed_now, class: Timetable do
     date        today
-    open        Time.zone.local(now.year, now.month, now.day,
-                                now.hour - 4, 0, 0)
-    close       Time.zone.local(now.year, now.month, now.day,
-                                now.hour - 2, 0, 0)
+    open        (now - 4.hours).beginning_of_hour
+    close       (now - 2.hours).beginning_of_hour
     association :location, factory: :miskatonic, strategy: :find_or_create
   end
 
   factory :lehman_closed_now, class: Timetable do
     date        today
-    open        Time.zone.local(now.year, now.month, now.day,
-                                now.hour - 4, 0, 0)
-    close       Time.zone.local(now.year, now.month, now.day,
-                                now.hour - 2, 0, 0)
+    open        (now - 4.hours).beginning_of_hour
+    close       (now - 2.hours).beginning_of_hour
     association :location, factory: :lehman, strategy: :find_or_create
   end
 end
