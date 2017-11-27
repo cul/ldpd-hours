@@ -21,11 +21,11 @@ class Api::V1::LocationsController < Api::V1::BaseController
       data_value = { location.code => location.build_api_response(start_date, end_date) }
       render json: { data: data_value }
     rescue ArgumentError => e
-      render json: { error: "400: #{e.message}", data: nil } , status: 400
+      render json: { error: { "msg" => "400: #{e.message}" }, data: nil } , status: 400
     rescue ActiveRecord::RecordNotFound => e
-      render json: { error: "404: location not found", data: nil } , status: 404
+      render json: { error: { "msg" => "404: location not found" }, data: nil } , status: 404
     rescue RangeError => e
-      render json: { error: "400: #{e.message}", data: nil } , status: 400
+      render json: { error: { "msg" => "400: #{e.message}" }, data: nil } , status: 400
     end
   end
 
