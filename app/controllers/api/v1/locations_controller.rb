@@ -19,15 +19,13 @@ class Api::V1::LocationsController < Api::V1::BaseController
         raise RangeError, "start_date greater than end_date" if start_date > end_date
       end
       data_value = { location.code => location.build_api_response(start_date, end_date) }
-      error_value = nil
-      # render json: { location.code => location.build_api_response(start_date, end_date) }
-      render json: { data: data_value, error: error_value }
+      render json: { data: data_value }
     rescue ArgumentError => e
-      render json: { error: "400: #{e.message}", data: nil } , status: 400
+      render json: { error: { "msg" => "400: #{e.message}" }, data: nil } , status: 400
     rescue ActiveRecord::RecordNotFound => e
-      render json: { error: "404: location not found", data: nil } , status: 404
+      render json: { error: { "msg" => "404: location not found" }, data: nil } , status: 404
     rescue RangeError => e
-      render json: { error: "400: #{e.message}", data: nil } , status: 400
+      render json: { error: { "msg" => "400: #{e.message}" }, data: nil } , status: 400
     end
   end
 
@@ -38,8 +36,7 @@ class Api::V1::LocationsController < Api::V1::BaseController
       open_locations_hash[t.location.code] = t.open_now_hash
     end
     data_value = open_locations_hash.empty?  ? nil :  open_locations_hash
-    error_value = nil
-    render json: { data: data_value, error: error_value }
+    render json: { data: data_value }
   end
 
   # fcd1, 10/25/17: Following functionality is almost verbatim

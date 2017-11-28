@@ -15,7 +15,8 @@ describe "locations API", :type => :request do
           get api_url
           expect(response).not_to be_success
           actual_json_as_hash = JSON.parse response.body
-          expect(actual_json_as_hash).to eq({"error" => "404: location not found", "data" => nil })
+          error_msg = { "msg" => "404: location not found" }
+          expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
         end
       end
       describe "with date set to specific date" do
@@ -25,7 +26,8 @@ describe "locations API", :type => :request do
           get api_url
           expect(response).not_to be_success
           actual_json_as_hash = JSON.parse response.body
-          expect(actual_json_as_hash).to eq({"error" => "404: location not found", "data" => nil })
+          error_msg = { "msg" => "404: location not found" }
+          expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
         end
       end
       describe "with date range" do
@@ -34,7 +36,8 @@ describe "locations API", :type => :request do
           get api_url
           expect(response).not_to be_success
           actual_json_as_hash = JSON.parse response.body
-          expect(actual_json_as_hash).to eq({"error" => "404: location not found", "data" => nil })
+          error_msg = { "msg" => "404: location not found" }
+          expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
         end
         it "contains Access-Control-Allow-Origin header set to *" do
           api_url = "/api/v1/locations/supercalifragilisticexpialidocious?start_date=1969-07-21&end_date=1969-07-21"
@@ -95,7 +98,8 @@ describe "locations API", :type => :request do
           get api_url
           expect(response).not_to be_success
           actual_json_as_hash = JSON.parse response.body
-          expect(actual_json_as_hash).to eq({"error" => "400: invalid date", "data" => nil })
+          error_msg = { "msg" => "400: invalid date" }
+          expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
         end
         it "in start date of date range returns an error" do
           end_date = (day_after_moon_landing).strftime("%F")
@@ -103,7 +107,8 @@ describe "locations API", :type => :request do
           get api_url
           expect(response).not_to be_success
           actual_json_as_hash = JSON.parse response.body
-          expect(actual_json_as_hash).to eq({"error" => "400: invalid date", "data" => nil })
+          error_msg = { "msg" => "400: invalid date" }
+          expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
         end
         it "in end of date range returns an error" do
           start_date = (day_after_moon_landing + 1).strftime("%F")
@@ -111,7 +116,8 @@ describe "locations API", :type => :request do
           get api_url
           expect(response).not_to be_success
           actual_json_as_hash = JSON.parse response.body
-          expect(actual_json_as_hash).to eq({"error" => "400: invalid date", "data" => nil })
+          error_msg = { "msg" => "400: invalid date" }
+          expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
         end
       end # END of describe covering bad date formats
       describe "with start date larger (later) than end date" do
@@ -124,7 +130,8 @@ describe "locations API", :type => :request do
           get api_url
           expect(response).not_to be_success
           actual_json_as_hash = JSON.parse response.body
-          expect(actual_json_as_hash).to eq({"error" => "400: start_date greater than end_date", "data" => nil })
+          error_msg = { "msg" => "400: start_date greater than end_date" }
+          expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
         end
       end
       describe "with both a date range (start_date, end_date) and a specific date (date)" do
