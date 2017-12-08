@@ -92,7 +92,7 @@ class Timetable < ApplicationRecord
       close_time: close_time_val,
       closed: closed,
       tbd: tbd,
-      notes: notes.nil? ? "" : notes,
+      notes: note.nil? ? "" : note,
       formatted_date: formatted_date
     }
   end

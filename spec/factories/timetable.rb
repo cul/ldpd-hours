@@ -41,7 +41,7 @@ FactoryGirl.define do
     sequence(:date) { |n| day_after_moon_landing + (n-1)%5 }
     open        Time.zone.parse('09:00', today.to_time)
     close       Time.zone.parse('17:00', today.to_time)
-    sequence(:notes) { |n| "Day #{(n-1)%5}!" }
+    sequence(:note) { |n| "Day #{(n-1)%5}!" }
     closed      false
   end
 
