@@ -98,7 +98,7 @@ RSpec.describe Timetable, type: :model do
         tbd: false,
         open_time: "09:00",
         close_time: "17:00",
-        notes: "Hello!",
+        note: "Hello!",
         formatted_date: "09:00AM-05:00PM"
       }
       end
@@ -109,7 +109,7 @@ RSpec.describe Timetable, type: :model do
         tbd: false,
         open_time: "09:00",
         close_time: "17:00",
-        notes: "",
+        note: "",
         formatted_date: "09:00AM-05:00PM"
       }
       end
@@ -126,7 +126,7 @@ RSpec.describe Timetable, type: :model do
       end
       it "that has hours, a note, and closed = false, tbd = true" do
         # add a nice note
-        butler_today.note = expected_day_info_hash[:notes] = "Still thinking about it..."
+        butler_today.note = expected_day_info_hash[:note] = "Still thinking about it..."
         # set tbd to true for timetable, which should be reflected in the generated hash
         butler_today.tbd = expected_day_info_hash[:tbd] = true
         # setting butler_today.tbd to true should entail the following formatted_date
@@ -135,7 +135,7 @@ RSpec.describe Timetable, type: :model do
       end
       it "that has hours, a note, and closed = true, tbd = false" do
         # add a nice note
-        butler_today.note = expected_day_info_hash[:notes] = "Sorry, we are closed."
+        butler_today.note = expected_day_info_hash[:note] = "Sorry, we are closed."
         # set closed to true for timetable, which should be reflected in the generated hash
         butler_today.closed = expected_day_info_hash[:closed] = true
         # setting butler_today.closed to true should entail the following formatted_date
@@ -144,7 +144,7 @@ RSpec.describe Timetable, type: :model do
       end
       it "that has hours, a note, and closed = tbd = true, closed wins out" do
         # add a nice note
-        butler_today.note = expected_day_info_hash[:notes] = "So confused..."
+        butler_today.note = expected_day_info_hash[:note] = "So confused..."
         # set closed to true for timetable, which should be reflected in the generated hash
         butler_today.closed = expected_day_info_hash[:closed] = true
         # set tbd to true for timetable, which should be reflected in the generated hash
@@ -166,7 +166,7 @@ RSpec.describe Timetable, type: :model do
         tbd: true,
         open_time: nil,
         close_time: nil,
-        notes: '',
+        note: '',
         formatted_date: 'TBD'
       }
     end

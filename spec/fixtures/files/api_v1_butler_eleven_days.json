@@ -9,7 +9,7 @@
 		"close_time" : null,
 		"closed" : false,
 		"tbd" : true,
-		"notes" : "",
+		"note" : "",
 		"formatted_date" : "TBD"
 	    }
 	    ,
@@ -19,7 +19,7 @@
 		"close_time" : null,
 		"closed" : false,
 		"tbd" : true,
-		"notes" : "",
+		"note" : "",
 		"formatted_date" : "TBD"
 	    }
 	    ,
@@ -29,7 +29,7 @@
 		"close_time" : null,
 		"closed" : false,
 		"tbd" : true,
-		"notes" : "",
+		"note" : "",
 		"formatted_date" : "TBD"
 	    }
 	    ,
@@ -39,7 +39,7 @@
 		"close_time" : null,
 		"closed" : false,
 		"tbd" : true,
-		"notes" : "",
+		"note" : "",
 		"formatted_date" : "TBD"
 	    }
 	    ,
@@ -49,7 +49,7 @@
 		"close_time" : null,
 		"closed" : false,
 		"tbd" : true,
-		"notes" : "",
+		"note" : "",
 		"formatted_date" : "TBD"
 	    }
 	    ,
@@ -59,7 +59,7 @@
 		"close_time" : "17:00",
 		"closed" : false,
 		"tbd" : false,
-		"notes" : "Day 0!",
+		"note" : "Day 0!",
 		"formatted_date" : "09:00AM-05:00PM"
 	    }
 	    ,
@@ -69,7 +69,7 @@
 		"close_time" : "17:00",
 		"closed" : false,
 		"tbd" : false,
-		"notes" : "Day 1!",
+		"note" : "Day 1!",
 		"formatted_date" : "09:00AM-05:00PM"
 	    }
 	    ,
@@ -79,7 +79,7 @@
 		"close_time" : "17:00",
 		"closed" : false,
 		"tbd" : false,
-		"notes" : "Day 2!",
+		"note" : "Day 2!",
 		"formatted_date" : "09:00AM-05:00PM"
 	    }
 	    ,
@@ -89,7 +89,7 @@
 		"close_time" : "17:00",
 		"closed" : false,
 		"tbd" : false,
-		"notes" : "Day 3!",
+		"note" : "Day 3!",
 		"formatted_date" : "09:00AM-05:00PM"
 	    }
 	    ,
@@ -99,7 +99,7 @@
 		"close_time" : "17:00",
 		"closed" : false,
 		"tbd" : false,
-		"notes" : "Day 4!",
+		"note" : "Day 4!",
 		"formatted_date" : "09:00AM-05:00PM"
 	    }
 	    ,
@@ -109,7 +109,7 @@
 		"close_time" : null,
 		"closed" : false,
 		"tbd" : true,
-		"notes" : "",
+		"note" : "",
 		"formatted_date" : "TBD"
 	    }
 	]
