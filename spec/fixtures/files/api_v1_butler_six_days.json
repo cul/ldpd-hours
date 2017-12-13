@@ -9,7 +9,7 @@
 		"close_time" : null,
 		"closed" : false,
 		"tbd" : true,
-		"notes" : "",
+		"note" : "",
 		"formatted_date" : "TBD"
 	    }
 	    ,
@@ -19,7 +19,7 @@
 		"close_time" : null,
 		"closed" : false,
 		"tbd" : true,
-		"notes" : "",
+		"note" : "",
 		"formatted_date" : "TBD"
 	    }
 	    ,
@@ -29,7 +29,7 @@
 		"close_time" : null,
 		"closed" : false,
 		"tbd" : true,
-		"notes" : "",
+		"note" : "",
 		"formatted_date" : "TBD"
 	    }
 	    ,
@@ -39,7 +39,7 @@
 		"close_time" : null,
 		"closed" : false,
 		"tbd" : true,
-		"notes" : "",
+		"note" : "",
 		"formatted_date" : "TBD"
 	    }
 	    ,
@@ -49,7 +49,7 @@
 		"close_time" : null,
 		"closed" : false,
 		"tbd" : true,
-		"notes" : "",
+		"note" : "",
 		"formatted_date" : "TBD"
 	    }
 	    ,
@@ -59,7 +59,7 @@
 		"close_time" : null,
 		"closed" : false,
 		"tbd" : true,
-		"notes" : "",
+		"note" : "",
 		"formatted_date" : "TBD"
 	    }
 	]

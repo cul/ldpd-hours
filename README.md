@@ -79,7 +79,7 @@ Because updating our hours uses a MySQL specific flavor of a batch upsert, if th
 		"close_time" : "17:00",
 		"closed" : false,
 		"tbd" : false,
-		"notes" : "Free Donuts!",
+		"note" : "Free Donuts!",
 		"formatted_date" : "09:00AM-05:00PM"
 	    }
 	]
@@ -102,7 +102,7 @@ Because updating our hours uses a MySQL specific flavor of a batch upsert, if th
 		"close_time" : "17:00",
 		"closed" : false,
 		"tbd" : false,
-		"notes" : "Movie night!",
+		"note" : "Movie night!",
 		"formatted_date" : "09:00AM-05:00PM"
 	    }
 	    ,
@@ -112,7 +112,7 @@ Because updating our hours uses a MySQL specific flavor of a batch upsert, if th
 		"close_time" : "17:00",
 		"closed" : false,
 		"tbd" : false,
-		"notes" : "",
+		"note" : "",
 		"formatted_date" : "09:00AM-05:00PM"
 	    }
 	    ,
@@ -122,7 +122,7 @@ Because updating our hours uses a MySQL specific flavor of a batch upsert, if th
 		"close_time" : null,
 		"closed" : false,
 		"tbd" : true,
-		"notes" : "",
+		"note" : "",
 		"formatted_date" : "TBD"
             }
 	]
@@ -133,7 +133,7 @@ Because updating our hours uses a MySQL specific flavor of a batch upsert, if th
 A few notes about the above JSON structure:
 
 - The last date entry is an example of the default date values that are returned for a date that does not have any associated data in Hours manager. So, in the above example, there was no information in the hours manager database for 07/26/2017 for location butler, and therefore default values were returned for that date.
-- The middle date entry has an empty string value asociated with the "notes" key. This is the default value (not null) if no note value was specified in the database for that date entry for the given location.
+- The middle date entry has an empty string value asociated with the "note" key. This is the default value (not null) if no note value was specified in the database for that date entry for the given location.
 
 ### `GET api/v1/locations/open_now`
 #### Query Params
