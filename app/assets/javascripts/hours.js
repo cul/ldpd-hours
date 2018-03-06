@@ -87,5 +87,21 @@ $(document).ready(function(){
       $('div.body-contain').prepend('<div class="alert alert-success"><a href="#" data-dismiss="alert" class="close">×</a><ul><li>Dates Successfully Added</li></ul></div>');
     }
   });
-
+  $.ajax({ 
+      type: 'GET', 
+      url: 'https://api.library.columbia.edu/query.json?qt=alerts',
+      dataType: 'json',
+      success: function (data) { 
+        if(data['alerts'].length > 0) {
+          data['alerts'].forEach(function(alert){
+            var $newAlertDiv = $('<div class="alert"></div>');
+            if(alert['type'] == 'critical') { $newAlertDiv.addClass('alert-danger'); }
+            if(alert['type'] == 'warning') { $newAlertDiv.addClass('alert-warning'); }
+            if(alert['type'] == 'info') { $newAlertDiv.addClass('alert-info'); }
+            $newAlertDiv.html(alert['html']).attr('role','alert');
+            $('#alert-container').append($newAlertDiv);
+          });
+        }
+      }
+  });
 });
