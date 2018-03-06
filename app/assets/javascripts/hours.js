@@ -95,10 +95,10 @@ $(document).ready(function(){
         if(data['alerts'].length > 0) {
           data['alerts'].forEach(function(alert){
             var $newAlertDiv = $('<div class="alert"></div>');
-            if(alert['type'] == 'critical') { $newAlertDiv.addClass('alert-error'); }
+            if(alert['type'] == 'critical') { $newAlertDiv.addClass('alert-danger'); }
             if(alert['type'] == 'warning') { $newAlertDiv.addClass('alert-warning'); }
             if(alert['type'] == 'info') { $newAlertDiv.addClass('alert-info'); }
-            $newAlertDiv.html(alert['html']);
+            $newAlertDiv.html(alert['html']).attr('role','alert');
             $('#alert-container').append($newAlertDiv);
           });
         }
