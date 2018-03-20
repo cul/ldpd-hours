@@ -6,10 +6,31 @@ describe 'locations open now', type: :feature do
   let(:fourAM) { Time.zone.local(tomorrow.year, tomorrow.month, tomorrow.day , 4, 0, 0) }
   let(:threePM) { Time.zone.local(now.year, now.month, now.day, 15, 0, 0) }
   let(:sevenPM) { Time.zone.local(now.year, now.month, now.day, 19, 0, 0) }
+  let (:scripts) { page.all(:css, 'script[src]', visible: false) }
 
   after do
     allow(Date).to receive(:current).and_call_original
     allow(Time).to receive(:current).and_call_original
+  end
+  context 'with analytics' do
+    before do
+      Rails.application.secrets[:analytics_key] = 'fakey'
+      visit '/locations/open_now'
+    end
+    it "tracks page views" do
+      expect(scripts).not_to be_empty
+      expect(scripts.find {|s| s[:src].include? 'gtag/js?id=fakey'}).to be
+    end
+  end
+  context 'without analytics' do
+    before do
+      Rails.application.secrets.delete(:analytics_key)
+      visit '/locations/open_now'
+    end
+    it "tracks page views" do
+      expect(scripts).not_to be_empty
+      expect(scripts.find {|s| s[:src].include? 'gtag/js?id='}).to be_nil
+    end
   end
   context 'afternoon' do
     before do
