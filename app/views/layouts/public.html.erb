@@ -15,7 +15,7 @@
 
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
-    <% if Rails.application.secrets[:analytics_key] -%>
+    <% if Rails.application.config.track_users && Rails.application.secrets[:analytics_key] -%>
     <script async src="https://www.googletagmanager.com/gtag/js?id=<%= Rails.application.secrets[:analytics_key]%>"></script>
     <script type="text/javascript">
       window.dataLayer = window.dataLayer || [];

@@ -27,7 +27,7 @@ describe 'locations open now', type: :feature do
       Rails.application.secrets.delete(:analytics_key)
       visit '/locations/open_now'
     end
-    it "tracks page views" do
+    it "doesn't tracks page views" do
       expect(scripts).not_to be_empty
       expect(scripts.find {|s| s[:src].include? 'gtag/js?id='}).to be_nil
     end
