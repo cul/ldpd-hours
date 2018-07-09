@@ -43,4 +43,6 @@ Rails.application.configure do
   # Logging
   config.log_formatter = ::Logger::Formatter.new
   config.log_level = :debug
+
+  config.track_users = false
 end
