@@ -87,11 +87,11 @@ $(document).ready(function(){
       $('div.body-contain').prepend('<div class="alert alert-success"><a href="#" data-dismiss="alert" class="close">×</a><ul><li>Dates Successfully Added</li></ul></div>');
     }
   });
-  $.ajax({ 
-      type: 'GET', 
+  $.ajax({
+      type: 'GET',
       url: 'https://api.library.columbia.edu/query.json?qt=alerts',
       dataType: 'json',
-      success: function (data) { 
+      success: function (data) {
         if(data['alerts'].length > 0) {
           data['alerts'].forEach(function(alert){
             var $newAlertDiv = $('<div class="alert"></div>');
@@ -104,4 +104,8 @@ $(document).ready(function(){
         }
       }
   });
+
+
+  //Enable bootstrap 3 tooltips
+  $('[data-toggle="tooltip"]').tooltip({html: true});
 });

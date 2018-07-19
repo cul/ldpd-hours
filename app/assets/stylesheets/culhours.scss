@@ -224,6 +224,11 @@ body {
 		}
 		.is-closed {
 			color: $color_29;
+
+			span[data-toggle="tooltip"] {
+				border-bottom: 1px dashed $color_1;
+			}
+
 		}
 	}
 }

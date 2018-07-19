@@ -19,7 +19,7 @@ describe CalendarHelper do
     subject { subject_class.new }
     let(:timetable) { Timetable.new(location_id: 1, date: today, open: open, close: still_open) }
     it do
-      expect(subject.until_or_closed(Location.new(id: 1), [timetable])).to match("Until")
+      expect(subject.until_or_closed(Location.new(id: 1), [timetable])).to match(/\s*\d{1,2}:\d{2} (a|p)m - \s*\d{1,2}:\d{2} (a|p)m/)
     end
   end
 end

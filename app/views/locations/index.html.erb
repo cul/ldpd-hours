@@ -1,13 +1,32 @@
 <div id="home-toc">
-  <h2 class="lead trajanpro text-center"><%= @now.strftime('%B %e, %Y') %></h2>
+  <h2 class="lead trajanpro text-center">Hours For <%= @now.strftime('%B %e, %Y') %></h2>
   <ul class="lib-list">
     <% @locations.each do |location| %>
-      <%- status = until_or_closed(location, @open)
+      <%-
+          status = until_or_closed(location, @open)
           use_class = " is-closed" if status == 'CLOSED'
           use_class = " is-24" if status == 'OPEN'
        %>
+       <%-
+          if status == 'CLOSED'
+            if @closed_location_ids_to_tomorrow_open_timetables.key?(location.id)
+              next_open_timetable = @closed_location_ids_to_tomorrow_open_timetables[location.id]
+              closed_location_next_open = "Next Open<br />#{next_open_timetable.date.strftime("%-m/%e")} #{next_open_timetable.open_time.strftime("%l:%M %P")} - #{next_open_timetable.close_time.strftime("%l:%M %P")}"
+            else
+              closed_location_next_open = "Not open within the next 24 hours."
+            end
+          end
+       %>
       <li class="location-item">
-        <span class="closes-at pull-right<%= use_class %>"><%= status %></span>
+        <span class="closes-at pull-right<%= use_class %>">
+          <% if status == 'CLOSED' %>
+            <span data-toggle="tooltip" data-placement="top" title="<%= closed_location_next_open %>">
+              <%= status %>
+            </span>
+          <% else %>
+            <%= status %>
+          <% end %>
+        </span>
         <%= link_to location.name, location_path(location.code) %>
       </li>
     <% end %>
