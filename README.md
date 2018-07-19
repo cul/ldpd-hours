@@ -29,7 +29,6 @@
 Run testing suite with:
 
 ```
-rake db:seed RAILS_ENV=test
 bundle exec rspec
 ```
 
