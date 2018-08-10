@@ -228,6 +228,7 @@ describe "locations API", :type => :request do
   end # END of describe covering open_hours
   # START of describe covering open_now
   describe 'open_now' do
+    let(:now) { Time.zone.now }
     let(:butler_open_now) { FactoryGirl.create(:butler_open_now) }
     let(:butler_closed_now) { FactoryGirl.create(:butler_closed_now) }
     let(:lehman_closed_now) { FactoryGirl.create(:lehman_closed_now) }
@@ -236,21 +237,10 @@ describe "locations API", :type => :request do
     # two_hours_from_now_floor is equal to two hours in the future, with
     # the minutes and seconds zeroed out. So, it is currently 10:14 AM,
     # two_hours_from_now_floor would be equal to the string "12:00"
-    let(:two_hours_from_now_floor) { Time.zone.local(Time.current.year,
-                                                     Time.current.month,
-                                                     Time.current.day,
-                                                     Time.current.hour + 2,
-                                                     0,
-                                                     0)
-    }
+    let(:two_hours_from_now_floor) { now.beginning_of_hour + 2.hours }
     # similar to the above, except two hours in the past
-    let(:two_hours_in_the_past_floor) { Time.zone.local(Time.current.year,
-                                                        Time.current.month,
-                                                        Time.current.day,
-                                                        Time.current.hour - 2,
-                                                        0,
-                                                        0)
-    }
+    let(:two_hours_in_the_past_floor) { now.beginning_of_hour - 2.hours }
+
     describe 'returns' do
       it "butler and miskatonic, but not lehman" do
         butler_open_now

@@ -11,6 +11,7 @@ class LocationsController < ApplicationController
     @locations = (home_page ? Location.where(front_page: true) : Location.all).order(:name)
     @now = Time.current
     @open = all_open(home_page)
+    @closed_location_ids_to_tomorrow_open_timetables = closed_location_ids_to_tomorrow_open_timetables(@open, home_page)
     render layout: "public"
   end
 
@@ -90,6 +91,26 @@ class LocationsController < ApplicationController
       pli = t.location.primary_location_id
       pli ? all_open.detect { |t2| t2.location_id == pli } : true
     end
+  end
+
+  def closed_location_ids_to_tomorrow_open_timetables(open_location_timetables = all_open, home_page = false)
+    open_location_ids = all_open.map { |timetable| timetable.location_id }
+    closed_locations = Location.where.not(id: open_location_ids)
+
+    tomorrow_open_timetables_for_closed = Timetable.where(location_id: closed_locations)
+                    .where("open > ?" , @now)
+                    .where("open < ?" , @now + 1.day)
+                    .where(closed: false)
+                    .where(tbd: false)
+                    .order(:date) # make sure that next day appears first in sort order, in case we get two calendar dates in results
+                    .includes(:location)
+    tomorrow_open_timetables_for_closed = tomorrow_open_timetables_for_closed.where(locations: {front_page: true}) if home_page
+    closed_loc_ids_to_tomorrow_open_timetables = {}
+    tomorrow_open_timetables_for_closed.each do |timetable|
+      next if closed_loc_ids_to_tomorrow_open_timetables.key?(timetable.location_id)
+      closed_loc_ids_to_tomorrow_open_timetables[timetable.location_id] = timetable
+    end
+    closed_loc_ids_to_tomorrow_open_timetables
   end
 
   private

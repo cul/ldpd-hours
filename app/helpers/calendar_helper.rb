@@ -7,7 +7,7 @@ module CalendarHelper
     @closings ||= begin
       closings = {}
       open.each do |timetable|
-        message = timetable.all_day? ? "OPEN" : "Until #{timetable.close_time.strftime("%l:%M %P")}"
+        message = timetable.all_day? ? "OPEN" : "#{timetable.open_time.strftime("%l:%M %P")} - #{timetable.close_time.strftime("%l:%M %P")}"
         closings[timetable.location_id] = message
       end
       closings
