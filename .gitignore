@@ -24,5 +24,6 @@
 
 /config/database.yml
 /config/secrets.yml
+/config/wifi_density.yml
 
 /coverage
