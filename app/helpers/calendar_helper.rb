@@ -14,4 +14,13 @@ module CalendarHelper
     end
     @closings.fetch(location.id, "CLOSED")
   end
+
+  def page_title(location = nil)
+    return "Library Hours and Locations Open Now" unless location
+    if location.name =~ /\shours$/i
+      return location.name
+    else
+      return "#{location.name} Hours"
+    end
+  end
 end

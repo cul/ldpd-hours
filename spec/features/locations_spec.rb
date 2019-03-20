@@ -14,12 +14,17 @@ describe "Locations", type: :feature do
 
     it "should have a calendar on show page" do
       visit("/locations")
+      # index page should list all open now locations
+      expect(page.title).to include("Open Now")
       first("li.location-item a").click
+      # show page should have a library name instead of Open Now general label
+      expect(page.title).not_to include("Open Now")
       expect(page).to have_css("tr")
     end
     it "shows the primary and secondary locations" do
       visit("/locations/#{butler.code}")
       click_on underbutler.name
+      expect(page.title).to include(butler.name)
       expect(page).to have_css("h2", text: underbutler.name)
       expect(page).to have_css("p", text: butler.name)
     end
