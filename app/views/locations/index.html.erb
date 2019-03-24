@@ -28,7 +28,7 @@
             <%= status %>
           <% end %>
         </span>
-        <%- if (status != 'CLOSED' || Rails.env.development?) && (density_percentage = wifi_density_percentage(location)) %>
+        <%- if (status != 'CLOSED' || Rails.env.development?) && (density_percentage = Hours::WifiDensity.percentage_for(location)) %>
           <span class="density-percentage pull-right"><span class="glyphicon glyphicon-signal"></span> <%= density_percentage %>%</span>
         <%- end %>
         <%= link_to location.name, location_path(location.code) %>
