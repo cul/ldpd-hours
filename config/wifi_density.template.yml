@@ -41,4 +41,4 @@ development:
 
 test:
   <<: *default
-  data_cache_duration: <%= 0.seconds %>
+  data_cache_duration: <%= 1.second %>

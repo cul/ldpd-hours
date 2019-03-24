@@ -38,7 +38,6 @@ group :development, :test do
   gem 'poltergeist'
   gem 'database_cleaner'
   gem 'pry'
-  gem 'webmock'
 end
 
 group :development do

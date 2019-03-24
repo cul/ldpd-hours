@@ -1,37 +1,31 @@
 require "rails_helper"
 
 describe Hours::WifiDensity do
-  let(:sample_wifi_density_response_json) { file_fixture("sample-wifi-density-response.json").read }
-  let(:sample_wifi_density_response) { JSON.parse sample_wifi_density_response_json }
+  let(:sample_wifi_density_response) { JSON.parse(file_fixture("sample-wifi-density-response.json").read) }
   let(:sample_hierarchical_wifi_density_data) { JSON.parse file_fixture("sample-hierarchical-wifi-density-data.json").read }
+
+  before do
+    allow(described_class).to receive(:fetch_raw_wifi_density_data).and_return(sample_wifi_density_response)
+  end
 
   context ".percentage_for" do
     let(:butler_location) {
       Location.new(code: 'butler-24')
     }
-    before do
-      stub_request(:get, "https://hours.library.columbia.edu/wifi-density.json").
-        with(headers: {
-       	  'Accept'=>'*/*',
-       	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-       	  'Host'=>'hours.library.columbia.edu',
-       	  'User-Agent'=>'Ruby'
-        }).to_return(status: 200, body: sample_wifi_density_response_json, headers: {})
-    end
-    it "returns the expected percentage", focus: true do
+    it "returns the expected percentage" do
       expect(described_class.percentage_for(butler_location)).to eq(27)
     end
   end
 
   context ".wifi_data_cache_duration" do
     it "returns the expected time" do
-      expect(described_class.wifi_data_cache_duration).to eq(123.seconds)
+      expect(described_class.wifi_data_cache_duration).to eq(1.second)
     end
   end
 
   context ".data_url" do
     it "returns the expected url" do
-      expect(described_class.data_url).to eq('https://library.columbia.edu/wifi-density.json')
+      expect(described_class.data_url).to eq('https://hours.library.columbia.edu/wifi-density.json')
     end
   end
 
