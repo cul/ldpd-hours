@@ -48,7 +48,7 @@ body {
 }
 #outer-wrapper {
 	padding-top: 0;
-	padding-bottom: 2em;
+	padding-bottom: 1em;
 	margin-bottom: 2em;
 	border: 1px solid $color_4;
 	border-top: 0;
@@ -230,7 +230,15 @@ body {
 			}
 
 		}
+		.density-percentage {
+			margin-right: 1em;
+			color: $color_4;
+			font-size: .8em;
+		}
 	}
+}
+#wifi_usage_data_statement {
+  margin:1em 0 0;
 }
 .location {
 	h2.location-name {
@@ -346,7 +354,7 @@ body {
 }
 @media(min-width: 1200px) {
 	#outer-wrapper {
-		padding: 0 10px 2em;
+		padding: 0 10px 1em;
 		width: 1190px;
 	}
 	#navbar-container {

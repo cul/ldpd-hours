@@ -19,6 +19,7 @@ before_script:
   - "phantomjs --version"
   - cp config/database.yml.travis config/database.yml
   - cp config/secrets.template.yml config/secrets.yml
+  - cp config/wifi_density.template.yml config/wifi_density.yml
   - RAILS_ENV=test bundle exec rake db:schema:load --trace
   - bundle exec rake db:test:prepare
   - nvm install 6

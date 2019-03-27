@@ -1,0 +1,44 @@
+default: &default
+  data_url: https://hours.library.columbia.edu/wifi-density.json
+  data_cache_duration: <%= 10.minutes %>
+  locations:
+    avery:
+      cuit_location_ids:
+        - 124
+      high: 100
+    business:
+      cuit_location_ids:
+        - 96
+      high: 100
+    butler-24:
+      cuit_location_ids:
+        - 115
+      high: 1900
+    eastasian:
+      cuit_location_ids:
+        - 98
+      high: 300
+    lehman:
+      cuit_location_ids:
+        - 109
+      high: 1300
+    math:
+      cuit_location_ids:
+        - 141
+      high: 600
+    science-engineering:
+      cuit_location_ids:
+        - 100
+      high: 240
+    social-work:
+      cuit_location_ids:
+        - 123
+      high: 100
+
+development:
+  <<: *default
+  data_cache_duration: <%= 10.seconds %>
+
+test:
+  <<: *default
+  data_cache_duration: <%= 1.second %>

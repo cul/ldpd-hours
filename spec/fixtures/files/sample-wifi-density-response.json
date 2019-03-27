@@ -1,0 +1,117 @@
+{
+   "155":{
+      "parent_id":"153",
+      "name":"John Jay Dining Hall",
+      "client_count":"6"
+   },
+   "192":{
+      "parent_id":"153",
+      "name":"JJ's Place",
+      "client_count":"3"
+   },
+   "117":{
+      "parent_id":"115",
+      "name":"Butler Library 3",
+      "client_count":"126"
+   },
+   "116":{
+      "parent_id":"115",
+      "name":"Butler Library 2",
+      "client_count":"108"
+   },
+   "111":{
+      "parent_id":"109",
+      "name":"Lehman Library 3",
+      "client_count":"11"
+   },
+   "110":{
+      "parent_id":"109",
+      "name":"Lehman Library 2",
+      "client_count":"10"
+   },
+   "119":{
+      "parent_id":"115",
+      "name":"Butler Library 4",
+      "client_count":"76"
+   },
+   "118":{
+      "parent_id":"117",
+      "name":"Butler Library 301",
+      "client_count":"107"
+   },
+   "105":{
+      "parent_id":"101",
+      "name":"Lerner 4",
+      "client_count":"21"
+   },
+   "120":{
+      "parent_id":"115",
+      "name":"Butler Library 5",
+      "client_count":"39"
+   },
+   "121":{
+      "parent_id":"115",
+      "name":"Butler Library 6",
+      "client_count":"37"
+   },
+   "122":{
+      "parent_id":"115",
+      "name":"Butler Library stk",
+      "client_count":"23"
+   },
+   "125":{
+      "parent_id":"124",
+      "name":"Architectural and Fine Arts Library 1",
+      "client_count":"0"
+   },
+   "126":{
+      "parent_id":"124",
+      "name":"Architectural and Fine Arts Library 2",
+      "client_count":"1"
+   },
+   "127":{
+      "parent_id":"124",
+      "name":"Architectural and Fine Arts Library 3",
+      "client_count":"2"
+   },
+   "102":{
+      "parent_id":"101",
+      "name":"Lerner 1",
+      "client_count":"12"
+   },
+   "103":{
+      "parent_id":"101",
+      "name":"Lerner 2",
+      "client_count":"53"
+   },
+   "100":{
+      "parent_id":"99",
+      "name":"Science and Engineering Library",
+      "client_count":"1"
+   },
+   "106":{
+      "parent_id":"101",
+      "name":"Lerner 5",
+      "client_count":"20"
+   },
+   "107":{
+      "parent_id":"101",
+      "name":"Roone Arledge Auditorium",
+      "client_count":"33"
+   },
+   "104":{
+      "parent_id":"101",
+      "name":"Lerner 3",
+      "client_count":"50"
+   },
+   "96":{
+      "parent_id":"2",
+      "name":"Uris/Watson Library",
+      "client_count":"100"
+   },
+   "98":{
+      "parent_id":"97",
+      "name":"Starr East Asian Library",
+      "client_count":"14"
+   }
+}
