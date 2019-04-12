@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock "3.8.1"
+lock "3.8.2"
 
 set :department, 'ldpd'
 set :instance, fetch(:department)
@@ -33,6 +33,7 @@ set :passenger_restart_with_touch, true
 set :linked_files, fetch(:linked_files, []).push(
   "config/database.yml",
   "config/secrets.yml",
+  "config/wifi_density.yml"
 )
 
 namespace :deploy do
