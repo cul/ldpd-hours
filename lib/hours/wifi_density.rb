@@ -11,7 +11,7 @@ module Hours
     def self.percentage_for(location)
       # If this location's code is not mapped in the wifi density config file,
       # that means wifi density info is not supported for the location.
-      config_for_location = WIFI_DENSITY['locations'][location.code]
+      config_for_location = config_for_location_code(location.code)
       return nil if config_for_location.nil? || !config_for_location.key?('high') || !config_for_location.key?('cuit_location_ids')
       Rails.cache.fetch('wifi_density_data-' + location.code, expires_in: wifi_data_cache_duration) do
         wifi_density_data_for_locations = Rails.cache.fetch('wifi_density_data', expires_in: wifi_data_cache_duration) do
@@ -25,6 +25,10 @@ module Hours
           aggregated_locations.merge!({cuit_location_id.to_s => location_data})
           aggregated_locations.merge!(recursively_collect_children(location_data))
         end
+
+        # Return nil if no aggregated_locations were found for the given id.
+        # This indicates that we have no data for this location.
+        return nil if aggregated_locations.blank?
 
         # Sum client_count totals from all aggregated locations
         total_client_count = aggregated_locations.values.reduce(0) do |count, location_data|
@@ -46,6 +50,10 @@ module Hours
           percentage_integer
         end
       end
+    end
+
+    def self.config_for_location_code(location_code)
+      WIFI_DENSITY['locations'][location_code]
     end
 
     def self.fetch_raw_wifi_density_data

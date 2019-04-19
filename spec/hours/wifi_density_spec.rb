@@ -12,8 +12,22 @@ describe Hours::WifiDensity do
     let(:butler_location) {
       Location.new(code: 'butler-24')
     }
+    let(:journalism_location) {
+      Location.new(code: 'journalism')
+    }
+    let(:location_with_no_associated_wifi_config) {
+      Location.new(code: 'some-location-with-no-wifi-data')
+    }
     it "returns the expected percentage" do
       expect(described_class.percentage_for(butler_location)).to eq(27)
+    end
+
+    it "returns nil for a location that has a wifi config entry in wifi_density.yml, but doesn't have location data" do
+      expect(described_class.percentage_for(journalism_location)).to eq(nil)
+    end
+
+    it "returns nil for a location that does not have a wifi config entry in wifi_density.yml" do
+      expect(described_class.percentage_for(location_with_no_associated_wifi_config)).to eq(nil)
     end
   end
 
