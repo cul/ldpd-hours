@@ -49,7 +49,7 @@ class Timetable < ApplicationRecord
 
     if timetable_params['location_code'] == 'all'
       Location.all.each do |each_location|
-        values[0] = each_location.id
+        0.step(by: 9, to: (timetable_params["dates"].count * 9) - 1) { |lidx| values[lidx] = each_location.id }
         bulk_insert_users_sql_arr = ["REPLACE INTO timetables (location_id,date,open,close,closed,tbd,note,created_at,updated_at) VALUES #{params.join(", ")}"] + values
         sql = ActiveRecord::Base.send(:sanitize_sql_array, bulk_insert_users_sql_arr)
         ActiveRecord::Base.connection.exec_update(sql)
