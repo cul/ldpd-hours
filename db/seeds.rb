@@ -6,6 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+all_location = Location.create(name: "All Locations", code: "all", primary: true, front_page: false)
 butler = Location.create(name: "Butler", code: "butler", primary: true)
 avery = Location.create(name: "Avery", code: "avery", primary: true)
 rbml = Location.create(name: "Rare Books", code: "rbml", primary_location: butler)

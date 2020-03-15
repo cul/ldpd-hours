@@ -8,7 +8,12 @@ class LocationsController < ApplicationController
       path = request.original_fullpath.split('?')[0]
       path.blank? or path == '/'
     end
-    @locations = (home_page ? Location.where(front_page: true) : Location.all).order(:name)
+    if home_page
+      @locations = Location.where(front_page: true).where.not(code: 'all')
+    else
+      @locations = Location.where.not(code: 'all')
+    end
+    @locations = @locations.order(:name)
     @now = Time.current
     @open = all_open(home_page)
     @closed_location_ids_to_tomorrow_open_timetables = closed_location_ids_to_tomorrow_open_timetables(@open, home_page)
@@ -86,7 +91,9 @@ class LocationsController < ApplicationController
                      .where(tbd: false)
                      .includes(:location)
     all_open = all_open.where(locations: {front_page: true}) if home_page
-    all_open = all_open.order('locations.name').load
+    all_open = all_open.order('locations.name')
+    all_open = all_open.where.not(locations: { code: 'all' })
+    all_open = all_open.load
     all_open.select do |t|
       pli = t.location.primary_location_id
       pli ? all_open.detect { |t2| t2.location_id == pli } : true
@@ -105,6 +112,7 @@ class LocationsController < ApplicationController
                     .order(:date) # make sure that next day appears first in sort order, in case we get two calendar dates in results
                     .includes(:location)
     tomorrow_open_timetables_for_closed = tomorrow_open_timetables_for_closed.where(locations: {front_page: true}) if home_page
+    tomorrow_open_timetables_for_closed = tomorrow_open_timetables_for_closed.where.not(locations: {code: 'all'})
     closed_loc_ids_to_tomorrow_open_timetables = {}
     tomorrow_open_timetables_for_closed.each do |timetable|
       next if closed_loc_ids_to_tomorrow_open_timetables.key?(timetable.location_id)
