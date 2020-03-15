@@ -50,4 +50,11 @@ FactoryGirl.define do
       create_list :the_five_days_after_moon_landing, 5, location: t
     end
   end
+
+  factory :all_location, class: Location do
+    code 'all'
+    name 'Magic Overwrite All Location'
+    primary true
+    primary_location nil
+  end
 end

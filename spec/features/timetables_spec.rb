@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 describe "Timetables", type: :feature, js: true do
-  let(:lehman) { FactoryGirl.create(:lehman) }
-  let(:miskatonic) { FactoryGirl.create(:miskatonic) }
+  let!(:all_location) { FactoryGirl.create(:all_location) }
+  let!(:lehman) { FactoryGirl.create(:lehman) }
+  let!(:miskatonic) { FactoryGirl.create(:miskatonic) }
 
   shared_examples 'view the page' do
     it "should display a calendar" do
@@ -75,6 +76,19 @@ describe "Timetables", type: :feature, js: true do
     end
   end
 
+  shared_examples 'edit all calendars' do
+    it "should display note everywhere if one is added to 'all'" do
+      visit(exceptional_edit_location_timetables_path(location_code: 'all'))
+      find("input#timetable_closed").click
+      find("td", :text => "15").click
+      fill_in "Note", with: "Holiday"
+      click_button("Update Hours")
+      expect(find("td", :text => "15")).to have_content("Holiday")
+      visit(exceptional_edit_location_timetables_path(location_code: lehman.code))
+      expect(find("td", :text => "15")).to have_content("Holiday")
+    end
+  end
+
   shared_examples 'batch edit calendar' do
     pending
   end
@@ -84,6 +98,7 @@ describe "Timetables", type: :feature, js: true do
 
     include_examples 'view the page'
     include_examples 'edit the calendar'
+    include_examples 'edit all calendars'
     include_examples 'batch edit calendar'
   end
 
