@@ -22,7 +22,7 @@ class TimetablesController < ApplicationController
     end
 
     if params["dates"].blank?
-      render json: { message: "no dates selected" }, status: :error
+      render json: { message: "no compatible dates selected" }, status: :error
       return
     end
 
@@ -80,6 +80,6 @@ class TimetablesController < ApplicationController
             end
     start_day, end_day = Date.strptime(params["start_date"], "%m/%d/%Y"), Date.strptime(params["end_date"], "%m/%d/%Y")
     dates_by_weekday = (start_day..end_day).group_by(&:wday)
-    dates_by_weekday.fetch_values(*keys).flatten.map(&:to_s)
+    dates_by_weekday.fetch_values(*keys) {|k| [] }.flatten.map(&:to_s)
   end
 end
