@@ -87,18 +87,26 @@ $(document).ready(function(){
       $('div.body-contain').prepend('<div class="alert alert-success"><a href="#" data-dismiss="alert" class="close">×</a><ul><li>Dates Successfully Added</li></ul></div>');
     }
   });
-  $.ajax({
+  var subscriptionsForThisPage = $('#alert-container').attr('data-subscriptions');
+  subscriptionsForThisPage = subscriptionsForThisPage ? subscriptionsForThisPage.split(',') : [];
+  $.ajax({ 
       type: 'GET',
       url: 'https://api.library.columbia.edu/query.json?qt=alerts',
       dataType: 'json',
-      success: function (data) {
+      success: function (data) { 
         if(data['alerts'].length > 0) {
           data['alerts'].forEach(function(alert){
+            var alertTargets = alert['targets'] || [];
+            var matches = alertTargets.filter(function(target) { return subscriptionsForThisPage.indexOf(target) !== -1; });
+            // Check to see if any of this pages's subscriptions match this alert's targets.
+            if( matches.length === 0 ) {
+                return; // no matches found
+            }
             var $newAlertDiv = $('<div class="alert"></div>');
             if(alert['type'] == 'critical') { $newAlertDiv.addClass('alert-danger'); }
             if(alert['type'] == 'warning') { $newAlertDiv.addClass('alert-warning'); }
             if(alert['type'] == 'info') { $newAlertDiv.addClass('alert-info'); }
-            $newAlertDiv.html(alert['html']).attr('role','alert');
+            $newAlertDiv.html(alert['html']);
             $('#alert-container').append($newAlertDiv);
           });
         }
