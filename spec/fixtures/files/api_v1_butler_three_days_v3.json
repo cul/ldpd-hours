@@ -1,37 +1,39 @@
 {
-    "data" :
-    {
-	"butlerfivedays" : 
-	[
-	    {
-		"date" : "1969-07-24",
-		"open_time" : "09:00",
-		"close_time" : "17:00",
-		"closed" : false,
-		"tbd" : false,
-		"note" : "Day 3!",
-		"formatted_date" : "09:00AM-05:00PM"
-	    }
-	    ,
-	    {
-		"date" : "1969-07-25",
-		"open_time" : "09:00",
-		"close_time" : "17:00",
-		"closed" : false,
-		"tbd" : false,
-		"note" : "Day 4!",
-		"formatted_date" : "09:00AM-05:00PM"
-	    }
-	    ,
-            {
-		"date" : "1969-07-26",
-		"open_time" : null,
-		"close_time" : null,
-		"closed" : false,
-		"tbd" : true,
-		"note" : "",
-		"formatted_date" : "TBD"
-            }
-	]
-    }
+	"data": {
+		"butlerfivedays": [
+			{
+				"date": "1969-07-24",
+				"open_time": "09:00",
+				"close_time": "17:00",
+				"closed": false,
+				"tbd": false,
+				"note": "Day 3!",
+				"short_note": "",
+				"short_note_url": "",
+				"formatted_date": "09:00AM-05:00PM"
+			},
+			{
+				"date": "1969-07-25",
+				"open_time": "09:00",
+				"close_time": "17:00",
+				"closed": false,
+				"tbd": false,
+				"note": "Day 4!",
+				"short_note": "",
+				"short_note_url": "",
+				"formatted_date": "09:00AM-05:00PM"
+			},
+			{
+				"date": "1969-07-26",
+				"open_time": null,
+				"close_time": null,
+				"closed": false,
+				"tbd": true,
+				"note": "",
+				"short_note": "",
+				"short_note_url": "",
+				"formatted_date": "TBD"
+			}
+		]
+	}
 }

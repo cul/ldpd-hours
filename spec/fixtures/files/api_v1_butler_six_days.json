@@ -1,67 +1,72 @@
 {
-    "data" :
-    {
-	"butlerfivedays" : 
-	[
-            {
-		"date" : "1969-07-26",
-		"open_time" : null,
-		"close_time" : null,
-		"closed" : false,
-		"tbd" : true,
-		"note" : "",
-		"formatted_date" : "TBD"
-	    }
-	    ,
-            {
-		"date" : "1969-07-27",
-		"open_time" : null,
-		"close_time" : null,
-		"closed" : false,
-		"tbd" : true,
-		"note" : "",
-		"formatted_date" : "TBD"
-	    }
-	    ,
-            {
-		"date" : "1969-07-28",
-		"open_time" : null,
-		"close_time" : null,
-		"closed" : false,
-		"tbd" : true,
-		"note" : "",
-		"formatted_date" : "TBD"
-	    }
-	    ,
-            {
-		"date" : "1969-07-29",
-		"open_time" : null,
-		"close_time" : null,
-		"closed" : false,
-		"tbd" : true,
-		"note" : "",
-		"formatted_date" : "TBD"
-	    }
-	    ,
-            {
-		"date" : "1969-07-30",
-		"open_time" : null,
-		"close_time" : null,
-		"closed" : false,
-		"tbd" : true,
-		"note" : "",
-		"formatted_date" : "TBD"
-	    }
-	    ,
-            {
-		"date" : "1969-07-31",
-		"open_time" : null,
-		"close_time" : null,
-		"closed" : false,
-		"tbd" : true,
-		"note" : "",
-		"formatted_date" : "TBD"
-	    }
-	]
-    }
+	"data": {
+		"butlerfivedays": [
+			{
+				"date": "1969-07-26",
+				"open_time": null,
+				"close_time": null,
+				"closed": false,
+				"tbd": true,
+				"note": "",
+				"short_note": "",
+				"short_note_url": "",
+				"formatted_date": "TBD"
+			},
+			{
+				"date": "1969-07-27",
+				"open_time": null,
+				"close_time": null,
+				"closed": false,
+				"tbd": true,
+				"note": "",
+				"short_note": "",
+				"short_note_url": "",
+				"formatted_date": "TBD"
+			},
+			{
+				"date": "1969-07-28",
+				"open_time": null,
+				"close_time": null,
+				"closed": false,
+				"tbd": true,
+				"note": "",
+				"short_note": "",
+				"short_note_url": "",
+				"formatted_date": "TBD"
+			},
+			{
+				"date": "1969-07-29",
+				"open_time": null,
+				"close_time": null,
+				"closed": false,
+				"tbd": true,
+				"note": "",
+				"short_note": "",
+				"short_note_url": "",
+				"formatted_date": "TBD"
+			},
+			{
+				"date": "1969-07-30",
+				"open_time": null,
+				"close_time": null,
+				"closed": false,
+				"tbd": true,
+				"note": "",
+				"short_note": "",
+				"short_note_url": "",
+				"formatted_date": "TBD"
+			},
+			{
+				"date": "1969-07-31",
+				"open_time": null,
+				"close_time": null,
+				"closed": false,
+				"tbd": true,
+				"note": "",
+				"short_note": "",
+				"short_note_url": "",
+				"formatted_date": "TBD"
+			}
+		]
+	}
 }

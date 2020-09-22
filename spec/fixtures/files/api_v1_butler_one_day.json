@@ -1,17 +1,17 @@
 {
-    "data" :
-    {
-	"butlerfivedays" : 
-	[
-	    {
-		"date" : "1969-07-23",
-		"open_time" : "09:00",
-		"close_time" : "17:00",
-		"closed" : false,
-		"tbd" : false,
-		"note" : "Day 2!",
-		"formatted_date" : "09:00AM-05:00PM"
-	    }
-	]
-    }
+	"data": {
+		"butlerfivedays": [
+			{
+				"date": "1969-07-23",
+				"open_time": "09:00",
+				"close_time": "17:00",
+				"closed": false,
+				"tbd": false,
+				"note": "Day 2!",
+				"short_note": "",
+				"short_note_url": "",
+				"formatted_date": "09:00AM-05:00PM"
+			}
+		]
+	}
 }

@@ -124,14 +124,14 @@ class LocationsController < ApplicationController
   private
 
   def create_params
-    params.require(:location).permit(:name, :code, :comment, :comment_two, :url, :summary, :primary, :primary_location_id)
+    params.require(:location).permit(:name, :code, :comment, :comment_two, :url, :summary, :primary, :primary_location_id, :short_note, :short_note_url)
   end
 
   def update_params
     if current_user.administrator?
-      params.require(:location).permit(:name, :code, :comment, :comment_two, :url, :summary, :primary, :primary_location_id, :front_page)
+      params.require(:location).permit(:name, :code, :comment, :comment_two, :url, :summary, :primary, :primary_location_id, :front_page, :short_note, :short_note_url)
     else
-      params.require(:location).permit(:comment, :comment_two, :url, :summary)
+      params.require(:location).permit(:comment, :comment_two, :url, :summary, :short_note, :short_note_url)
     end
   end
 end
