@@ -102,7 +102,9 @@ class Timetable < ApplicationRecord
       closed: closed,
       tbd: tbd,
       note: note.nil? ? "" : note,
-      formatted_date: formatted_date
+      short_note: location.short_note.nil? ? "" : location.short_note,
+      short_note_url: location.short_note_url.nil? ? "" : location.short_note_url,
+      formatted_date: formatted_date,
     }
   end
 
@@ -117,6 +119,8 @@ class Timetable < ApplicationRecord
       closed: false,
       tbd: true,
       note: "",
+      short_note: "",
+      short_note_url: "",
       formatted_date: "TBD"
     }
   end

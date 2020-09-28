@@ -1,16 +1,17 @@
 {
-    "data" : {
-	"butler" :
-	[
-	    {
-		"date" : "",
-		"open_time" : "09:00",
-		"close_time" : "17:00",
-		"closed" : false,
-		"tbd" : false,
-		"note" : "",
-		"formatted_date" : "09:00AM-05:00PM"
-	    }
-	]
-    }
+	"data": {
+		"butler": [
+			{
+				"date": "",
+				"open_time": "09:00",
+				"close_time": "17:00",
+				"closed": false,
+				"tbd": false,
+				"note": "",
+				"short_note": "This is a short note",
+				"short_note_url": "https://library.columbia.edu",
+				"formatted_date": "09:00AM-05:00PM"
+			}
+		]
+	}
 }

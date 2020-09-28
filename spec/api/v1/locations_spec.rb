@@ -47,7 +47,8 @@ describe "locations API", :type => :request do
         end
       end
     end # END of describe covering bad location code
-    # START of describve covering test involving location with one timetable
+
+    # START of describe covering test involving location with one timetable
     describe "location with 1 timetable for today" do
       let(:butler_today) { FactoryGirl.create(:butler_today) }
       describe "with date=today" do
@@ -85,6 +86,7 @@ describe "locations API", :type => :request do
         end
       end
     end # END of describe covering test involving location with one timetable
+
     # START of describe covering test involving location with five timetables
     describe "location with 5 consecutive-days timetables" do
       let(:day_after_moon_landing) { Date.parse('1969-07-21') }
@@ -120,6 +122,7 @@ describe "locations API", :type => :request do
           expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
         end
       end # END of describe covering bad date formats
+
       describe "with start date larger (later) than end date" do
         it "returns an error" do
           # Given the starting and ending date given below, API call should return
@@ -134,6 +137,7 @@ describe "locations API", :type => :request do
           expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
         end
       end
+
       describe "with both a date range (start_date, end_date) and a specific date (date)" do
         it "the specific date query parameter wins out" do
           # Here, the url sent to the API contains three query parameters:
@@ -151,6 +155,7 @@ describe "locations API", :type => :request do
           expect(actual_json_as_hash).to eq(expected_json_as_hash)
         end
       end
+
       # START of describe with date range of 3 consecutive days
       describe "with date range of covering 3 consecutive days" do
         it "with requested range matching middle 3 location timetables" do
@@ -226,6 +231,7 @@ describe "locations API", :type => :request do
       end  # END of describe with date range of 11 consecutive days
     end # END of describe covering test involving location with five timetables
   end # END of describe covering open_hours
+
   # START of describe covering open_now
   describe 'open_now' do
     let(:now) { Time.zone.now }
@@ -252,11 +258,11 @@ describe "locations API", :type => :request do
         # update the expected json since we are using time deltas based off the current time
         expected_json_as_hash['data']['butler']['open_time'] = two_hours_in_the_past_floor.strftime('%H:%M')
         expected_json_as_hash['data']['butler']['close_time'] = two_hours_from_now_floor.strftime('%H:%M')
-        expected_json_as_hash['data']['butler']['formatted_date'] = 
+        expected_json_as_hash['data']['butler']['formatted_date'] =
           "Until #{two_hours_from_now_floor.strftime('%I:%M%p')}"
         expected_json_as_hash['data']['miskat']['open_time'] = two_hours_in_the_past_floor.strftime('%H:%M')
         expected_json_as_hash['data']['miskat']['close_time'] = two_hours_from_now_floor.strftime('%H:%M')
-        expected_json_as_hash['data']['miskat']['formatted_date'] = 
+        expected_json_as_hash['data']['miskat']['formatted_date'] =
           "Until #{two_hours_from_now_floor.strftime('%I:%M%p')}"
         actual_json_as_hash = JSON.parse response.body
         expect(actual_json_as_hash).to eq(expected_json_as_hash)

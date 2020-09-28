@@ -4,6 +4,8 @@ FactoryGirl.define do
     name 'Butler'
     primary true
     primary_location nil
+    short_note 'This is a short note'
+    short_note_url 'https://library.columbia.edu'
   end
 
   factory :underbutler, class: Location do

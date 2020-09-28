@@ -99,6 +99,8 @@ RSpec.describe Timetable, type: :model do
         open_time: "09:00",
         close_time: "17:00",
         note: "Hello!",
+        short_note: "This is a short note",
+        short_note_url: "https://library.columbia.edu",
         formatted_date: "09:00AM-05:00PM"
       }
       end
@@ -110,6 +112,8 @@ RSpec.describe Timetable, type: :model do
         open_time: "09:00",
         close_time: "17:00",
         note: "",
+        short_note: "This is a short note",
+        short_note_url: "https://library.columbia.edu",
         formatted_date: "09:00AM-05:00PM"
       }
       end
@@ -167,6 +171,8 @@ RSpec.describe Timetable, type: :model do
         open_time: nil,
         close_time: nil,
         note: '',
+        short_note: '',
+        short_note_url: '',
         formatted_date: 'TBD'
       }
     end

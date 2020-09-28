@@ -43,8 +43,7 @@ class Location < ApplicationRecord
       [t.date.strftime("%F"),  t.day_info_hash]
     end.to_h
     (start_date..end_date).map do |d|
-      hash.fetch(d.strftime("%F"),
-                 Timetable.default_day_info_hash(d))
+      hash.fetch(d.strftime("%F"), Timetable.default_day_info_hash(d))
     end
   end
 end

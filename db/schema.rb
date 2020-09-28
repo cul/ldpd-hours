@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170911151824) do
+ActiveRecord::Schema.define(version: 20200921101843) do
 
-  create_table "locations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "locations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string "name", null: false
     t.string "code", null: false
     t.string "url"
@@ -24,14 +24,16 @@ ActiveRecord::Schema.define(version: 20170911151824) do
     t.bigint "primary_location_id"
     t.boolean "primary", default: false
     t.boolean "front_page", default: false, null: false
+    t.string "short_note"
+    t.text "short_note_url"
     t.index ["code"], name: "index_locations_on_code"
     t.index ["front_page"], name: "index_locations_on_front_page"
     t.index ["primary"], name: "index_locations_on_primary"
     t.index ["primary_location_id"], name: "index_locations_on_primary_location_id"
   end
 
-  create_table "permissions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "user_id"
+  create_table "permissions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.bigint "user_id"
     t.string "role", null: false
     t.string "subject_class"
     t.integer "subject_id"
@@ -40,7 +42,7 @@ ActiveRecord::Schema.define(version: 20170911151824) do
     t.index ["user_id"], name: "index_permissions_on_user_id"
   end
 
-  create_table "timetables", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "timetables", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.date "date"
     t.datetime "open"
     t.datetime "close"
@@ -50,7 +52,7 @@ ActiveRecord::Schema.define(version: 20170911151824) do
     t.boolean "tbd", default: false, null: false
     t.boolean "closed", default: false, null: false
     t.string "note"
-    t.integer "location_id"
+    t.bigint "location_id"
     t.index ["close"], name: "index_timetables_on_close"
     t.index ["date"], name: "index_timetables_on_date"
     t.index ["location_id", "date"], name: "index_timetables_on_location_id_and_date", unique: true
@@ -58,7 +60,7 @@ ActiveRecord::Schema.define(version: 20170911151824) do
     t.index ["open"], name: "index_timetables_on_open"
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -79,4 +81,5 @@ ActiveRecord::Schema.define(version: 20170911151824) do
   end
 
   add_foreign_key "locations", "locations", column: "primary_location_id"
+  add_foreign_key "timetables", "locations"
 end
