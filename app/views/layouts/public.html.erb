@@ -14,16 +14,6 @@
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag 'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
-    <% if Rails.application.config.track_users && Rails.application.secrets[:analytics_key] -%>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=<%= Rails.application.secrets[:analytics_key]%>"></script>
-    <script type="text/javascript">
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', '<%= Rails.application.secrets[:analytics_key]%>');
-    </script>
-    <% end -%>
     <!-- CUL Toolkit -->
     <link rel="stylesheet" type="text/css" href="https://toolkit-dev.library.columbia.edu/v3/css/cul-toolkit.css"/>
   </head>
@@ -46,6 +36,16 @@
   </main>
   <%= render 'layouts/footer' %>
 
+  <%= javascript_include_tag 'application' %>
+  <% if Rails.application.config.track_users && Rails.application.secrets[:analytics_key] -%>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=<%= Rails.application.secrets[:analytics_key]%>"></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '<%= Rails.application.secrets[:analytics_key]%>');
+  </script>
+  <% end -%>
   <!-- FontAwesome -->
   <script defer src="https://cdn.cul.columbia.edu/fontawesome/pro/v5.x/js/all.js" crossorigin="anonymous"></script>
 
