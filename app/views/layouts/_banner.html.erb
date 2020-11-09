@@ -16,3 +16,20 @@
 	 </div>
  </div>
 </section>
+
+<% unless current_page?(root_path) %>
+  <section id="breadcrumb_bar" class="cul-breadcrumb_bar bg-light">
+      <nav aria-label="breadcrumb">
+          <div class="container">
+              <div class="row">
+                  <div class="col">
+                      <ol class="breadcrumb bg-transparent small px-0 m-0">
+                        <li class="breadcrumb-item" aria-current="page"><%= link_to "Hours Home", root_path %></li>
+                        <li class="breadcrumb-item active"><%= page_title(@location) %></li>
+                      </ol>
+                  </div>
+              </div>
+          </div>
+      </nav>
+  </section>
+<% end %>
