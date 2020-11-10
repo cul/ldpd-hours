@@ -14,11 +14,7 @@
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag 'application', media: 'all' %>
-    <script>
-        window.CUL = window.CUL || {};
-    </script>
-    <!-- CUL Toolkit -->
-    <link rel="stylesheet" type="text/css" href="https://toolkit-dev.library.columbia.edu/v3/css/cul-toolkit.css"/>
+    <%= render :partial => 'layouts/toolkit' %>
     <%= javascript_include_tag 'application', defer: true %>
     <% if Rails.application.config.track_users && Rails.application.secrets[:analytics_key] -%>
     <script async src="https://www.googletagmanager.com/gtag/js?id=<%= Rails.application.secrets[:analytics_key]%>"></script>

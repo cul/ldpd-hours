@@ -15,12 +15,11 @@
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag 'application', media: 'all' %>
-    <link rel="stylesheet" type="text/css" href="https://toolkit-dev.library.columbia.edu/v3/css/cul-toolkit.css"/>
+    <%= render :partial => 'layouts/toolkit' %>
     <%= javascript_include_tag 'application' %>
   </head>
 
   <body>
-    <%= render :partial => 'layouts/topnavbar' %>
     <div class="container" id="outer-wrapper">
       <%= render 'layouts/header' %>
 
