@@ -18,10 +18,14 @@
  * //require_tree .
  *= require_self
  */
+
+@import "variables";
+
 #outer-wrapper {
-@import "hours";
-@import "culhours";
+  @import "hours";
+  @import "culhours";
 }
+
 #hero .jumbotron {
    height: 80px;
    background-image: url(https://toolkit.library.columbia.edu/v3/img/butler-library.jpg);

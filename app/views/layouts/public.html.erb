@@ -29,23 +29,18 @@
   </head>
 
   <body>
-  <div id="alert-container"  data-subscriptions="hours,all-sites"></div>
-	<%= render :partial => 'layouts/topnavbar' %>
-  <main role="main">
-  <%= render :partial => 'layouts/banner' %>
-	<div class="container" id="outer-wrapper">
-  	<%#= render :partial => 'layouts/culnav' %>
-
-		<div class="body-contain">
-		  <%= render 'layouts/messages' %>
-		  <%= yield %>
-		</div>
-
-	</div> <!-- /#outer-wrapper -->
-  	<%= render 'layouts/fat_footer' %>
-  </main>
-  <%= render 'layouts/footer' %>
-
+    <div id="alert-container"  data-subscriptions="hours,all-sites"></div>
+    <%= render :partial => 'layouts/topnavbar' %>
+    <main role="main">
+    <%= render :partial => 'layouts/banner' %>
+    <div class="container mb-3" id="outer-wrapper">
+      <div class="body-contain">
+        <%= render 'layouts/messages' %>
+        <%= yield %>
+      </div>
+    </div> <!-- /#outer-wrapper -->
+      <%= render 'layouts/fat_footer' %>
+    </main>
+    <%= render 'layouts/footer' %>
   </body>
-
 </html>
