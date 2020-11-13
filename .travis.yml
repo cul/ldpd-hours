@@ -10,8 +10,11 @@ cache:
     - travis_phantomjs
 addons:
   chrome: stable
+  apt:
+    packages:
+      - chromium-chromedriver
 before_script:
-  -
+  - ln -s /usr/lib/chromium-browser/chromedriver ~/bin/chromedriver
   - cp config/database.yml.travis config/database.yml
   - cp config/secrets.template.yml config/secrets.yml
   - cp config/wifi_density.template.yml config/wifi_density.yml
