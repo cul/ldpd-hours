@@ -1,23 +1,3 @@
-CUL.createNamespace = function (strNamespacePath)
-{
-  var aryNamespaceSegments = strNamespacePath.split(".");
-  var objNamespace = CUL;
-  if (aryNamespaceSegments[0] === "CUL")
-  {
-    aryNamespaceSegments = aryNamespaceSegments.slice(1);
-  }
-  for (var i = 0; i < aryNamespaceSegments.length; i++)
-  {
-    var strSegment = aryNamespaceSegments[i];
-    if (typeof objNamespace[strSegment] === "undefined")
-    {
-      objNamespace[strSegment] = {};
-    }
-    objNamespace = objNamespace[strSegment];
-  }
-  return objNamespace;
-};
-
 // Strip potentially destructive character sequences from an HTML string
 CUL.escapeHtml = function(html) {
     return html
