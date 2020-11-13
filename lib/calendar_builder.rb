@@ -40,7 +40,7 @@ class CalendarBuilder < Struct.new(:view, :date, :callback)
       content_tag :td, class: day_classes(day) do
         dayoftheweek = HEADER[day.wday]
         view.capture(day, &callback) + content_tag(:div, day.mday, class: "day-date", :"data-dayoftheweek" =>  dayoftheweek) +
-          content_tag(:div, day, class: "fulldate hidden") + content_tag(:div, hours, class: "day-hours") + note
+          content_tag(:div, day, class: "fulldate d-none") + content_tag(:div, hours, class: "day-hours") + note
       end
     end
 

@@ -1,9 +1,17 @@
+li{
+  list-style-type: none;
+}
+
+.body-contain {
+  margin-top: 15px;
+}
+
 .lib-list {
 	padding: 10px;
 	margin:0;
 	border:1px solid $color_2;
 	border-radius: 4px;
-	font-size:1.1em;
+	font-size:1.05em;
 	.location-item {
 		padding:.61em;
 		-webkit-column-break-inside: avoid;
@@ -36,6 +44,10 @@
   margin:1em 0 0;
 }
 .location {
+	h2{
+		text-align: center;
+	}
+
 	h2.location-name {
 		a {
 			color: $color_7;
