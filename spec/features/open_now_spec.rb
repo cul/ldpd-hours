@@ -7,6 +7,7 @@ describe 'locations open now', type: :feature do
   let(:threePM) { Time.zone.local(now.year, now.month, now.day, 15, 0, 0) }
   let(:sevenPM) { Time.zone.local(now.year, now.month, now.day, 19, 0, 0) }
   let (:scripts) { page.all(:css, 'script[src]', visible: false) }
+  let(:main_page_content) { find('#outer-wrapper') }
 
   after do
     allow(Date).to receive(:current).and_call_original
@@ -43,12 +44,12 @@ describe 'locations open now', type: :feature do
     end
 
     it "correctly displays open library" do
-      expect(page).to have_content 'Butler'
-      expect(page).to have_content 'Lehman'
+      expect(main_page_content).to have_content 'Butler'
+      expect(main_page_content).to have_content 'Lehman'
     end
 
     it "does not display closed libraries" do
-      expect(page).not_to have_content 'Miskatonic'
+      expect(main_page_content).not_to have_content 'Miskatonic'
     end
   end
   context 'evening' do
@@ -62,12 +63,12 @@ describe 'locations open now', type: :feature do
     end
 
     it "correctly displays open library" do
-      expect(page).to have_content 'Lehman'
-      expect(page).to have_content 'Miskatonic'
+      expect(main_page_content).to have_content 'Lehman'
+      expect(main_page_content).to have_content 'Miskatonic'
     end
 
     it "does not display closed libraries" do
-      expect(page).not_to have_content 'Butler'
+      expect(main_page_content).not_to have_content 'Butler'
     end
   end
   context 'overnight' do
@@ -82,13 +83,13 @@ describe 'locations open now', type: :feature do
     end
 
     it "correctly displays open libraries" do
-      expect(page).to have_content 'Miskatonic'
-      expect(page).to have_content 'Drugstore'
+      expect(main_page_content).to have_content 'Miskatonic'
+      expect(main_page_content).to have_content 'Drugstore'
     end
 
     it "does not display closed libraries" do
-      expect(page).not_to have_content 'Butler'
-      expect(page).not_to have_content 'Lehman'
+      expect(main_page_content).not_to have_content 'Butler'
+      expect(main_page_content).not_to have_content 'Lehman'
     end
   end
   context 'primary closed' do
@@ -102,12 +103,12 @@ describe 'locations open now', type: :feature do
     end
 
     it "correctly displays open library" do
-      expect(page).to have_content 'Lehman'
+      expect(main_page_content).to have_content 'Lehman'
     end
 
     it "does not display closed libraries" do
-      expect(page).not_to have_content 'Butler'
-      expect(page).not_to have_content 'Library Under'
+      expect(main_page_content).not_to have_content 'Butler'
+      expect(main_page_content).not_to have_content 'Library Under'
     end
   end
 end

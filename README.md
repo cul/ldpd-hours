@@ -26,7 +26,13 @@
 
 ## Testing
 
-Run testing suite with:
+You need to install chromedriver for javascript tests.
+
+With Homebrew: `brew cask install chromedriver`
+
+And on macOS Catalina (10.15) and later, you'll need to allow macOS to run chromedriver because "the developer cannot be verified."  See: https://stackoverflow.com/a/60362134
+
+Then run the test suite with:
 
 ```
 bundle exec rspec
@@ -76,7 +82,7 @@ Configuring `analytics_key` will cause the public layout to include the GA analy
     "error" : null,
     "data" :
     {
-	"butler" : 
+	"butler" :
 	[
 	    {
 		"date" : "2017-07-23",
@@ -99,7 +105,7 @@ Configuring `analytics_key` will cause the public layout to include the GA analy
     "error" : null,
     "data" :
     {
-	"butler" : 
+	"butler" :
 	[
 	    {
 		"date" : "2017-07-24",
@@ -150,14 +156,14 @@ A few notes about the above JSON structure:
     "error" : null,
     "data" :
     {
-	"butler" : 
+	"butler" :
 	{
 	    "open_time" : "09:00",
 	    "close_time" : "22:00",
 	    "formatted_date" : "Until 10:00PM"
 	}
 	,
-	"avery" : 
+	"avery" :
 	{
 	    "open_time" : "09:00",
 	    "close_time" : "22:00",
