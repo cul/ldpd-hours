@@ -30,7 +30,7 @@ You need to install chromedriver for javascript tests.
 
 With Homebrew: `brew cask install chromedriver`
 
-And on macOS Catalina (10.15) and later, you'll need to allow macOS to run chromedriver because "the developer cannot be verified."  See: https://stackoverflow.com/a/60362134
+And on macOS Catalina (10.15) and later, you'll need to update security settings to allow chromedriver to run because the first-time run will tell you that "the developer cannot be verified."  See: https://stackoverflow.com/a/60362134
 
 Then run the test suite with:
 
