@@ -15,11 +15,12 @@
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= stylesheet_link_tag 'admin', media: 'all' %>
+    <%= render :partial => 'layouts/toolkit' %>
     <%= javascript_include_tag 'application' %>
   </head>
 
   <body>
-    <%= render :partial => 'layouts/topnavbar' %>
     <div class="container" id="outer-wrapper">
       <%= render 'layouts/header' %>
 
@@ -30,6 +31,10 @@
 
       <%= render 'layouts/footer' %>
     </div> <!-- /#outer-wrapper -->
+
+    <!-- FontAwesome -->
+    <script defer src="https://cdn.cul.columbia.edu/fontawesome/pro/v5.x/js/all.js" crossorigin="anonymous"></script>
+
   </body>
 
 </html>

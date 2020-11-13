@@ -93,6 +93,7 @@ describe "User management", type: :feature, js: true do
     it "can delete user from edit page" do
       visit "/users/#{user.id}/edit"
       click_on "Delete User"
+      page.driver.browser.switch_to.alert.accept
       expect(page).to have_content("User successfully deleted")
       expect(page).not_to have_content("def456")
     end
@@ -100,7 +101,8 @@ describe "User management", type: :feature, js: true do
     it "can delete users from index page" do
       user
       visit "/users"
-      find("#delete_#{user.uid}").trigger('click')
+      find("#delete_#{user.uid}").click
+      page.driver.browser.switch_to.alert.accept
       expect(page).not_to have_content 'def456'
     end
 

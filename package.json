@@ -2,10 +2,11 @@
   "name": "ldpd-hours",
   "private": true,
   "dependencies": {
-    "bootstrap": "3.3.7",
+    "popper.js": "^1.16.1",
+    "bootstrap": "^4.5.3",
     "bootstrap-datepicker": "^1.7.0",
     "font-awesome": "^4.7.0",
-    "jquery": "^3.2.1",
+    "jquery": "^3.5.1",
     "jquery-ui-dist": "^1.12.1",
     "tether": "^1.4.0"
   }

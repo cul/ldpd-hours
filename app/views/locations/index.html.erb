@@ -1,6 +1,6 @@
 <div id="home-toc">
-  <h2 class="lead trajanpro text-center">Hours For <%= @now.strftime('%B %e, %Y') %></h2>
-  <h3 class="small trajanpro text-center">Click on a location for its full schedule.</h3>
+  <h2 class="lead text-center">Hours For <%= @now.strftime('%B %e, %Y') %></h2>
+  <h3 class="small text-center">Click on a location for its full schedule.</h3>
   <ul class="lib-list">
     <% @locations.each do |location| %>
       <%-
@@ -29,13 +29,13 @@
           <% end %>
         </span>
         <%- if (status != 'CLOSED' || Rails.env.development?) && (density_percentage = Hours::WifiDensity.percentage_for(location)) %>
-          <span class="density-percentage pull-right"><span class="glyphicon glyphicon-signal"></span> <%= density_percentage %>%</span>
+          <span class="density-percentage pull-right"><span class="fal fa-signal"></span> <%= density_percentage %>%</span>
         <%- end %>
         <%= link_to location.name, location_path(location.code) %>
       </li>
     <% end %>
   </ul>
-  <p id="wifi_usage_data_statement" class="trajanpro text-center">
-    <span class="glyphicon glyphicon-signal"></span> Current WiFi usage data. Data provided by CUIT. <a href="https://library.columbia.edu/using-libraries/study-spaces/density-info.html">More details &amp; privacy information.</a>
+  <p id="wifi_usage_data_statement" class="mt-3 trajanpro text-center">
+    <span class="fal fa-signal"></span> Current WiFi usage data. Data provided by CUIT. <a href="https://library.columbia.edu/using-libraries/study-spaces/density-info.html">More details &amp; privacy information.</a>
   </p>
 </div>

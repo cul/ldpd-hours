@@ -1,14 +1,35 @@
-<div id="site-banner">
-	<div class="row">
-	 <div id="site-banner-inner">
-	  <div class="col-sm-9">
-		<h1>
-			<%= link_to(image_tag("/assets/cul-banner-hours.png", :alt => "logo", :title => "Hours Home"), "/") %>
-		</h1>
-	  </div>
-	  <div class="col-sm-3 hidden-xs">
-	   <div id="site-banner-left"><a href="https://library.columbia.edu/services/askalibrarian.html"><img class="spotlight" src="https://library.columbia.edu/content/libraryweb/srcdoc/homepage_spotlight/_jcr_content/layout_par_main_1/image_v2.img.jpg/1370032412527.jpg" alt="Spotlight Blog"></a></div>
-	  </div>
+<section id="hero" class="d-sm-block">
+ <div class="jumbotron text-center d-flex mb-0">
+	 <div class="container d-flex align-items-center">
+		 <div id="hero-search" class="col-md-8 offset-md-2">
+			 <form id="hero-search-form" class="" method="get" action="https://clio.columbia.edu/quicksearch">
+				 <div class="input-group input-group-lg flex-nowrap">
+					 <span class="input-group-prepend">
+						 <button class="btn btn-light border-right-0 border" type="submit" aria-label="Submit keywords">
+								 <i class="fal fa-search"></i>
+						 </button>
+					 </span>
+						 <input required class="form-control py-2 border-left-0 border h-100" type="search" aria-label="Search CLIO & the Libraries" placeholder="Search CLIO & the Libraries Website" name="q" id="quicksearch" autofocus>
+				 </div>
+			 </form>
+		 </div>
 	 </div>
-	</div><!--/row-->
-</div> <!--/#site-banner-->
+ </div>
+</section>
+
+<% unless current_page?(root_path) %>
+  <section id="breadcrumb_bar" class="cul-breadcrumb_bar bg-light">
+      <nav aria-label="breadcrumb">
+          <div class="container">
+              <div class="row">
+                  <div class="col">
+                      <ol class="breadcrumb bg-transparent small px-0 m-0">
+                        <li class="breadcrumb-item" aria-current="page"><%= link_to "Hours Home", root_path %></li>
+                        <li class="breadcrumb-item active"><%= page_title(@location) %></li>
+                      </ol>
+                  </div>
+              </div>
+          </div>
+      </nav>
+  </section>
+<% end %>

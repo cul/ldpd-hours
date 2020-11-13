@@ -14,6 +14,7 @@
 //= require jquery/dist/jquery
 //= require jquery-ui-dist/jquery-ui.min.js
 //= require tether/dist/js/tether
+//= require popper.js/dist/umd/popper.min.js
 //= require bootstrap/dist/js/bootstrap
 //= require bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js
 //= require_tree .

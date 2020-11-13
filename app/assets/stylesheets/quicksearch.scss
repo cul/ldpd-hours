@@ -1,0 +1,94 @@
+#hero-search {
+    .twitter-typeahead {
+        width: 100%;
+        z-index: 999
+    }
+
+    .twitter-typeahead input.tt-input.form-control,
+      .twitter-typeahead input.tt-hint.form-control {
+        width: 100%
+    }
+
+    .twitter-typeahead input.tt-input,
+    .twitter-typeahead input.tt-hint{
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .twitter-typeahead .tt-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+        display: none;
+        width: 100%;
+        min-width: 160px;
+        float: left;
+        padding: 5px 0;
+        margin: 0;
+        list-style: none;
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 12px;
+        text-align: left;
+        background-color: #fff;
+        border: 1px solid rgba(0,0,0,0.15);
+        border:0;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        -webkit-box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+        background-clip: padding-box
+    }
+
+    .twitter-typeahead .tt-cursor {
+        background-color: var(--light);
+        color: #262626;
+        text-decoration: none
+    }
+
+    .twitter-typeahead .tt-suggestion {
+        font-size: 14px;
+        padding: 5px 5px 5px 2em;
+        margin: 2px 0;
+        cursor: pointer;
+        overflow-x: hidden;
+        text-indent: -1em;
+        white-space: normal
+    }
+
+    .twitter-typeahead .tt-suggestion .tt-description {
+        color: #666
+    }
+
+
+    .twitter-typeahead .tt-suggestion a {
+        word-break: break-all
+    }
+
+    .twitter-typeahead .tt-suggestion>span:first-child {
+        font-weight: 500
+    }
+
+    .twitter-typeahead .tt-suggestion:hover,.twitter-typeahead .tt-suggestion.tt-cursor {
+        background-color: #08c;
+        color: #fafafa
+    }
+
+    .twitter-typeahead .tt-suggestion:hover .tt-description,.twitter-typeahead .tt-suggestion.tt-cursor .tt-description {
+        color: #f8f8f8
+    }
+
+    .twitter-typeahead .tt-suggestion.tt-selectable:hover {
+        background-color: #17d;
+    }
+
+    .twitter-typeahead .tt-cursor a,.twitter-typeahead .tt-suggestion:hover a {
+        color: #eee
+    }
+
+    .twitter-typeahead .tt-hint,.twitter-typeahead .tt-dataset {
+        background-color: #fff;
+        width: 100%
+    }
+
+}

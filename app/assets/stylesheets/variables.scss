@@ -1,0 +1,43 @@
+//colors
+$color_0: #fff;
+$color_1: #828F88;
+$color_2: #ccc;
+$color_3: #f8f8f8;
+$color_4: #aaa;
+$color_5: #000;
+$color_6: #779bc3;
+$color_7: #002b7f;
+$color_8: #222;
+$color_9: #eef;
+$color_10: #0081c2;
+$color_11: #08c;
+$color_12: #0077b3;
+$color_13: #2a2aa5;
+$color_14: #08c;
+$color_22: #777;
+$color_27: #336699;
+$color_29: #bbb;
+
+//fonts
+$font_0: TrajanProRegular;
+$font_1: trajan;
+$font_2: serif;
+$font_3: trajan pro;
+$font_4: georgia;
+
+//urls
+$url_0: url(//cdn.cul.columbia.edu/ldpd-toolkit/img/crown-bts-24x24.png);
+$url_1: url(//cdn.cul.columbia.edu/ldpd-toolkit/img/crown-icon-sprite.png);
+$url_3: url(//cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.eot);
+$url_4: url(//cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.eot?#iefix);
+$url_5: url(//cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.woff);
+$url_6: url(//cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.ttf);
+$url_7: url(//cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.svg#TrajanProRegular);
+
+@font-face {
+	font-family: $font_0;
+	src: $url_3;
+	src: $url_4 format("embedded-opentype"), $url_5 format("woff"), $url_6 format("truetype"), $url_7 format("svg");
+	font-weight: normal;
+	font-style: normal;
+}

@@ -1,0 +1,170 @@
+li{
+  list-style-type: none;
+}
+
+.body-contain {
+  margin-top: 15px;
+}
+
+.lib-list {
+	padding: 10px;
+	margin:0;
+	border:1px solid $color_2;
+	border-radius: 4px;
+	font-size:1.05em;
+	.location-item {
+		padding:.61em;
+		-webkit-column-break-inside: avoid;
+		&:nth-child(even) {
+			background-color: $color_3;
+		}
+		.closes-at {
+			margin-left:.5em;
+			text-transform: uppercase;
+			font-size: 80%;
+			color: $color_22;
+			min-width: 10em;
+		}
+		.is-closed {
+			color: $color_29;
+
+			span[data-toggle="tooltip"] {
+				border-bottom: 1px dashed $color_1;
+			}
+
+		}
+		.density-percentage {
+			margin-right: 1em;
+			color: $color_4;
+			font-size: .8em;
+		}
+	}
+}
+#wifi_usage_data_statement {
+  margin:1em 0 0;
+}
+.location {
+	h2{
+		text-align: center;
+	}
+
+	h2.location-name {
+		a {
+			color: $color_7;
+			&:hover {
+				color: lighten($color_7, 30%);
+				text-decoration: none;
+			}
+		}
+	}
+	.location-primary-comment {
+		padding:1em 0;
+	}
+	.controls {
+		font-size: 1.2em;
+	}
+}
+// calendar table
+.calendar {
+	th {
+		font-size:.7em;
+		text-transform: uppercase;
+	}
+	td {
+		overflow:hidden;
+		line-height:2em;
+		&.today {
+			background-color: lighten($color_6, 33%);
+			.day-date {
+				color: $color_8;
+			}
+		}
+		&.not-month {
+			opacity:.4;
+		}
+	}
+	.day-date {
+		color: $color_1;
+  	font-family: Helvetica, Arial, sans-serif;
+  	font-size: 210%;
+
+	}
+	.day-note {
+		font-size: 90%;
+		margin:1em 0 0;
+		color: $color_22;
+	}
+}
+@media(min-width: 768px) {
+	.lib-list {
+		column-count:2;
+		column-gap:2em;
+		column-rule: 1px solid $color_2;
+	}
+	.calendar {
+		td {
+			width: 14%;
+			height:125px;
+		}
+	}
+}
+@media(min-width: 992px) {
+	.calendar {
+		td {
+			width: 14%;
+			height:125px;
+		}
+	}
+}
+@media(min-width: 1200px) {
+	.calendar {
+		td {
+			width: 14%;
+			height:154px;
+		}
+	}
+}
+@media screen and (max-width: 640px) {
+	.calendar {
+		//width:100%;
+		thead {
+			display: none;
+		}
+		tbody td {
+			display: block;
+			text-align:center;
+			height: auto;
+			&.not-month {
+				display:none;
+			}
+			//&:before {
+			.day-date:before {
+			    content: attr(data-dayoftheweek);
+			    display: block;
+			    text-align:center;
+					font-size:.4em;
+					color: $color_29;
+		  }
+		}
+	}
+}
+@media print {
+	a[href]:after {
+		content: "" !important;
+	}
+}
+a, a:visited {
+  color: $color_27;
+}
+.trajanpro {
+	font-family: $font_0, $font_1, $font_2;
+}
+.nomar {
+	padding:0;
+}
+.nopad {
+	padding:0;
+}
+.noborder {
+	border:0;
+}

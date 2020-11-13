@@ -14,9 +14,25 @@
  *= require tether/dist/css/tether
  *= require font-awesome/css/font-awesome
  *= require bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css
+ *= require quicksearch
  * //require_tree .
  *= require_self
  */
 
-@import "hours";
-@import "culhours";
+@import "variables";
+
+#outer-wrapper {
+  @import "hours";
+}
+
+#hero .jumbotron {
+   height: 80px;
+   background-image: url(https://toolkit.library.columbia.edu/v3/img/butler-library.jpg);
+   background-size: cover;
+   background-position: center 25%;
+ }
+.fatf-icon {
+  i, .svg-inline--fa {
+    max-height: 1em;
+  }
+}

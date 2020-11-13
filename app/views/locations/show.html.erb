@@ -1,8 +1,8 @@
 
 <div class="location row">
-    <h2 class="location-name"><%= link_to @location.name, @location.url %></h2>
 
     <div class="col-md-12">
+      <h2 class="location-name"><%= link_to @location.name, @location.url %></h2>
       <div class="location-primary-comment">
         <% if @location.primary_location %>
           <p>Check hours for: <strong class="text-center"><%= link_to @location.primary_location.name, location_path(@location.primary_location.code) %></strong></p>
