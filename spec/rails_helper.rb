@@ -1,16 +1,16 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-require 'coveralls'
-Coveralls.wear!('rails')
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
+require 'webdrivers'
 require 'capybara/rails'
 require 'capybara/rspec'
 
 Capybara.javascript_driver = :selenium_chrome_headless
+Capybara.default_max_wait_time = 30 # Some ajax requests might take longer than the default wait time of 2 seconds.
 
 #webdriver = Selenium::WebDriver.for :selenium_chrome_headless
 #webdriver.capabilities[:unexpectedAlertBehaviour] = 'dismiss'

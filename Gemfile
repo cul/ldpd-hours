@@ -31,10 +31,15 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 3.33'
-  gem 'selenium-webdriver'
+  # For testing with chromedriver
+  gem 'selenium-webdriver', '~> 3.142'
+  # For automatically updating chromedriver
+  gem 'webdrivers', '~> 4.0', require: false
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails', ' ~> 4.0'
   gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
+  gem 'simplecov',      require: false
+  gem 'simplecov-lcov', require: false
   gem 'database_cleaner'
   gem 'pry'
 end
@@ -62,8 +67,6 @@ gem 'listen', '>= 3.0.5', '< 3.2'
 gem 'devise'
 gem 'cul_omniauth', '~> 0.6.1'
 gem 'cancancan', '~> 2.0'
-
-gem 'coveralls', require: false
 
 gem 'gaffe'
 
