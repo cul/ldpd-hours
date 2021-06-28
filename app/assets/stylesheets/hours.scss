@@ -15,6 +15,7 @@ li{
 	.location-item {
 		padding:.61em;
 		-webkit-column-break-inside: avoid;
+		break-inside: avoid;
 		&:nth-child(even) {
 			background-color: $color_3;
 		}
