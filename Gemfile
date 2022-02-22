@@ -7,14 +7,14 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.0'
+gem 'rails', '~> 6.0.0'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 gem 'bigdecimal', '~> 1.4.4'
 # Use Puma as the app server
 gem 'puma', '~> 5.2'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails', '~> 6.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -42,7 +42,7 @@ group :development, :test do
   gem 'selenium-webdriver', '~> 3.142'
   # For automatically updating chromedriver
   gem 'webdrivers', '~> 4.0', require: false
-  gem 'rspec-rails', '~> 3.5'
+  gem 'rspec-rails', '~> 4.0'
   gem 'factory_bot_rails', ' ~> 4.0'
   gem 'simplecov',      require: false
   gem 'simplecov-lcov', require: false
@@ -71,9 +71,9 @@ gem 'listen', '>= 3.0.5', '< 3.2'
 
 # Login/auth gems
 gem 'devise'
-gem 'cul_omniauth', '~> 0.6.1'
-gem 'cancancan', '~> 2.0'
+gem 'cul_omniauth', github: "cul/cul_omniauth", branch: "rails_6"
+gem 'cancancan', '~> 3.0'
 
 gem 'gaffe'
 
-gem "cul-ldap", :github => "cul/cul-ldap"
+gem "cul-ldap", github: "cul/cul-ldap"
