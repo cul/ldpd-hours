@@ -8,6 +8,8 @@ end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'
+# Reduces boot times through caching; required in config/boot.rb
+gem 'bootsnap', require: false
 gem 'bigdecimal', '~> 1.4.4'
 # Use Puma as the app server
 gem 'puma', '~> 5.2'
