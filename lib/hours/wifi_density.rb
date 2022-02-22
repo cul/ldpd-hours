@@ -1,25 +1,25 @@
 module Hours
   module WifiDensity
     def self.wifi_data_cache_duration
-      WIFI_DENSITY['data_cache_duration']
+      WIFI_DENSITY[:data_cache_duration]
     end
 
     def self.data_url
-      WIFI_DENSITY['data_url']
+      WIFI_DENSITY[:data_url]
     end
 
     def self.percentage_for(location)
       # If this location's code is not mapped in the wifi density config file,
       # that means wifi density info is not supported for the location.
       config_for_location = config_for_location_code(location.code)
-      return nil if config_for_location.nil? || !config_for_location.key?('high') || !config_for_location.key?('cuit_location_ids')
+      return nil if config_for_location.nil? || !config_for_location.key?(:high) || !config_for_location.key?(:cuit_location_ids)
       Rails.cache.fetch('wifi_density_data-' + location.code, expires_in: wifi_data_cache_duration) do
         wifi_density_data_for_locations = Rails.cache.fetch('wifi_density_data', expires_in: wifi_data_cache_duration) do
           fetch_hierarchical_wifi_density_data
         end
         aggregated_locations = {}
 
-        config_for_location['cuit_location_ids'].each do |cuit_location_id|
+        config_for_location[:cuit_location_ids].each do |cuit_location_id|
           location_data = wifi_density_data_for_locations[cuit_location_id.to_s]
           next if location_data.nil?
           aggregated_locations.merge!({cuit_location_id.to_s => location_data})
@@ -39,7 +39,7 @@ module Hours
         return 0 if total_client_count == 0
 
         # Make sure to use float division here so we can calculate a percentage.
-        percentage_integer = ((total_client_count / config_for_location['high'].to_f) * 100).round
+        percentage_integer = ((total_client_count / config_for_location[:high].to_f) * 100).round
         if percentage_integer < 1
           # If there is at least one client, it seems incorrect to say 0%, so always return a minimum of 1%.
           1
@@ -53,7 +53,7 @@ module Hours
     end
 
     def self.config_for_location_code(location_code)
-      WIFI_DENSITY['locations'][location_code]
+      WIFI_DENSITY[:locations][location_code.to_sym]
     end
 
     def self.fetch_raw_wifi_density_data
