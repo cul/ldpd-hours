@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe "Locations", type: :feature do
-  let(:lehman) { FactoryGirl.create(:lehman) }
-  let(:underbutler) { FactoryGirl.create(:underbutler) }
+  let(:lehman) { FactoryBot.create(:lehman) }
+  let(:underbutler) { FactoryBot.create(:underbutler) }
   let(:butler) { underbutler.primary_location }
   context 'when user without role logged in' do
     # initialize at least one library

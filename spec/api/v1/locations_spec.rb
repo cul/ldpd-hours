@@ -50,7 +50,7 @@ describe "locations API", :type => :request do
 
     # START of describe covering test involving location with one timetable
     describe "location with 1 timetable for today" do
-      let(:butler_today) { FactoryGirl.create(:butler_today) }
+      let(:butler_today) { FactoryBot.create(:butler_today) }
       describe "with date=today" do
         it "retrieves today's hours for given location code" do
           location_code=butler_today.location.code
@@ -92,7 +92,7 @@ describe "locations API", :type => :request do
       let(:day_after_moon_landing) { Date.parse('1969-07-21') }
       # location represented by butler_five_days contains 5 timetables for dates
       # 1969-07-21 thru 1969-07-25.
-      let(:butler_five_days) { FactoryGirl.create(:butler_five_days) }
+      let(:butler_five_days) { FactoryBot.create(:butler_five_days) }
       # START of describe covering bad date formats
       describe "bad date format" do
         it "in date query parameter returns an error" do
@@ -235,11 +235,11 @@ describe "locations API", :type => :request do
   # START of describe covering open_now
   describe 'open_now' do
     let(:now) { Time.zone.now }
-    let(:butler_open_now) { FactoryGirl.create(:butler_open_now) }
-    let(:butler_closed_now) { FactoryGirl.create(:butler_closed_now) }
-    let(:lehman_closed_now) { FactoryGirl.create(:lehman_closed_now) }
-    let(:miskatonic_open_now) { FactoryGirl.create(:miskatonic_open_now) }
-    let(:miskatonic_closed_now) { FactoryGirl.create(:miskatonic_closed_now) }
+    let(:butler_open_now) { FactoryBot.create(:butler_open_now) }
+    let(:butler_closed_now) { FactoryBot.create(:butler_closed_now) }
+    let(:lehman_closed_now) { FactoryBot.create(:lehman_closed_now) }
+    let(:miskatonic_open_now) { FactoryBot.create(:miskatonic_open_now) }
+    let(:miskatonic_closed_now) { FactoryBot.create(:miskatonic_closed_now) }
     # two_hours_from_now_floor is equal to two hours in the future, with
     # the minutes and seconds zeroed out. So, it is currently 10:14 AM,
     # two_hours_from_now_floor would be equal to the string "12:00"

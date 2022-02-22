@@ -41,8 +41,7 @@ group :development, :test do
   # For automatically updating chromedriver
   gem 'webdrivers', '~> 4.0', require: false
   gem 'rspec-rails', '~> 3.5'
-  gem 'factory_girl_rails', ' ~> 4.0'
-  gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
+  gem 'factory_bot_rails', ' ~> 4.0'
   gem 'simplecov',      require: false
   gem 'simplecov-lcov', require: false
   gem 'database_cleaner'

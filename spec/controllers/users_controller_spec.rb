@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
-  let(:butler) { FactoryGirl.create(:butler) }
-  let(:lehman) { FactoryGirl.create(:lehman) }
+  let(:butler) { FactoryBot.create(:butler) }
+  let(:lehman) { FactoryBot.create(:lehman) }
 
   let(:jane) { User.create(uid: 'xyz123', email: 'xyz123@columbia.edu') }
 
@@ -35,7 +35,7 @@ RSpec.describe UsersController, type: :controller do
 
       it "throws error if location id invalid" do
         post :create, params: { user: { uid: uid, permissions: { role: 'editor', location_ids: [1] } } }
-        expect(controller).to set_flash[:error].to('Permissions one or more of the location ids given is invalid')
+        expect(controller.flash.to_h).to include('error' => 'Permissions one or more of the location ids given is invalid')
       end
 
       it "creates user with no permissions" do

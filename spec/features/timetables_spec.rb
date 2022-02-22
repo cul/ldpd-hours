@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 describe "Timetables", type: :feature, js: true do
-  let!(:all_location) { FactoryGirl.create(:all_location) }
-  let!(:lehman) { FactoryGirl.create(:lehman) }
-  let!(:miskatonic) { FactoryGirl.create(:miskatonic) }
+  let!(:all_location) { FactoryBot.create(:all_location) }
+  let!(:lehman) { FactoryBot.create(:lehman) }
+  let!(:miskatonic) { FactoryBot.create(:miskatonic) }
 
   shared_examples 'view the page' do
     it "should display a calendar" do
@@ -120,7 +120,7 @@ describe "Timetables", type: :feature, js: true do
   end
 
   describe 'when butler editor logged in' do
-    let(:butler) { FactoryGirl.create(:butler) }
+    let(:butler) { FactoryBot.create(:butler) }
 
     include_context 'login user'
     before :each do

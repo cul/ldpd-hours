@@ -3,8 +3,8 @@ require "cancan/matchers"
 
 RSpec.describe Ability, type: :model do
   subject { Ability.new(user) }
-  let(:user) { FactoryGirl.create(:user, permissions: [role]) }
-  let(:lehman) { FactoryGirl.create(:lehman) }
+  let(:user) { FactoryBot.create(:user, permissions: [role]) }
+  let(:lehman) { FactoryBot.create(:lehman) }
   let(:timetable) { Timetable.create(location: lehman) }
 
   shared_examples 'editor/manager permissions' do
@@ -39,17 +39,17 @@ RSpec.describe Ability, type: :model do
   context "when is a manager" do
     let(:role) { Permission.new(role: Permission::MANAGER) }
     let(:admin) {
-      FactoryGirl.create(:user,
+      FactoryBot.create(:user,
       uid: 'lmn123', email: "lmn123@columbia.edu",
       permissions: [Permission.new(role: Permission::ADMINISTRATOR)])
     }
     let(:manager) {
-      FactoryGirl.create(:user,
+      FactoryBot.create(:user,
       uid: 'lmn123', email: "lmn123@columbia.edu",
       permissions: [Permission.new(role: Permission::MANAGER)])
     }
     let(:editor) {
-      FactoryGirl.create(:user,
+      FactoryBot.create(:user,
       uid: 'def', email: "def123@columbia.edu",
       permissions: [Permission.new(role: Permission::EDITOR, subject_class: Location.to_s, subject_id: lehman.id)])
     }

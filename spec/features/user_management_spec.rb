@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe "User management", type: :feature, js: true do
   let(:user) { User.create(uid: 'def456', email: "def456@columbia.edu") }
-  let(:butler) { FactoryGirl.create(:butler) }
-  let(:lehman) { FactoryGirl.create(:lehman) }
+  let(:butler) { FactoryBot.create(:butler) }
+  let(:lehman) { FactoryBot.create(:lehman) }
 
   shared_examples 'no user management permissions' do
     it 'cannot edit user' do
@@ -131,7 +131,7 @@ describe "User management", type: :feature, js: true do
     end
 
     it "can change editor permissions" do
-      lehman = FactoryGirl.create(:lehman)
+      lehman = FactoryBot.create(:lehman)
       user.update_permissions(location_ids: [butler.id])
       visit edit_user_path(user)
       choose 'user_permissions_role_editor'

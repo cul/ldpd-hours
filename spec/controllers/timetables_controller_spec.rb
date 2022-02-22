@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe TimetablesController, type: :controller do
-  let(:butler) { FactoryGirl.create(:butler) }
-  let(:lehman) { FactoryGirl.create(:lehman) }
+  let(:butler) { FactoryBot.create(:butler) }
+  let(:lehman) { FactoryBot.create(:lehman) }
 
   # POST /locations/:location_id/timetables/batch_update(.:format)
   describe '#batch_update' do
