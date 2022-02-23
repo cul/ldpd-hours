@@ -24,6 +24,7 @@ describe "Timetables", type: :feature, js: true do
       select "06 PM", :from => "timetable_close_4i"
       select "30", :from => "timetable_close_5i"
       click_button("Update Hours")
+      find("td", :text => "16")
       visit(exceptional_edit_location_timetables_path(location_code: lehman.code))
       expect(find("td", :text => "16")).to have_content("7:30AM-6:30PM")
     end
