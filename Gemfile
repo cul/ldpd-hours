@@ -14,7 +14,10 @@ gem 'bigdecimal', '~> 1.4.4'
 # Use Puma as the app server
 gem 'puma', '~> 5.2'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 6.0'
+gem 'sass', '~> 3.7.4'
+gem 'sass-rails', '~> 5'
+gem 'sprockets', '~> 3.7.2'
+gem 'nokogiri', '~> 1.10.10'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -29,9 +32,6 @@ gem 'jbuilder', '~> 2.5'
 gem "sqlite3", "~> 1.4.2"
 
 gem 'mysql2'
-
-# Min version 1.8.1 for nokogiri, due to gem vunlerability
-gem 'nokogiri', '>= 1.8.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
