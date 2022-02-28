@@ -1,5 +1,5 @@
 class Location < ApplicationRecord
-  validates :name, :code, presence: true, uniqueness: true
+  validates :name, :code, presence: true, uniqueness: { case_sensitive: true }
   validate :primary_location_must_be_primary
 
   has_many :timetables

@@ -37,9 +37,9 @@ describe 'locations open now', type: :feature do
     before do
       allow(Date).to receive(:current).and_return(now.to_date)
       allow(Time).to receive(:current).and_return(threePM)
-      FactoryGirl.create(:butler_today)
-      FactoryGirl.create(:lehman_today)
-      FactoryGirl.create(:miskatonic_today)
+      FactoryBot.create(:butler_today)
+      FactoryBot.create(:lehman_today)
+      FactoryBot.create(:miskatonic_today)
       visit '/locations/open_now'
     end
 
@@ -56,9 +56,9 @@ describe 'locations open now', type: :feature do
     before do
       allow(Date).to receive(:current).and_return(now.to_date)
       allow(Time).to receive(:current).and_return(sevenPM)
-      FactoryGirl.create(:butler_today)
-      FactoryGirl.create(:lehman_today)
-      FactoryGirl.create(:miskatonic_today)
+      FactoryBot.create(:butler_today)
+      FactoryBot.create(:lehman_today)
+      FactoryBot.create(:miskatonic_today)
       visit '/locations/open_now'
     end
 
@@ -75,10 +75,10 @@ describe 'locations open now', type: :feature do
     before do
       allow(Date).to receive(:current).and_return(tomorrow.to_date)
       allow(Time).to receive(:current).and_return(fourAM)
-      FactoryGirl.create(:butler_today)
-      FactoryGirl.create(:lehman_today)
-      FactoryGirl.create(:miskatonic_today)
-      FactoryGirl.create(:duanereade_today)
+      FactoryBot.create(:butler_today)
+      FactoryBot.create(:lehman_today)
+      FactoryBot.create(:miskatonic_today)
+      FactoryBot.create(:duanereade_today)
       visit '/locations/open_now'
     end
 
@@ -96,9 +96,9 @@ describe 'locations open now', type: :feature do
     before do
       allow(Date).to receive(:current).and_return(now.to_date)
       allow(Time).to receive(:current).and_return(threePM)
-      FactoryGirl.create(:butler_today).update(closed: true)
-      FactoryGirl.create(:lehman_today)
-      FactoryGirl.create(:underbutler_today)
+      FactoryBot.create(:butler_today).update(closed: true)
+      FactoryBot.create(:lehman_today)
+      FactoryBot.create(:underbutler_today)
       visit '/locations/open_now'
     end
 

@@ -13,7 +13,7 @@ describe "locations API", :type => :request do
         it "returns an error" do
           api_url = "/api/v1/locations/supercalifragilisticexpialidocious?date=today"
           get api_url
-          expect(response).not_to be_success
+          expect(response).not_to be_successful
           actual_json_as_hash = JSON.parse response.body
           error_msg = { "msg" => "404: location not found" }
           expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
@@ -24,7 +24,7 @@ describe "locations API", :type => :request do
           the_date = Date.current.strftime("%F")
           api_url = "/api/v1/locations/supercalifragilisticexpialidocious?date=the_date"
           get api_url
-          expect(response).not_to be_success
+          expect(response).not_to be_successful
           actual_json_as_hash = JSON.parse response.body
           error_msg = { "msg" => "404: location not found" }
           expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
@@ -34,7 +34,7 @@ describe "locations API", :type => :request do
         it "returns an error" do
           api_url = "/api/v1/locations/supercalifragilisticexpialidocious?start_date=1969-07-21&end_date=1969-07-21"
           get api_url
-          expect(response).not_to be_success
+          expect(response).not_to be_successful
           actual_json_as_hash = JSON.parse response.body
           error_msg = { "msg" => "404: location not found" }
           expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
@@ -42,7 +42,7 @@ describe "locations API", :type => :request do
         it "contains Access-Control-Allow-Origin header set to *" do
           api_url = "/api/v1/locations/supercalifragilisticexpialidocious?start_date=1969-07-21&end_date=1969-07-21"
           get api_url
-          expect(response).not_to be_success
+          expect(response).not_to be_successful
           expect(response.headers['Access-Control-Allow-Origin']).to eq('*')
         end
       end
@@ -50,13 +50,13 @@ describe "locations API", :type => :request do
 
     # START of describe covering test involving location with one timetable
     describe "location with 1 timetable for today" do
-      let(:butler_today) { FactoryGirl.create(:butler_today) }
+      let(:butler_today) { FactoryBot.create(:butler_today) }
       describe "with date=today" do
         it "retrieves today's hours for given location code" do
           location_code=butler_today.location.code
           api_url = "/api/v1/locations/#{location_code}?date=today"
           get api_url
-          expect(response).to be_success
+          expect(response).to be_successful
           actual_json_as_hash = JSON.parse response.body
           expected_json_as_hash = JSON.parse file_fixture("api_v1_butler_today.json").read
           # update expected_json_as_hash with today's date
@@ -67,7 +67,7 @@ describe "locations API", :type => :request do
           location_code=butler_today.location.code
           api_url = "/api/v1/locations/#{location_code}?date=today"
           get api_url
-          expect(response).to be_success
+          expect(response).to be_successful
           expect(response.headers['Access-Control-Allow-Origin']).to eq('*')
         end
       end
@@ -77,7 +77,7 @@ describe "locations API", :type => :request do
           the_date = Date.current.strftime("%F")
           api_url = "/api/v1/locations/#{location_code}?date=#{the_date}"
           get api_url
-          expect(response).to be_success
+          expect(response).to be_successful
           actual_json_as_hash = JSON.parse response.body
           expected_json_as_hash = JSON.parse file_fixture("api_v1_butler_today.json").read
           # update expected_json_as_hash with today's date
@@ -92,13 +92,13 @@ describe "locations API", :type => :request do
       let(:day_after_moon_landing) { Date.parse('1969-07-21') }
       # location represented by butler_five_days contains 5 timetables for dates
       # 1969-07-21 thru 1969-07-25.
-      let(:butler_five_days) { FactoryGirl.create(:butler_five_days) }
+      let(:butler_five_days) { FactoryBot.create(:butler_five_days) }
       # START of describe covering bad date formats
       describe "bad date format" do
         it "in date query parameter returns an error" do
           api_url = "/api/v1/locations/#{butler_five_days.code}?date=iamnotadate"
           get api_url
-          expect(response).not_to be_success
+          expect(response).not_to be_successful
           actual_json_as_hash = JSON.parse response.body
           error_msg = { "msg" => "400: invalid date" }
           expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
@@ -107,7 +107,7 @@ describe "locations API", :type => :request do
           end_date = (day_after_moon_landing).strftime("%F")
           api_url = "/api/v1/locations/#{butler_five_days.code}?start_date=iamnotadate&end_date=#{end_date}"
           get api_url
-          expect(response).not_to be_success
+          expect(response).not_to be_successful
           actual_json_as_hash = JSON.parse response.body
           error_msg = { "msg" => "400: invalid date" }
           expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
@@ -116,7 +116,7 @@ describe "locations API", :type => :request do
           start_date = (day_after_moon_landing + 1).strftime("%F")
           api_url = "/api/v1/locations/#{butler_five_days.code}?start_date=#{start_date}&end_date=iamnotadate"
           get api_url
-          expect(response).not_to be_success
+          expect(response).not_to be_successful
           actual_json_as_hash = JSON.parse response.body
           error_msg = { "msg" => "400: invalid date" }
           expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
@@ -131,7 +131,7 @@ describe "locations API", :type => :request do
           end_date = (day_after_moon_landing).strftime("%F")
           api_url = "/api/v1/locations/#{butler_five_days.code}?start_date=#{start_date}&end_date=#{end_date}"
           get api_url
-          expect(response).not_to be_success
+          expect(response).not_to be_successful
           actual_json_as_hash = JSON.parse response.body
           error_msg = { "msg" => "400: start_date greater than end_date" }
           expect(actual_json_as_hash).to eq({"error" => error_msg, "data" => nil })
@@ -149,7 +149,7 @@ describe "locations API", :type => :request do
           end_date = (day_after_moon_landing + 3).strftime("%F")
           api_url = "/api/v1/locations/#{butler_five_days.code}?start_date=#{start_date}&end_date=#{end_date}&date=#{the_date}"
           get api_url
-          expect(response).to be_success
+          expect(response).to be_successful
           actual_json_as_hash = JSON.parse response.body
           expected_json_as_hash = JSON.parse file_fixture("api_v1_butler_one_day.json").read
           expect(actual_json_as_hash).to eq(expected_json_as_hash)
@@ -165,7 +165,7 @@ describe "locations API", :type => :request do
           end_date = (day_after_moon_landing + 3).strftime("%F")
           api_url = "/api/v1/locations/#{butler_five_days.code}?start_date=#{start_date}&end_date=#{end_date}"
           get api_url
-          expect(response).to be_success
+          expect(response).to be_successful
           actual_json_as_hash = JSON.parse response.body
           expected_json_as_hash = JSON.parse file_fixture("api_v1_butler_three_days.json").read
           expect(actual_json_as_hash).to eq(expected_json_as_hash)
@@ -180,7 +180,7 @@ describe "locations API", :type => :request do
           end_date = (day_after_moon_landing + 1).strftime("%F")
           api_url = "/api/v1/locations/#{butler_five_days.code}?start_date=#{start_date}&end_date=#{end_date}"
           get api_url
-          expect(response).to be_success
+          expect(response).to be_successful
           actual_json_as_hash = JSON.parse response.body
           expected_json_as_hash = JSON.parse file_fixture("api_v1_butler_three_days_v2.json").read
           expect(actual_json_as_hash).to eq(expected_json_as_hash)
@@ -194,7 +194,7 @@ describe "locations API", :type => :request do
           end_date = (day_after_moon_landing + 5).strftime("%F")
           api_url = "/api/v1/locations/#{butler_five_days.code}?start_date=#{start_date}&end_date=#{end_date}"
           get api_url
-          expect(response).to be_success
+          expect(response).to be_successful
           actual_json_as_hash = JSON.parse response.body
           # expected_json_as_hash = JSON.parse file_fixture("api_v1_butler_two_days_v2.json").read
           expected_json_as_hash = JSON.parse file_fixture("api_v1_butler_three_days_v3.json").read
@@ -210,7 +210,7 @@ describe "locations API", :type => :request do
           end_date = (day_after_moon_landing + 5).strftime("%F")
           api_url = "/api/v1/locations/#{butler_five_days.code}?start_date=#{start_date}&end_date=#{end_date}"
           get api_url
-          expect(response).to be_success
+          expect(response).to be_successful
           actual_json_as_hash = JSON.parse response.body
           expected_json_as_hash = JSON.parse file_fixture("api_v1_butler_eleven_days.json").read
           expect(actual_json_as_hash).to eq(expected_json_as_hash)
@@ -223,7 +223,7 @@ describe "locations API", :type => :request do
           end_date = (day_after_moon_landing + 10).strftime("%F")
           api_url = "/api/v1/locations/#{butler_five_days.code}?start_date=#{start_date}&end_date=#{end_date}"
           get api_url
-          expect(response).to be_success
+          expect(response).to be_successful
           actual_json_as_hash = JSON.parse response.body
           expected_json_as_hash = JSON.parse file_fixture("api_v1_butler_six_days.json").read
           expect(actual_json_as_hash).to eq(expected_json_as_hash)
@@ -235,11 +235,11 @@ describe "locations API", :type => :request do
   # START of describe covering open_now
   describe 'open_now' do
     let(:now) { Time.zone.now }
-    let(:butler_open_now) { FactoryGirl.create(:butler_open_now) }
-    let(:butler_closed_now) { FactoryGirl.create(:butler_closed_now) }
-    let(:lehman_closed_now) { FactoryGirl.create(:lehman_closed_now) }
-    let(:miskatonic_open_now) { FactoryGirl.create(:miskatonic_open_now) }
-    let(:miskatonic_closed_now) { FactoryGirl.create(:miskatonic_closed_now) }
+    let(:butler_open_now) { FactoryBot.create(:butler_open_now) }
+    let(:butler_closed_now) { FactoryBot.create(:butler_closed_now) }
+    let(:lehman_closed_now) { FactoryBot.create(:lehman_closed_now) }
+    let(:miskatonic_open_now) { FactoryBot.create(:miskatonic_open_now) }
+    let(:miskatonic_closed_now) { FactoryBot.create(:miskatonic_closed_now) }
     # two_hours_from_now_floor is equal to two hours in the future, with
     # the minutes and seconds zeroed out. So, it is currently 10:14 AM,
     # two_hours_from_now_floor would be equal to the string "12:00"
@@ -283,7 +283,7 @@ describe "locations API", :type => :request do
         miskatonic_closed_now
         api_url = "/api/v1/locations/open_now"
         get api_url
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(response.headers['Access-Control-Allow-Origin']).to eq('*')
       end
     end

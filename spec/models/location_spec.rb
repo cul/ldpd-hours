@@ -2,13 +2,15 @@ require "rails_helper"
 
 RSpec.describe Location, :type => :model do
   describe 'validations' do
-    let(:miskatonic) { FactoryGirl.create(:miskatonic) }
-    let(:sorcery) { FactoryGirl.create(:sorcery) }
-    let(:butler) { FactoryGirl.create(:butler) }
-    let(:underbutler) { FactoryGirl.create(:underbutler) }
+    let(:validators) { described_class.validators }
+    let(:presence_validator) { validators.detect { |v| ActiveRecord::Validations::PresenceValidator === v } }
+    let(:miskatonic) { FactoryBot.create(:miskatonic) }
+    let(:sorcery) { FactoryBot.create(:sorcery) }
+    let(:butler) { FactoryBot.create(:butler) }
+    let(:underbutler) { FactoryBot.create(:underbutler) }
 
-    it { should validate_presence_of :name }
-    it { should validate_presence_of :code  }
+    it { expect(presence_validator.attributes).to include(:name) }
+    it { expect(presence_validator.attributes).to include(:code) }
 
     it "requires primary location not to have a primary location" do
       miskatonic.primary_location = butler
@@ -27,7 +29,7 @@ RSpec.describe Location, :type => :model do
   end
 
   describe 'build_api_response' do
-    let(:butler) { FactoryGirl.create(:butler) }
+    let(:butler) { FactoryBot.create(:butler) }
     it "raises if start_date larger than end_date" do
       start_date = '1958-10-10'
       end_date = '1958-10-09'

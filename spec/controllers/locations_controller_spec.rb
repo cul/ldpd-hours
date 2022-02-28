@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe LocationsController, type: :controller do
-  let(:lehman) { FactoryGirl.create(:lehman) }
+  let(:lehman) { FactoryBot.create(:lehman) }
 
   # PATCH /locations/:code
   describe '#update' do

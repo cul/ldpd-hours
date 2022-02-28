@@ -50,8 +50,8 @@ RSpec.describe Location, type: :model do
     end
 
     context 'when creating editor roles' do
-      let(:lehman) { FactoryGirl.create(:lehman) }
-      let(:butler) { FactoryGirl.create(:butler) }
+      let(:lehman) { FactoryBot.create(:lehman) }
+      let(:butler) { FactoryBot.create(:butler) }
 
       it "creates correct editor roles" do
         expect(user.update_permissions(role: Permission::EDITOR, location_ids: [lehman.id])).to be true

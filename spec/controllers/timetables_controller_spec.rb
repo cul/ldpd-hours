@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe TimetablesController, type: :controller do
-  let(:butler) { FactoryGirl.create(:butler) }
-  let(:lehman) { FactoryGirl.create(:lehman) }
+  let(:butler) { FactoryBot.create(:butler) }
+  let(:lehman) { FactoryBot.create(:lehman) }
 
   # POST /locations/:location_id/timetables/batch_update(.:format)
   describe '#batch_update' do
@@ -16,21 +16,18 @@ RSpec.describe TimetablesController, type: :controller do
       end
 
       it 'cannot update times for butler' do
-        expect {
-          post :batch_update, params: { location_code: butler.code }
-        }.to raise_error CanCan::AccessDenied
+        post :batch_update, params: { location_code: butler.code }
+        expect(response.status).to eql(403)
       end
 
       it 'cannot visit set hours page' do
-        expect {
-          get :exceptional_edit, params: { location_code: butler.code }
-        }.to raise_error CanCan::AccessDenied
+        get :exceptional_edit, params: { location_code: butler.code }
+        expect(response.status).to eql(403)
       end
 
       it 'cannot visit batch hours page' do
-        expect {
-          get :batch_edit, params: { location_code: butler.code }
-        }.to raise_error CanCan::AccessDenied
+        get :batch_edit, params: { location_code: butler.code }
+        expect(response.status).to eql(403)
       end
     end
 

@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Timetable, type: :model do
   describe "#generate_time" do
-    let(:butler_today) { FactoryGirl.create(:butler_today) }
+    let(:butler_today) { FactoryBot.create(:butler_today) }
 
     it 'returns nil when date blank' do
       butler_today.update(date: nil)
@@ -30,7 +30,7 @@ RSpec.describe Timetable, type: :model do
   describe "#open_at?" do
     let(:now) { Time.current }
     let(:butler_today) {
-      FactoryGirl.create(
+      FactoryBot.create(
         :butler_today, open: (now - 1.hour),
         close: (now + 3.hours)
       )
@@ -47,7 +47,7 @@ RSpec.describe Timetable, type: :model do
   end
 
   describe ".batch_update_or_create" do
-    let(:butler) { FactoryGirl.create(:butler) }
+    let(:butler) { FactoryBot.create(:butler) }
 
     it "should add records to the time_tables table" do
       code, dates, open, close, closed, tbd, note = butler.id, [Date.current], "07:00AM", "08:00PM", false, false, ""
@@ -70,7 +70,7 @@ RSpec.describe Timetable, type: :model do
   end
 
   describe "display_str" do
-    let(:butler) { FactoryGirl.create(:butler) }
+    let(:butler) { FactoryBot.create(:butler) }
 
     it "should display 24 hour message if all day" do
       now = Time.current
@@ -90,7 +90,7 @@ RSpec.describe Timetable, type: :model do
   end
 
   describe "day_info_hash" do
-    let(:butler_today) { FactoryGirl.create(:butler_today) }
+    let(:butler_today) { FactoryBot.create(:butler_today) }
     let(:expected_day_info_hash) do
       {
         date: Date.current.strftime("%F"),
@@ -183,7 +183,7 @@ RSpec.describe Timetable, type: :model do
   end
 
   describe "open_now_hash" do
-    let(:butler_today) { FactoryGirl.create(:butler_today) }
+    let(:butler_today) { FactoryBot.create(:butler_today) }
     let(:expected_hash) do
       {
         open_time: "09:00",
