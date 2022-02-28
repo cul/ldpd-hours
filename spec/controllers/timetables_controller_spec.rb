@@ -16,21 +16,18 @@ RSpec.describe TimetablesController, type: :controller do
       end
 
       it 'cannot update times for butler' do
-        expect {
-          post :batch_update, params: { location_code: butler.code }
-        }.to raise_error CanCan::AccessDenied
+        post :batch_update, params: { location_code: butler.code }
+        expect(response.status).to eql(403)
       end
 
       it 'cannot visit set hours page' do
-        expect {
-          get :exceptional_edit, params: { location_code: butler.code }
-        }.to raise_error CanCan::AccessDenied
+        get :exceptional_edit, params: { location_code: butler.code }
+        expect(response.status).to eql(403)
       end
 
       it 'cannot visit batch hours page' do
-        expect {
-          get :batch_edit, params: { location_code: butler.code }
-        }.to raise_error CanCan::AccessDenied
+        get :batch_edit, params: { location_code: butler.code }
+        expect(response.status).to eql(403)
       end
     end
 

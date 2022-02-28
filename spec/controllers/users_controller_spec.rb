@@ -59,17 +59,15 @@ RSpec.describe UsersController, type: :controller do
         )
       end
 
-      it "throws error if creating administrator" do
-        expect {
-          post :create, params: { user: { uid: uid, permissions: { role: 'administrator' } } }
-        }.to raise_error CanCan::AccessDenied
+      it "forbids creating administrator" do
+        post :create, params: { user: { uid: uid, permissions: { role: 'manager' } } }
+        expect(response.status).to eql(403)
         expect(User.find_by(uid: uid)).to be nil
       end
 
-      it "throws error if creating manager" do
-        expect {
-          post :create, params: { user: { uid: uid, permissions: { role: 'manager' } } }
-        }.to raise_error CanCan::AccessDenied
+      it "forbids creating manager" do
+        post :create, params: { user: { uid: uid, permissions: { role: 'manager' } } }
+        expect(response.status).to eql(403)
         expect(User.find_by(uid: uid)).to be nil
       end
     end
@@ -112,30 +110,28 @@ RSpec.describe UsersController, type: :controller do
 
       it 'cannot update managers' do
         jane.update_permissions(role: 'manager')
-        expect {
-          patch :update, params: { id: jane.id, user: { permissions: { role: 'editor' } } }
-        }.to raise_error CanCan::AccessDenied
+        patch :update, params: { id: jane.id, user: { permissions: { role: 'editor' } } }
+        expect(response.status).to eql(403)
       end
 
       it 'cannot update administrators' do
-         jane.update_permissions(role: 'administrator')
-         expect {
-           patch :update, params: { id: jane.id, user: { permissions: { role: 'editor' } } }
-         }.to raise_error CanCan::AccessDenied
+        jane.update_permissions(role: 'administrator')
+        patch :update, params: { id: jane.id, user: { permissions: { role: 'editor' } } }
+        expect(response.status).to eql(403)
        end
 
       it 'cannot make editors into managers' do
         jane.update_permissions(role: 'editor', location_ids: [butler.id])
-        expect {
-          patch :update, params: { id: jane.id, user: { permissions: { role: 'manager' } } }
-        }.to raise_error CanCan::AccessDenied, "Managers can only create Editors"
+        patch :update, params: { id: jane.id, user: { permissions: { role: 'manager' } } }
+        expect(response.status).to eql(403)
+        expect(controller.access_error_message).to include("Managers can only create Editors")
       end
 
       it 'cannot make editors into administrators' do
         jane.update_permissions(role: 'editor', location_ids: [butler.id])
-        expect {
-          patch :update, params: { id: jane.id, user: { permissions: { role: 'administrator' } } }
-        }.to raise_error CanCan::AccessDenied, "Managers can only create Editors"
+        patch :update, params: { id: jane.id, user: { permissions: { role: 'administrator' } } }
+        expect(response.status).to eql(403)
+        expect(controller.access_error_message).to include("Managers can only create Editors")
       end
     end
   end
@@ -170,22 +166,21 @@ RSpec.describe UsersController, type: :controller do
       it "can delete editors" do
         jane.update_permissions(role: 'editor', location_ids: [butler.id])
         delete :destroy, params: { id: jane.id }
+        expect(response.status).to eql(302) # redirects to index
         expect(User.exists?(jane.id)).to be false
       end
 
       it "cannot delete managers" do
         jane.update_permissions(role: 'manager')
-        expect {
-          delete :destroy, params: { id: jane.id }
-        }.to raise_error CanCan::AccessDenied
+        delete :destroy, params: { id: jane.id }
+        expect(response.status).to eql(403)
         expect(User.exists?(jane.id)).to be true
       end
 
       it "cannot delete administators" do
         jane.update_permissions(role: 'administrator')
-        expect {
-          delete :destroy, params: { id: jane.id }
-        }.to raise_error CanCan::AccessDenied
+        delete :destroy, params: { id: jane.id }
+        expect(response.status).to eql(403)
         expect(User.exists?(jane.id)).to be true
       end
     end
