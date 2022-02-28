@@ -71,7 +71,7 @@ gem 'listen', '>= 3.0.5', '< 3.2'
 
 # Login/auth gems
 gem 'devise'
-gem 'cul_omniauth', github: "cul/cul_omniauth", branch: "rails_6"
+gem 'cul_omniauth', '~> 0.7.0'
 gem 'cancancan', '~> 3.0'
 
 gem 'gaffe'
