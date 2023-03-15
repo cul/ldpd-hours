@@ -17,12 +17,14 @@
     <%= render :partial => 'layouts/toolkit' %>
     <%= javascript_include_tag 'application', defer: true %>
     <% if Rails.application.config.track_users && Rails.application.secrets[:analytics_key] -%>
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=<%= Rails.application.secrets[:analytics_key]%>"></script>
     <script type="text/javascript">
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', '<%= Rails.application.secrets[:analytics_key]%>');
+      gtag('config', 'G-QRM52K5M78');
     </script>
     <% end -%>
     <script src="https://cdn.cul.columbia.edu/fontawesome/pro/v5.x/js/all.js" defer="defer" crossorigin="anonymous"></script>
