@@ -16,26 +16,38 @@ $(document).ready(function(){
     }
   });
 
+  // On check of Closed, ensure TBD is unchecked
+  $('input#timetable_closed').on("input", function () {
+    if ($(this).is(':checked')) $('input#timetable_tbd').prop( "checked", false );
+  });
+  // On check of TBD, ensure Closed is unchecked
+  $('input#timetable_tbd').on("input", function () {
+    if ($(this).is(':checked')) $('input#timetable_closed').prop( "checked", false );
+  });
   // On batch_edit form submit, add days and times to cal on success
   $('form#new_timetable').on('ajax:success', function(event, jqxhr, settings, exception){
     $( '.days-list' ).empty();
+    const closedChecked = $('input#timetable_closed').is(':checked');
+    const tbdChecked = $('input#timetable_tbd').is(':checked');
+    const timetableNote = $('#timetable_note').val();
     $('.ui-selected').each(function(){
       var that = this;
-      $.when($(this).children('.day-hours').remove()).then(function(){
-        if($('input#timetable_closed').is(':checked')){
-          $(that).append('<div class="day-hours">Closed</div>');
-        }else if($('input#timetable_tbd').is(':checked')){
-          $(that).append('<div class="day-hours">TBD</div>');
-        }else{
-          $(that).append(location_hours);
-        }
-
-        if($('#timetable_note').val()){
-          $(that).append('<div class="day-hours">' + $('#timetable_note').val() + '</div>');
-          $('#timetable_note').val('');
-        }
-      });
+      var replaceHours;
+      if(closedChecked){
+        replaceHours = '<div class="day-hours">Closed</div>';
+      }else if(tbdChecked){
+        replaceHours = '<div class="day-hours">TBD</div>';
+      }else{
+        replaceHours = location_hours();
+      }
+      $(this).children('.day-hours').replaceWith(replaceHours);
+      if ($(this).children('.day-note').text(timetableNote).length == 0) {
+        $(this).append('<div class="day-note">' + timetableNote + '</div>');
+      }
     });
+    if (closedChecked) $('input#timetable_closed').prop( "checked", false );
+    if (tbdChecked) $('input#timetable_tbd').prop( "checked", false );
+    $('#timetable_note').val('');
     $('td').removeClass('ui-selected');
   });
 
@@ -66,12 +78,15 @@ $(document).ready(function(){
   });
 
   function location_hours(){
+    const leadZeros = /^0+/;
     var open = $('#timetable_open_4i option:selected').text().split(' ')[0] + ':' +
                $('#timetable_open_5i option:selected').text() +
-               $('#timetable_open_4i option:selected').text().split(' ')[1]
+               $('#timetable_open_4i option:selected').text().split(' ')[1];
+    open = open.replace(leadZeros, '');
     var close = $('#timetable_close_4i option:selected').text().split(' ')[0] + ':' +
                 $('#timetable_close_5i option:selected').text() +
-                $('#timetable_close_4i option:selected').text().split(' ')[1]
+                $('#timetable_close_4i option:selected').text().split(' ')[1];
+    close = close.replace(leadZeros, '');
     return '<div class="day-hours">' + open + '-' + close + '</div>'
   }
 

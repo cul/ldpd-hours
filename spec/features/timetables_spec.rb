@@ -45,7 +45,7 @@ describe "Timetables", type: :feature, js: true do
       select "06 PM", :from => "timetable_close_4i"
       select "30", :from => "timetable_close_5i"
       click_button("Update Hours")
-      expect(page).to have_content("07:30AM-06:30PM")
+      expect(page).to have_content("7:30AM-6:30PM")
     end
 
     it "should warn when hours run overnight" do
