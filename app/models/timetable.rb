@@ -25,12 +25,11 @@ class Timetable < ApplicationRecord
   end
 
   def self.batch_update_or_create(timetable_params, open, close)
-    params, values = [],[]
-    (timetable_params["dates"].count).times{ params.push("(?,?,?,?,?,?,?,?,?)")}
+    attr_names = %w(location_id date open close closed tbd note created_at updated_at)
     overnight = open && open >= close
     timetable_params["tbd"] = "0" if timetable_params["tbd"].blank?
     timetable_params["closed"] = "0" if timetable_params["closed"].blank?
-    timetable_params["dates"].each do |day|
+    values = timetable_params["dates"].map do |day|
       time = day.to_time.in_time_zone
       if open
         if overnight
@@ -44,20 +43,17 @@ class Timetable < ApplicationRecord
         open_time = nil
         close_time = nil
       end
-      values.push(timetable_params['location_id'], day, open_time, close_time, timetable_params['closed'], timetable_params['tbd'], timetable_params['note'], Time.current, Time.current)
+      attr_values = [timetable_params['location_id'], day, open_time, close_time, timetable_params['closed'], timetable_params['tbd'], timetable_params['note'], Time.current, Time.current]
+      attr_names.zip(attr_values).to_h
     end
-
+    upsert_opts =  ActiveRecord::Base.connection.adapter_name.eql?('SQLite') ? { unique_by: %i[ location_id date ] } : {}
     if timetable_params['location_code'] == 'all'
       Location.all.each do |each_location|
-        0.step(by: 9, to: (timetable_params["dates"].count * 9) - 1) { |lidx| values[lidx] = each_location.id }
-        bulk_insert_users_sql_arr = ["REPLACE INTO timetables (location_id,date,open,close,closed,tbd,note,created_at,updated_at) VALUES #{params.join(", ")}"] + values
-        sql = ActiveRecord::Base.send(:sanitize_sql_array, bulk_insert_users_sql_arr)
-        ActiveRecord::Base.connection.exec_update(sql)
+        values.each { |value| value['location_id'] = each_location.id }
+        Timetable.upsert_all(values, upsert_opts)
       end
     else
-      bulk_insert_users_sql_arr = ["REPLACE INTO timetables (location_id,date,open,close,closed,tbd,note,created_at,updated_at) VALUES #{params.join(", ")}"] + values
-      sql = ActiveRecord::Base.send(:sanitize_sql_array, bulk_insert_users_sql_arr)
-      ActiveRecord::Base.connection.exec_update(sql)
+      Timetable.upsert_all(values, upsert_opts)
     end
   end
 
