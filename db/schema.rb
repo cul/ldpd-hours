@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2022_02_28_151512) do
 
-  create_table "locations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "locations", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "code", null: false
     t.string "url"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 2022_02_28_151512) do
     t.index ["primary_location_id"], name: "index_locations_on_primary_location_id"
   end
 
-  create_table "permissions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "permissions", charset: "utf8", force: :cascade do |t|
     t.bigint "user_id"
     t.string "role", null: false
     t.string "subject_class"
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 2022_02_28_151512) do
     t.index ["user_id"], name: "index_permissions_on_user_id"
   end
 
-  create_table "timetables", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "timetables", charset: "utf8", force: :cascade do |t|
     t.date "date"
     t.datetime "open"
     t.datetime "close"
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 2022_02_28_151512) do
     t.index ["open"], name: "index_timetables_on_open"
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "users", charset: "utf8", force: :cascade do |t|
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
