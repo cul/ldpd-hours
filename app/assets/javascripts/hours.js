@@ -16,13 +16,39 @@ $(document).ready(function(){
     }
   });
 
+  function disableWidget(widget) {
+    if (widget.prop("disabled")) return;
+    widget.prop("disabled", true);
+    const selection = widget.children(':checked');
+    selection.data('label', selection.text());
+    selection.text('--');
+  }
+  function enableWidget(widget) {
+    if (!widget.prop("disabled")) return;
+    const selection = widget.children(':checked');
+    selection.text(selection.data('label'));
+    widget.prop("disabled", false);
+  }
+
+  const dateWidgetIds = ['#timetable_open_4i', '#timetable_open_5i', '#timetable_close_4i', '#timetable_close_5i']
+
   // On check of Closed, ensure TBD is unchecked
   $('input#timetable_closed').on("input", function () {
-    if ($(this).is(':checked')) $('input#timetable_tbd').prop( "checked", false );
+    if ($(this).is(':checked')) {
+      $('input#timetable_tbd').prop( "checked", false );
+      dateWidgetIds.forEach(function(widgetId) { disableWidget($(widgetId)) });
+    } else {
+      dateWidgetIds.forEach(function(widgetId) { enableWidget($(widgetId)) });
+    }
   });
   // On check of TBD, ensure Closed is unchecked
   $('input#timetable_tbd').on("input", function () {
-    if ($(this).is(':checked')) $('input#timetable_closed').prop( "checked", false );
+    if ($(this).is(':checked')) {
+      $('input#timetable_closed').prop( "checked", false );
+      dateWidgetIds.forEach(function(widgetId) { disableWidget($(widgetId)) });
+    } else {
+      dateWidgetIds.forEach(function(widgetId) { enableWidget($(widgetId)) });
+    }
   });
   // On batch_edit form submit, add days and times to cal on success
   $('form#new_timetable').on('ajax:success', function(event, jqxhr, settings, exception){
@@ -47,6 +73,7 @@ $(document).ready(function(){
     });
     if (closedChecked) $('input#timetable_closed').prop( "checked", false );
     if (tbdChecked) $('input#timetable_tbd').prop( "checked", false );
+    dateWidgetIds.forEach(function(widgetId) { enableWidget($(widgetId)) });
     $('#timetable_note').val('');
     $('td').removeClass('ui-selected');
   });
