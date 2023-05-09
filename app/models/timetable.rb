@@ -50,10 +50,10 @@ class Timetable < ApplicationRecord
     if timetable_params['location_code'] == 'all'
       Location.all.each do |each_location|
         values.each { |value| value['location_id'] = each_location.id }
-        Timetable.upsert_all(values, upsert_opts)
+        Timetable.upsert_all(values, **upsert_opts)
       end
     else
-      Timetable.upsert_all(values, upsert_opts)
+      Timetable.upsert_all(values, **upsert_opts)
     end
   end
 
