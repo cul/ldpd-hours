@@ -36,6 +36,8 @@ set :linked_files, fetch(:linked_files, []).push(
   "config/wifi_density.yml"
 )
 
+before "deploy:assets:precompile", "deploy:yarn_install"
+
 namespace :deploy do
   desc "Report the environment"
   task :report do
@@ -57,4 +59,12 @@ namespace :deploy do
     system("git tag -a #{tag} -m 'auto-tagged' && git push origin --tags")
   end
 
+  desc "Run rake yarn install"
+  task :yarn_install do
+    on roles(:web) do
+      within release_path do
+        execute("cd #{release_path} && yarn install --silent --no-progress --no-audit --no-optional")
+      end
+    end
+  end
 end

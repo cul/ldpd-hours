@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: ['2.6.4', '2.7.5']
+        ruby-version: ['2.7.5', '3.0.3']
         node: ['8', '12']
     env:
       RAILS_ENV: test
@@ -20,6 +20,7 @@ jobs:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_USER: user
       MYSQL_USER_PASSWORD: password
+      NOKOGIRI_USE_SYSTEM_LIBRARIES: true
 
     steps:
       # Set up MySQL first because it can take some time to start up
@@ -33,6 +34,8 @@ jobs:
           mysql database: ${{ env.MYSQL_DATABASE }}
           mysql root password: ${{ env.MYSQL_ROOT_PASSWORD }}
       - uses: actions/checkout@v2
+      - name: Install libxslt for nokogiri gem (required for version < 1.11)
+        run: sudo apt-get install -y libxml2-dev libxslt-dev
       - name: Add --no-document option to .gemrc file to speed up bundle install
         run: "echo 'gem: --no-document' > ~/.gemrc"
       - name: Set up Ruby

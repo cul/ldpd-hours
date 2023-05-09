@@ -7,16 +7,17 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.0'
+gem 'rails', '~> 7.0.0'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
-gem 'bigdecimal', '~> 1.4.4'
+gem 'bigdecimal'
 # Use Puma as the app server
 gem 'puma', '~> 5.2'
 # Use SCSS for stylesheets
 gem 'sass', '~> 3.7.4'
 gem 'sass-rails', '~> 5'
-gem 'sprockets', '~> 3.7.2'
+gem "sprockets-rails"
+gem "net-ldap", '~> 0.17.1'
 gem 'nokogiri', '~> 1.10.10'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -40,6 +41,7 @@ group :development, :test do
   gem 'capybara', '~> 3.33'
   # For testing with chromedriver
   gem 'selenium-webdriver', '~> 3.142'
+  gem 'rexml', '~> 3.2', '>= 3.2.4'
   # For automatically updating chromedriver
   gem 'webdrivers', '~> 4.0', require: false
   gem 'rspec-rails', '~> 4.0'
@@ -67,11 +69,11 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Moved outside dev/test group to get deploy to work, known issue
-gem 'listen', '>= 3.0.5', '< 3.2'
+gem 'listen', '~> 3.2'
 
 # Login/auth gems
 gem 'devise'
-gem 'cul_omniauth', '~> 0.7.0'
+gem 'cul_omniauth', '~> 0.8.0'
 gem 'cancancan', '~> 3.0'
 
 gem 'gaffe'

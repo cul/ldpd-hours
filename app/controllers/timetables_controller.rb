@@ -22,7 +22,7 @@ class TimetablesController < ApplicationController
     end
 
     if params["dates"].blank?
-      render json: { message: "no compatible dates selected" }, status: :error
+      render json: { message: "no compatible dates selected" }, status: :bad_request
       return
     end
 
@@ -40,7 +40,7 @@ class TimetablesController < ApplicationController
       render json: { message: "success" }, status: :ok
     end
   rescue ArgumentError, Mysql2::Error => e
-    render json: { message: "ERROR #{e.message}" }, status: :error
+    render json: { message: "ERROR #{e.message}" }, status: :internal_server_error
   end
 
   def load_location
