@@ -25,10 +25,10 @@ class Timetable < ApplicationRecord
   end
 
   def self.batch_update_or_create(timetable_params, open, close)
-    attr_names = %w(location_id date open close closed tbd note created_at updated_at)
     overnight = open && open >= close
     timetable_params["tbd"] = "0" if timetable_params["tbd"].blank?
     timetable_params["closed"] = "0" if timetable_params["closed"].blank?
+    now = Time.current
     values = timetable_params["dates"].map do |day|
       time = day.to_time.in_time_zone
       if open
@@ -43,13 +43,23 @@ class Timetable < ApplicationRecord
         open_time = nil
         close_time = nil
       end
-      attr_values = [timetable_params['location_id'], day, open_time, close_time, timetable_params['closed'], timetable_params['tbd'], timetable_params['note'], Time.current, Time.current]
-      attr_names.zip(attr_values).to_h
+      {
+        location_id: timetable_params['location_id'],
+        date: day,
+        open: open_time,
+        close: close_time,
+        closed: timetable_params['closed'],
+        tbd: timetable_params['tbd'],
+        note: timetable_params['note'],
+        created_at: now,
+        updated_at: now
+      }
     end
-    upsert_opts =  ActiveRecord::Base.connection.adapter_name.eql?('SQLite') ? { unique_by: %i[ location_id date ] } : {}
+    upsert_opts =  { update_only: [:open, :close, :closed, :tbd, :note, :updated_at] }
+    upsert_opts[:unique_by] = %i[ location_id date ] if ActiveRecord::Base.connection.adapter_name.eql?('SQLite')
     if timetable_params['location_code'] == 'all'
       Location.all.each do |each_location|
-        values.each { |value| value['location_id'] = each_location.id }
+        values.each { |value| value[:location_id] = each_location.id }
         Timetable.upsert_all(values, **upsert_opts)
       end
     else
