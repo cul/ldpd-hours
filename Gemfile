@@ -40,10 +40,10 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 3.33'
   # For testing with chromedriver
-  gem 'selenium-webdriver', '~> 3.142'
+  gem 'selenium-webdriver', '~> 4.0'
   gem 'rexml', '~> 3.2', '>= 3.2.4'
   # For automatically updating chromedriver
-  gem 'webdrivers', '~> 4.0', require: false
+  gem 'webdrivers', '~> 5.3.0', require: false
   gem 'rspec-rails', '~> 4.0'
   gem 'factory_bot_rails', ' ~> 4.0'
   gem 'simplecov',      require: false
