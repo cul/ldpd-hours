@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: ['3.0.3']
-        node: ['8', '12']
+        ruby-version: ['3.2.2']
+        node: ['14', '16']
     env:
       RAILS_ENV: test
       MYSQL_HOST: 127.0.0.1

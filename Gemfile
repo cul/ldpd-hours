@@ -18,7 +18,7 @@ gem 'sass', '~> 3.7.4'
 gem 'sass-rails', '~> 5'
 gem "sprockets-rails"
 gem "net-ldap", '~> 0.17.1'
-gem 'nokogiri', '~> 1.10.10'
+gem 'nokogiri', '~> 1.15.2' # update past 1.10 requires alma
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -38,7 +38,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '~> 3.33'
+  gem 'capybara', '~> 3.39'
   # For testing with chromedriver
   gem 'selenium-webdriver', '~> 4.0'
   gem 'rexml', '~> 3.2', '>= 3.2.4'
