@@ -18,6 +18,15 @@
       <% end %>
     </div>
 
+    <div class="form-group">
+      <%= f.label :suppress_display %>
+      <% if current_user.administrator? %>
+        <%= f.check_box :suppress_display %>
+      <% elsif @location.suppress_display %>
+        <p class="warn static-control-form"><%= t("location.suppressed") %></p>
+      <% end %>
+    </div>
+
     <% if current_user.administrator? %>
       <div class="form-group">
         <%= f.label :front_page %>

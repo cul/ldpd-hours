@@ -4,6 +4,8 @@ describe "Locations", type: :feature do
   let(:lehman) { FactoryBot.create(:lehman) }
   let(:underbutler) { FactoryBot.create(:underbutler) }
   let(:butler) { underbutler.primary_location }
+  let(:duanereade) { FactoryBot.create(:duanereade, suppress_display: true) }
+
   context 'when user without role logged in' do
     # initialize at least one library
     before { lehman }
@@ -27,6 +29,11 @@ describe "Locations", type: :feature do
       expect(page.title).to include(butler.name)
       expect(page).to have_css("h2", text: underbutler.name)
       expect(page).to have_css("p", text: butler.name)
+    end
+
+    it "does not display suppressed locations", js: false do
+      visit("/locations/#{duanereade.code}")
+      expect(page.status_code).to eq(404)
     end
   end
 
@@ -84,6 +91,20 @@ describe "Locations", type: :feature do
     end
 
     it "can update primary location"
+
+    it "displays suppressed locations", js: false do
+      visit("/locations/#{duanereade.code}")
+      expect(page).to have_content("Public display of this location is suppressed.")
+    end
+
+    it "can update suppress_display" do
+      expect(duanereade.suppress_display).to be true
+      visit edit_location_path(duanereade.code)
+      uncheck "Suppress"
+      click_on "Update Location"
+      expect(page).to have_content("Location successfully updated")
+      expect(duanereade.reload.suppress_display).to be false
+    end
   end
 
   context 'when manager logged in' do
@@ -102,6 +123,11 @@ describe "Locations", type: :feature do
     it "cannot create a new location" do
       visit new_location_path
       expect(page).to have_content("Unauthorized")
+    end
+
+    it "displays suppressed locations", js: false do
+      visit("/locations/#{duanereade.code}")
+      expect(page).to have_content("Public display of this location is suppressed.")
     end
   end
 
@@ -131,5 +157,10 @@ describe "Locations", type: :feature do
     end
 
     it "cannot delete lehman"
+
+    it "displays suppressed locations", js: false do
+      visit("/locations/#{duanereade.code}")
+      expect(page).to have_content("Public display of this location is suppressed.")
+    end
   end
 end
