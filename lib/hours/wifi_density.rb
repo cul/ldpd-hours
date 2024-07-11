@@ -57,11 +57,6 @@ module Hours
       }
     end
 
-    # Obsolete
-    def self.config_for_location_code(location_code)
-      WIFI_DENSITY[:locations][location_code.to_sym]
-    end
-
     def self.raw_wifi_density_data
       Rails.cache.fetch('raw_wifi_density_data', expires_in: wifi_data_cache_duration) do
         cacheable_data = fetch_raw_wifi_density_data
