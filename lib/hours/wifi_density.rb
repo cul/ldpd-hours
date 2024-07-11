@@ -11,15 +11,13 @@ module Hours
     def self.percentage_for(location)
       # If this location's code is not mapped in the wifi density config file,
       # that means wifi density info is not supported for the location.
-      config_for_location = config_for_location_code(location.code)
+      config_for_location = location_wifi_configuration(location)
       return nil if config_for_location.nil? || !config_for_location.key?(:high) || !config_for_location.key?(:cuit_location_ids)
       Rails.cache.fetch('wifi_density_data-' + location.code, expires_in: wifi_data_cache_duration) do
-        wifi_density_data_for_locations = Rails.cache.fetch('wifi_density_data', expires_in: wifi_data_cache_duration) do
-          fetch_hierarchical_wifi_density_data
-        end
+        wifi_density_data_for_locations = hierarchical_wifi_density_data
         aggregated_locations = {}
 
-        config_for_location[:cuit_location_ids].each do |cuit_location_id|
+        config_for_location[:cuit_location_ids]&.each do |cuit_location_id|
           location_data = wifi_density_data_for_locations[cuit_location_id.to_s]
           next if location_data.nil?
           aggregated_locations.merge!({cuit_location_id.to_s => location_data})
@@ -52,20 +50,54 @@ module Hours
       end
     end
 
+    def self.location_wifi_configuration(location)
+      {
+        high: (location.wifi_connections_baseline.to_i if location.wifi_connections_baseline.present?),
+        cuit_location_ids: (location.access_point_ids.map(&:to_s) if location.access_point_ids.present?)
+      }
+    end
+
+    # Obsolete
     def self.config_for_location_code(location_code)
       WIFI_DENSITY[:locations][location_code.to_sym]
     end
 
+    def self.raw_wifi_density_data
+      Rails.cache.fetch('raw_wifi_density_data', expires_in: wifi_data_cache_duration) do
+        cacheable_data = fetch_raw_wifi_density_data
+        now = DateTime.now
+        cacheable_data.each do |ap_id, location_data|
+          ap = AccessPoint.find_or_create_by(id: ap_id)
+          if ap.client_count != location_data['client_count'].to_i
+            ap.update(client_count: location_data['client_count'].to_i)
+            location_data['updated_at'] = now
+          else
+            location_data['updated_at'] = ap.updated_at
+          end
+        end
+        cacheable_data
+      end
+    end
+
     def self.fetch_raw_wifi_density_data
-      if Rails.env.development?
+      if Rails.env.development? || Rails.env.test?
         JSON.parse(File.read(Rails.root.join('spec/fixtures/files/sample-wifi-density-response.json')))
       else
         JSON.parse(Net::HTTP.get(URI(data_url)))
       end
     end
 
+    def self.hierarchical_wifi_density_data
+      Rails.cache.fetch('hierarchical_wifi_density_data', expires_in: wifi_data_cache_duration) do
+        fetch_hierarchical_wifi_density_data
+      end
+    end
+
     def self.fetch_hierarchical_wifi_density_data
-      all_location_data = fetch_raw_wifi_density_data
+      all_location_data = raw_wifi_density_data
+
+      stale_time = DateTime.now - 2.hours
+      all_location_data.reject! { |k, v| v['updated_at'] < stale_time }
 
       # Convert raw data into hierarchical data, generating top level entries
       # for any referenced parent_id values that don't exist.
@@ -90,6 +122,8 @@ module Hours
       all_location_data
     end
 
+    # add child access point nodes to their parent's children hash
+    # but keep them in the top-level hash
     def self.recursively_collect_children(location_data, children = {})
       if location_data['children']
         location_data['children'].each do |child_location_id, child_location_data|
@@ -103,6 +137,53 @@ module Hours
         end
       end
       children
+    end
+
+    def self.default_access_point_data_for_id(ap_id, suffix = "")
+      { 'id' => ap_id, 'name' => "Location #{ap_id}#{suffix}" }
+    end
+
+    def self.access_point_trees(location = nil)
+      stored_ids = location ? location.access_point_ids.to_a : []
+      aggregated_locations = raw_wifi_density_data.reduce({}) do |acc, entry|
+        ap_id, ap_data = *entry
+        acc[ap_id] ||= default_access_point_data_for_id(ap_id)
+        acc[ap_id].merge!(ap_data)
+        if parent_id = ap_data['parent_id']
+          acc[parent_id] ||= default_access_point_data_for_id(parent_id)
+        end
+        acc
+      end
+
+      roots = rollup_children(aggregated_locations).transform_values(&:deep_symbolize_keys)
+      stored_ids.each { |id| roots[id.to_s] ||= default_access_point_data_for_id(id, " [no current data]").symbolize_keys }
+      roots.map { |k,v| AccessPointStruct.new(**v) }
+    end
+
+    # add child access point nodes to their parent's children hash
+    # and remove them from the top-level hash
+    def self.rollup_children(data = {})
+      parent_ids = data.values.map { |v| v['parent_id'] }.compact
+      return data if parent_ids.length == 0
+
+      (data.keys - parent_ids).each do |leaf_id|
+        leaf = data[leaf_id]
+        next unless parent_id = leaf['parent_id']
+        parent = data[parent_id] ||= default_access_point_data_for_id(parent_id)
+        (parent['children'] ||= {})[leaf_id] = data.delete(leaf_id)
+      end
+      rollup_children(data)
+    end
+
+    class AccessPointStruct
+      attr_accessor :children, :id, :name, :parent_id, :updated_at
+      def initialize(children: nil, id:, name:, parent_id: nil, updated_at: nil, **args)
+        @id = id
+        @name = name
+        @parent_id = parent_id
+        @updated_at = updated_at
+        @children = (children || {}).transform_values { |c| AccessPointStruct.new(**c) }
+      end
     end
   end
 end

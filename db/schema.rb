@@ -10,7 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_10_150406) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_10_210750) do
+  create_table "access_points", force: :cascade do |t|
+    t.integer "client_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "access_points_locations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "location_id", null: false
+    t.bigint "access_point_id", null: false
+    t.index ["access_point_id"], name: "index_access_points_locations_on_access_point_id"
+    t.index ["location_id", "access_point_id"], name: "index_access_points_locations_on_location_id_and_access_point_id", unique: true
+    t.index ["location_id"], name: "index_access_points_locations_on_location_id"
+  end
+
   create_table "locations", force: :cascade do |t|
     t.string "name", null: false
     t.string "code", null: false
@@ -26,6 +42,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_10_150406) do
     t.string "short_note"
     t.text "short_note_url"
     t.boolean "suppress_display", default: false
+    t.integer "wifi_connections_baseline"
     t.index ["code"], name: "index_locations_on_code"
     t.index ["front_page"], name: "index_locations_on_front_page"
     t.index ["primary"], name: "index_locations_on_primary"
