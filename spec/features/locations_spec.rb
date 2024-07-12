@@ -34,6 +34,7 @@ describe "Locations", type: :feature do
     it "does not display suppressed locations", js: false do
       visit("/locations/#{duanereade.code}")
       expect(page.status_code).to eq(404)
+      expect(page).to have_content("Location not found")
     end
   end
 
