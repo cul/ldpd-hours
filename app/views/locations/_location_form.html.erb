@@ -22,9 +22,9 @@
       <h3>Location Display Options</h3>
         <% if current_user.administrator? %>
           <ul>
-            <li><%= f.label(:suppress_display) { f.check_box(:suppress_display).safe_concat(" Suppress Display") } %></li>
-            <li><%= f.label(:front_page) { f.check_box(:front_page).safe_concat(" Front Page") } %></li>
-            <li><%= f.label(:primary) { f.check_box(:primary).safe_concat(" Primary") } %></li>
+            <li class="form-check"><%= f.label(:suppress_display, class: ['form-check-label']) { f.check_box(:suppress_display, class: ['form-check-input']).safe_concat("Suppress Display") } %></li>
+            <li class="form-check"><%= f.label(:front_page, class: ['form-check-label']) { f.check_box(:front_page, class: ['form-check-input']).safe_concat("Front Page") } %></li>
+            <li class="form-check"><%= f.label(:primary, class: ['form-check-label']) { f.check_box(:primary, class: ['form-check-input']).safe_concat("Primary") } %></li>
           </ul>
           <div class="form-group">
             <%= f.label :primary_location %>
