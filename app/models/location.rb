@@ -3,7 +3,11 @@ class Location < ApplicationRecord
   validate :primary_location_must_be_primary
 
   has_many :timetables
+  has_many :access_points_locations
+  has_many :access_points, through: :access_points_locations
+
   belongs_to :primary_location, class_name: 'Location', foreign_key: 'primary_location_id', optional: true
+  accepts_nested_attributes_for :access_points
 
   # TODO: when a location is deleted any permissions related to that location should also be deleted
 

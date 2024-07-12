@@ -9,9 +9,9 @@ class LocationsController < ApplicationController
       path.blank? or path == '/'
     end
     if home_page
-      @locations = Location.where(front_page: true).where.not(code: 'all')
+      @locations = Location.where(front_page: true).where.not(code: 'all', suppress_display: true).includes(:access_points)
     else
-      @locations = Location.where.not(code: 'all')
+      @locations = Location.where.not(code: 'all', suppress_display: true).includes(:access_points)
     end
     @locations = @locations.order(:name)
     @now = Time.current
@@ -44,7 +44,12 @@ class LocationsController < ApplicationController
 
   def update
     authorize! :update, @location
-    if @location.update(update_params)
+    clean_params = update_params
+    clean_params.dig(:access_points)&.map! do |ap|
+      ap.present? ? AccessPoint.find_or_create_by(id: ap.to_i) : nil
+    end
+    clean_params.dig(:access_points)&.compact!
+    if @location.update(clean_params)
       flash[:success] = "Location successfully updated"
       redirect_to admin_url
     else
@@ -59,6 +64,13 @@ class LocationsController < ApplicationController
   end
 
   def show
+    unless @location && (current_user || !@location.suppress_display)
+      respond_to do |format|
+        format.html { render "errors/not_found", status: 404, layout: "public" }
+        format.json { render json: {}, status: 404 }
+      end
+      return
+    end
     @secondary_locations = Location.where(primary_location: @location).load
     @date = params[:date] ? Date.parse(params[:date]) : Date.current
     respond_to do |format|
@@ -129,7 +141,7 @@ class LocationsController < ApplicationController
 
   def update_params
     if current_user.administrator?
-      params.require(:location).permit(:name, :code, :comment, :comment_two, :url, :summary, :primary, :primary_location_id, :front_page, :short_note, :short_note_url)
+      params.require(:location).permit(:name, :code, :comment, :comment_two, :url, :summary, :primary, :primary_location_id, :front_page, :short_note, :short_note_url, :suppress_display, :wifi_connections_baseline, access_points: [])
     else
       params.require(:location).permit(:comment, :comment_two, :url, :summary, :short_note, :short_note_url)
     end

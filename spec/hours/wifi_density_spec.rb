@@ -10,7 +10,7 @@ describe Hours::WifiDensity do
 
   context ".percentage_for" do
     let(:butler_location) {
-      Location.new(code: 'butler-24')
+      Location.new(code: 'butler-24', wifi_connections_baseline: 1900, access_points: [AccessPoint.new(id: '115')])
     }
     let(:journalism_location) {
       Location.new(code: 'journalism')
@@ -50,8 +50,15 @@ describe Hours::WifiDensity do
   end
 
   context ".fetch_hierarchical_wifi_density_data" do
+    let(:hierarchical_wifi_density_data) { described_class.fetch_hierarchical_wifi_density_data }
+    before do
+      hierarchical_wifi_density_data.each do |k, v|
+        v.delete('updated_at')
+        v['children']&.each {|v2| v2.delete('updated_at')}
+      end
+    end
     it "returns a hierarchical version of the raw wifi data with child locations nested under parents" do
-      expect(described_class.fetch_hierarchical_wifi_density_data).to eq(sample_hierarchical_wifi_density_data)
+      expect(hierarchical_wifi_density_data).to eq(sample_hierarchical_wifi_density_data)
     end
   end
 

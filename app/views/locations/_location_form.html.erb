@@ -18,20 +18,32 @@
       <% end %>
     </div>
 
-    <% if current_user.administrator? %>
-      <div class="form-group">
-        <%= f.label :front_page %>
-        <%= f.check_box :front_page %>
-      </div>
-      <div class="form-group">
-        <%= f.label :primary %>
-        <%= f.check_box :primary %>
-      </div>
-      <div class="form-group">
-        <%= f.label :primary_location %>
-        <%= collection_select(:location, :primary_location_id, Location.where(primary: true), :id, :name, {include_blank: 'None'}) %>
-      </div>
-    <% end %>
+    <div class="form-group">
+      <h3>Location Display Options</h3>
+        <% if current_user.administrator? %>
+          <ul>
+            <li class="form-check"><%= f.label(:suppress_display, class: ['form-check-label']) { f.check_box(:suppress_display, class: ['form-check-input']).safe_concat("Suppress Display") } %></li>
+            <li class="form-check"><%= f.label(:front_page, class: ['form-check-label']) { f.check_box(:front_page, class: ['form-check-input']).safe_concat("Front Page") } %></li>
+            <li class="form-check"><%= f.label(:primary, class: ['form-check-label']) { f.check_box(:primary, class: ['form-check-input']).safe_concat("Primary") } %></li>
+          </ul>
+          <div class="form-group">
+            <%= f.label :primary_location %>
+            <%= collection_select(:location, :primary_location_id, Location.where(primary: true), :id, :name, {include_blank: 'None'}) %>
+          </div>
+        <% else %>
+          <ul>
+            <% if @location.suppress_display %>
+              <li><span class="warn static-control-form"><%= t("location.suppressed") %></span></li>
+            <% end %>
+            <li>Front Page: <%= (!!@location.front_page).to_s %></li>
+            <li>Primary: <%= (!!@location.primary).to_s %></li>
+            <% if @location.primary_location %>
+              <li>Primary Location: <%= @location.primary_location.name %></li>
+            <% end %>
+          </ul>
+        <% end %>
+    </div>
+
     <div class="form-group">
       <%= f.label :url %>
       <%= f.text_field :url, :class => "form-control" %>
@@ -57,6 +69,16 @@
       <%= f.text_field :short_note_url, :class => "form-control" %>
     </div>
 
+
+    <div class="form-group">
+      <h3>WiFi Configuration</h3>
+      <div class="form-group">
+        <%= f.label :wifi_connections_baseline, 'WiFi Connections Baseline Count' %>
+        <%= f.text_field :wifi_connections_baseline, :class => "form-control" %>
+      </div>
+      <% current_aps = @location.access_point_ids.map(&:to_s) %>
+      <%= access_point_checkboxes(Hours::WifiDensity.access_point_trees(@location), (1...).each, current_aps) %>
+    </div>
     <%= f.submit :class => 'btn btn-primary btn-sm'%>
   <% end %>
 </div>
