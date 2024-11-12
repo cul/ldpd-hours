@@ -36,7 +36,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_10_210750) do
     t.string "summary"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.bigint "primary_location_id"
+    t.integer "primary_location_id"
     t.boolean "primary", default: false
     t.boolean "front_page", default: false, null: false
     t.string "short_note"
@@ -50,7 +50,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_10_210750) do
   end
 
   create_table "permissions", force: :cascade do |t|
-    t.bigint "user_id"
+    t.integer "user_id"
     t.string "role", null: false
     t.string "subject_class"
     t.integer "subject_id"
@@ -69,7 +69,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_10_210750) do
     t.boolean "tbd", default: false, null: false
     t.boolean "closed", default: false, null: false
     t.string "note"
-    t.bigint "location_id"
+    t.integer "location_id"
     t.index ["close"], name: "index_timetables_on_close"
     t.index ["date"], name: "index_timetables_on_date"
     t.index ["location_id", "date"], name: "index_timetables_on_location_id_and_date", unique: true

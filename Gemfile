@@ -30,7 +30,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 
 # Use sqlite3 as the database for Active Record
-gem "sqlite3", "~> 1.4.2"
+gem "sqlite3", "~> 1.5.0"
 
 gem 'mysql2'
 
