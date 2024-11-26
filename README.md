@@ -10,18 +10,18 @@
 - Git clone this repo
 - Setup a MySQL db locally and add credentials to config/database.yml
 - `$ bundle install`
-- `$ rake db:migrate`
-- If you don't have yarn currently installed please run `brew install yarn`
-- `$ yarn`
-- `$ rake db:seed`
+- `$ bundle exec rake db:migrate`
+- If you don't have yarn currently installed, install node 20 (preferably using nvm) and then run `npm install -g yarn`
+- `$ yarn install`
+- `$ bundle exec rake db:seed`
 
-   Seeds the db with two locations and an administrative user. Administrative credentials are:
+   The above seed command will seed the db with two locations and an administrative user. Administrative credentials are:
    ```
    name: Test User
    email: admin@example.com
    ```
-- `$ rails s`
-- Navigate to `localhost:3000`
+- `$ bundle exec rails s`
+- Navigate to `http://localhost:3000`
 
 
 ## Testing
