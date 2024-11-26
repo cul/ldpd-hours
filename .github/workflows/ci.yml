@@ -10,29 +10,12 @@ jobs:
     strategy:
       matrix:
         ruby-version: ['3.2.2']
-        node: ['14', '16']
+        node: ['20']
     env:
       RAILS_ENV: test
-      MYSQL_HOST: 127.0.0.1
-      MYSQL_PORT: 3306
-      MYSQL_VERSION: 5.7
-      MYSQL_DATABASE: hours_test
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_USER: user
-      MYSQL_USER_PASSWORD: password
       NOKOGIRI_USE_SYSTEM_LIBRARIES: true
 
     steps:
-      # Set up MySQL first because it can take some time to start up
-      - uses: mirromutth/mysql-action@v1.1
-        with:
-          host port: ${{ env.MYSQL_PORT }}
-          container port: ${{ env.MYSQL_PORT }}
-          character set server: 'utf8mb4'
-          mysql version: ${{ env.MYSQL_VERSION }}
-          collation server: 'utf8mb4_general_ci'
-          mysql database: ${{ env.MYSQL_DATABASE }}
-          mysql root password: ${{ env.MYSQL_ROOT_PASSWORD }}
       - uses: actions/checkout@v2
       - name: Install libxslt for nokogiri gem (required for version < 1.11)
         run: sudo apt-get install -y libxml2-dev libxslt-dev
@@ -49,21 +32,9 @@ jobs:
           node-version: ${{ matrix.node }}
       - run: npm install -g yarn
       - run: yarn install
-      - run: cp config/database.gh-actions.yml config/database.yml
+      - run: cp config/database.template.yml config/database.yml
       - run: cp config/secrets.template.yml config/secrets.yml
       - run: cp config/wifi_density.template.yml config/wifi_density.yml
-      # Before we run any MySQL-related commands, make sure that MySQL has started
-      - name: Wait for MySQL to start
-        run: |
-          for i in 1 2 3 4 5; do mysqladmin ping -u root -p${{ env.MYSQL_ROOT_PASSWORD }} -h ${{ env.MYSQL_HOST }} --port ${{ env.MYSQL_PORT }} && break || sleep 5; done
-          # Run one final time to return success or error status (cancelling CI run if we get an error status)
-          mysqladmin ping -u root -p${{ env.MYSQL_ROOT_PASSWORD }} -h ${{ env.MYSQL_HOST }} --port ${{ env.MYSQL_PORT }}
-      - name: Grant database permissions
-        run: |
-          mysql -u root -p${{ env.MYSQL_ROOT_PASSWORD }} -h ${{ env.MYSQL_HOST }} --port ${{ env.MYSQL_PORT }} -e "CREATE USER '${{ env.MYSQL_USER }}'@'%' IDENTIFIED BY '${{ env.MYSQL_USER_PASSWORD }}';";
-          mysql -u root -p${{ env.MYSQL_ROOT_PASSWORD }} -h ${{ env.MYSQL_HOST }} --port ${{ env.MYSQL_PORT }} -e "GRANT ALL PRIVILEGES ON ${{ env.MYSQL_DATABASE }}.* TO '${{ env.MYSQL_USER }}'@'%';";
-      - name: Database user connection test
-        run: mysql -u ${{ env.MYSQL_USER }} -p${{ env.MYSQL_USER_PASSWORD }} -h ${{ env.MYSQL_HOST }} --port ${{ env.MYSQL_PORT }} -e "SHOW DATABASES;";
       - run: RAILS_ENV=test bundle exec rake db:schema:load --trace
       - run: RAILS_ENV=test bundle exec rake db:test:prepare
       - name: Run tests
