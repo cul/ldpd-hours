@@ -110,6 +110,7 @@ describe "User management", type: :feature, js: true do
       visit edit_user_path(user)
       choose "user_permissions_role_administrator"
       click_button "Update User"
+      sleep 1
       expect(user.administrator?).to eq true
     end
 
@@ -117,6 +118,7 @@ describe "User management", type: :feature, js: true do
       visit edit_user_path(user)
       choose "user_permissions_role_manager"
       click_button "Update User"
+      sleep 1
       expect(user.manager?).to eq true
     end
 
