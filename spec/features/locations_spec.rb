@@ -23,6 +23,22 @@ describe "Locations", type: :feature do
       expect(page.title).not_to include("Open Now")
       expect(page).to have_css("tr")
     end
+
+    # This is a test targeting the Rails 6.1 change that switched `.where.not` behavior from NOR to NAND
+    context "when an 'all' location and a suppressed location exist" do
+      let!(:lehman) { FactoryBot.create(:lehman) }
+      let!(:all_location) { FactoryBot.create(:all_location) }
+      let!(:duanereade_location) { FactoryBot.create(:duanereade, suppress_display: true) }
+
+      it "does not display the 'all' location and does not display suppressed locations", js: false do
+        visit("/locations")
+        expect(page).to have_content("Click on a location for its full schedule")
+        expect(page).to have_content(lehman.name)
+        expect(page).not_to have_content(all_location.name)
+        expect(page).not_to have_content(duanereade_location.name)
+      end
+    end
+
     it "shows the primary and secondary locations" do
       visit("/locations/#{butler.code}")
       click_on underbutler.name
