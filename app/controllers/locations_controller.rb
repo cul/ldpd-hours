@@ -9,9 +9,9 @@ class LocationsController < ApplicationController
       path.blank? or path == '/'
     end
     if home_page
-      @locations = Location.where(front_page: true).where.not(code: 'all', suppress_display: true).includes(:access_points)
+      @locations = Location.where(front_page: true).where.not(code: 'all').where.not(suppress_display: true).includes(:access_points)
     else
-      @locations = Location.where.not(code: 'all', suppress_display: true).includes(:access_points)
+      @locations = Location.where.not(code: 'all').where.not(suppress_display: true).includes(:access_points)
     end
     @locations = @locations.order(:name)
     @now = Time.current
