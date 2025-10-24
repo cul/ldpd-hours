@@ -18,7 +18,7 @@ gem 'sass', '~> 3.7.4'
 gem 'sass-rails', '~> 5'
 gem "sprockets-rails"
 gem "net-ldap", '~> 0.17.1'
-gem 'nokogiri', '~> 1.15.2' # update past 1.10 requires alma
+gem 'nokogiri', '~> 1.18', '>= 1.18.9', force_ruby_platform: true
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
