@@ -7,7 +7,7 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.0'
+gem 'rails', '~> 7.1.0'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 gem 'bigdecimal'
