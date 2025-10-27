@@ -25,6 +25,7 @@
 .byebug_history
 
 /config/database.yml
+/config/credentials.yml
 /config/secrets.yml
 /config/wifi_density.yml
 
