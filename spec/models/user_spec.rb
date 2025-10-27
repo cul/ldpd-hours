@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Location, type: :model do
+RSpec.describe User, type: :model do
   describe '#update_permissions' do
-    let(:user) { User.create(uid: "xyz123", email: "xyz123@columbia.edu") }
+    let(:user) { User.create(uid: "xyz123", email: "xyz123@columbia.edu", name: "Xyz 123") }
 
     context "returns false" do
       it 'when role is invalid' do
@@ -71,6 +71,30 @@ RSpec.describe Location, type: :model do
         expect(user.update_permissions(role: Permission::EDITOR)).to be true
         expect(user.permissions.count).to eql 0
         expect(user.editor?).to be false
+      end
+    end
+    context 'when validating a new user' do
+      let(:uid) { 'abcdef' }
+      let(:email) { 'abcdef@mail.example.org' }
+      let(:user_name) { 'Abc Def' }
+      let(:ldap_entry) { instance_double(Cul::LDAP::Entry, uni: uid, email: email, name: user_name) }
+      subject(:user) { User.new(uid: uid) }
+
+      before do
+        allow_any_instance_of(Cul::LDAP).to receive(:find_by_uni).with(uid).and_return(ldap_entry)
+        user.valid?
+      end
+
+      it 'is valid' do
+        expect(user.valid?).to be true
+      end
+
+      it 'assigns email from ldap' do
+        expect(user.email).to eql(email)
+      end
+
+      it 'assigns name from ldap' do
+        expect(user.name).to eql(user_name)
       end
     end
   end

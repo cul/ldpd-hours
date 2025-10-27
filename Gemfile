@@ -7,7 +7,7 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.0'
+gem 'rails', '~> 7.1.0'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 gem 'bigdecimal'
@@ -18,7 +18,7 @@ gem 'sass', '~> 3.7.4'
 gem 'sass-rails', '~> 5'
 gem "sprockets-rails"
 gem "net-ldap", '~> 0.17.1'
-gem 'nokogiri', '~> 1.15.2' # update past 1.10 requires alma
+gem 'nokogiri', '~> 1.18', '>= 1.18.9', force_ruby_platform: true
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -44,7 +44,7 @@ group :development, :test do
   gem 'rexml', '~> 3.2', '>= 3.2.4'
   # For automatically updating chromedriver
   gem 'webdrivers', '~> 5.3.0', require: false
-  gem 'rspec-rails', '~> 4.0'
+  gem 'rspec-rails', '~> 6.0'
   gem 'factory_bot_rails', ' ~> 4.0'
   gem 'simplecov',      require: false
   gem 'simplecov-lcov', require: false
@@ -59,7 +59,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   # Use Capistrano for deployment
-  gem 'capistrano', '~> 3.18.0', require: false
+  gem 'capistrano', '~> 3.19.0', require: false
   gem 'capistrano-cul', require: false
   gem 'capistrano-passenger', '~> 0.1', require: false
   gem 'capistrano-rails', '~> 1.4', require: false

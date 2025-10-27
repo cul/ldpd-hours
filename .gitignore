@@ -9,6 +9,8 @@
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
+/db/*.sqlite3-shm
+/db/*.sqlite3-wal
 /db/*.sqlite3-journal
 
 # Ignore all logfiles and tempfiles.
@@ -23,6 +25,9 @@
 .byebug_history
 
 /config/database.yml
+/config/credentials.yml
+/config/credentials.yml.enc
+/config/master.key
 /config/secrets.yml
 /config/wifi_density.yml
 

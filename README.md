@@ -43,7 +43,7 @@ bundle exec rspec
 Because updating our hours uses a MySQL specific flavor of a batch upsert, if the db provider changes in the future you will need to modify the `TimeTable.batch_update_or_create` method with SQL appropriate for the db provider.
 
 ## Configuration
-#### secrets.yml
+#### credentials.yml
 
 Configuring `analytics_key` will cause the public layout to include the GA analytics snippet if the Rails environment config also has `track_users` set to true.
 

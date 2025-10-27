@@ -33,7 +33,7 @@ jobs:
       - run: npm install -g yarn
       - run: yarn install
       - run: cp config/database.template.yml config/database.yml
-      - run: cp config/secrets.template.yml config/secrets.yml
+      - run: cp config/credentials.template.yml config/credentials.yml
       - run: cp config/wifi_density.template.yml config/wifi_density.yml
       - run: RAILS_ENV=test bundle exec rake db:schema:load --trace
       - run: RAILS_ENV=test bundle exec rake db:test:prepare

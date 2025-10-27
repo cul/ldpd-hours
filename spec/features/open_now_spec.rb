@@ -15,7 +15,7 @@ describe 'locations open now', type: :feature do
   end
   context 'with analytics' do
     before do
-      Rails.application.secrets[:analytics_key] = 'fakey'
+      Rails.application.credentials[:analytics_key] = 'fakey'
       visit '/locations/open_now'
     end
     it "tracks page views" do
@@ -25,7 +25,7 @@ describe 'locations open now', type: :feature do
   end
   context 'without analytics' do
     before do
-      Rails.application.secrets.delete(:analytics_key)
+      Rails.application.credentials.delete(:analytics_key)
       visit '/locations/open_now'
     end
     it "doesn't tracks page views" do
