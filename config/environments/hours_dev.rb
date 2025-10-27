@@ -1,13 +1,14 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # In the development environment your application's code is reloaded on
-  # every request. This slows down response time but is perfect for development
-  # since you don't have to restart the web server when you make code changes.
-  config.cache_classes = false
+  # Code is not reloaded between requests.
+  config.enable_reloading = false
 
-  # Do not eager load code on boot.
-  config.eager_load = false
+  # Eager load code on boot. This eager loads most of Rails and
+  # your application in memory, allowing both threaded web servers
+  # and those relying on copy on write to perform better.
+  # Rake tasks automatically ignore this option for performance.
+  config.eager_load = true
 
   # Show full error reports.
   config.consider_all_requests_local = false
@@ -31,8 +32,8 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  # Print deprecation notices to the Rails logger.
-  config.active_support.deprecation = :log
+  # Don't log any deprecations.
+  config.active_support.report_deprecations = false
 
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
@@ -46,11 +47,7 @@ Rails.application.configure do
   config.assets.quiet = true
 
   # Raises error for missing translations
-  # config.action_view.raise_on_missing_translations = true
-
-  # Use an evented file watcher to asynchronously detect changes in source code,
-  # routes, locales, etc. This feature depends on the listen gem.
-  # config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  # config.i18n.raise_on_missing_translations = true
 
   # Logging
   config.log_formatter = ::Logger::Formatter.new
