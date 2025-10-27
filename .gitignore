@@ -26,6 +26,8 @@
 
 /config/database.yml
 /config/credentials.yml
+/config/credentials.yml.enc
+/config/master.key
 /config/secrets.yml
 /config/wifi_density.yml
 
