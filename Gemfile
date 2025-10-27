@@ -44,7 +44,7 @@ group :development, :test do
   gem 'rexml', '~> 3.2', '>= 3.2.4'
   # For automatically updating chromedriver
   gem 'webdrivers', '~> 5.3.0', require: false
-  gem 'rspec-rails', '~> 4.0'
+  gem 'rspec-rails', '~> 6.0'
   gem 'factory_bot_rails', ' ~> 4.0'
   gem 'simplecov',      require: false
   gem 'simplecov-lcov', require: false
