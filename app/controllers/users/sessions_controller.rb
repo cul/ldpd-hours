@@ -7,15 +7,16 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def omniauth_provider_key
-    Rails.env == 'development' ? 'developer' : 'saml'
+    Rails.env == 'development' ? 'developer' : 'cas'
   end
 
   # GET /resource/sign_in
   def new
     if Rails.env == 'development'
+      puts "About to redirect to developer omniauth"
       redirect_to user_developer_omniauth_authorize_path
     else
-      redirect_to user_saml_omniauth_authorize_path
+      redirect_to user_cas_omniauth_authorize_path
     end
   end
 end

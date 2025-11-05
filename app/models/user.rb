@@ -1,9 +1,10 @@
 class User < ApplicationRecord
-  include Cul::Omniauth::Users
-
   has_many :permissions, dependent: :destroy
 
   before_validation :add_ldap_info
+
+  # Configure devise
+  devise :rememberable, :trackable, :omniauthable, omniauth_providers: [Rails.env.development? ? :developer : :cas]
 
   def password
     Devise.friendly_token[0,20]
@@ -38,8 +39,8 @@ class User < ApplicationRecord
       .map{ |p| Location.find(p.subject_id) }
   end
 
-  # Updating permissions. Destroys all previously definited permissions.
-  # Recreates them based on the paramters given. If 'administrator' or 'manager'
+  # Updating permissions. Destroys all previously defined permissions.
+  # Recreates them based on the parameters given. If 'administrator' or 'manager'
   # role is given, adds in corresponding permission for user. If 'editor' is
   # passed in as the role editor permissions are added based on the the list if
   # location_ids given. location_ids are ignored if passed in with
