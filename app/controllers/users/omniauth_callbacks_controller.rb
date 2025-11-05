@@ -19,9 +19,14 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     "#{request.base_url}/users/auth/cas/callback"
   end
 
-  # GET /users/auth/cas (go here to be redirected to the CAS login form)
   def passthru
-    redirect_to Omniauth::Cul::Cas3.passthru_redirect_url(app_cas_callback_endpoint), allow_other_host: true
+    puts "In passthru, request.path: #{request.path}"
+    if Rails.env.development?
+      # Let the developer strategy handle this automatically
+      super
+    else
+      redirect_to Omniauth::Cul::Cas3.passthru_redirect_url(app_cas_callback_endpoint), allow_other_host: true
+    end
   end
 
   # GET /users/auth/cas/callback

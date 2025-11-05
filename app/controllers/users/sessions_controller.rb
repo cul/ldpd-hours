@@ -11,6 +11,8 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   # GET /resource/sign_in
+  # TODO: let the view handle the POST form submission and 
+  # auto-submit the form
   def new
     if Rails.env == 'development'
       puts "About to redirect to developer omniauth"

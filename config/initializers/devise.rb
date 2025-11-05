@@ -252,7 +252,7 @@ Devise.setup do |config|
   # up on your models and hooks.
   if Rails.env.development?
     puts "Using developer omniauth strategy"
-    config.omniauth :developer, fields: [:uid], uid_field: :uid, callback_method: :get
+    config.omniauth :developer, fields: [:uid], uid_field: :uid
   else
     config.omniauth :cas, strategy_class: Omniauth::Cul::Strategies::Cas3Strategy
   end
