@@ -250,12 +250,14 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  if Rails.env.development?
-    puts "Using developer omniauth strategy"
-    config.omniauth :developer, fields: [:email], uid_field: :email
-  else
-    config.omniauth :cas, strategy_class: Omniauth::Cul::Strategies::Cas3Strategy
-  end
+  # if Rails.env.development?
+  #   puts "Using developer omniauth strategy"
+  #   config.omniauth :developer, fields: [:email], uid_field: :email
+  # else
+  #   config.omniauth :cas, strategy_class: Omniauth::Cul::Strategies::Cas3Strategy
+  # end
+  config.omniauth :columbia_cas, { label: 'Columbia SSO (CAS)' }
+  config.omniauth :developer_uid, { label: 'Developer UID' } if Rails.env.development?
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

@@ -74,7 +74,7 @@ gem 'listen', '~> 3.2'
 # Login/auth gems
 gem 'devise'
 gem 'omniauth-rails_csrf_protection', '~> 1.0'
-gem 'omniauth-cul'
+gem "omniauth-cul", github: "cul/omniauth-cul", branch: "improved-implementation"
 gem 'omniauth', '>= 2.1'
 gem 'cancancan', '~> 3.0'
 

@@ -4,11 +4,18 @@ Rails.application.routes.draw do
 
   resources :users
   # devise_for :users, controllers: {sessions: 'users/sessions', omniauth_callbacks: 'users/omniauth_callbacks'}
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
-  devise_scope :user do
-    get 'sign_in', to: 'users/sessions#new', as: :new_user_session
-    get 'sign_out', to: 'users/sessions#destroy', as: :destroy_user_session
-  end
+
+  # skip_omniauth_callbacks = Rails.env.development? ? [] : [:omniauth_callbacks]
+
+  devise_for :users,
+             controllers: { sessions: 'users/sessions', omniauth_callbacks: 'users/omniauth_callbacks' },
+             skip: skip_omniauth_callbacks
+
+  # devise_scope :user do
+    # get 'sign_in', to: 'users/sessions#new', as: :new_user_session    
+    # delete 'sign_out', to: 'users/sessions#destroy', as: :destroy_user_session
+å
+  # end
 
   resources :locations, param: :code do
     get :open_now, on: :collection

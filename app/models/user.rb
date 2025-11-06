@@ -4,7 +4,8 @@ class User < ApplicationRecord
   before_validation :add_ldap_info
 
   # Configure devise
-  devise :rememberable, :trackable, :omniauthable, omniauth_providers: [Rails.env.development? ? :developer : :cas]
+  # devise :rememberable, :trackable, :omniauthable, omniauth_providers: [:developer, :cas]
+  devise :database_authenticatable, :validatable, :omniauthable, omniauth_providers: Devise.omniauth_configs.keys
 
   def password
     Devise.friendly_token[0,20]

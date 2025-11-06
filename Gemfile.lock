@@ -5,6 +5,15 @@ GIT
     cul-ldap (0.0.1)
       net-ldap (~> 0.16)
 
+GIT
+  remote: https://github.com/cul/omniauth-cul.git
+  revision: 6fb91e21311244c476ecc61fdfad51bb1f93ee81
+  branch: improved-implementation
+  specs:
+    omniauth-cul (0.2.0)
+      devise (>= 4.9)
+      omniauth (>= 2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -215,9 +224,6 @@ GEM
       logger
       rack (>= 2.2.3)
       rack-protection
-    omniauth-cul (0.2.0)
-      devise (>= 4.9)
-      omniauth (>= 2.0)
     omniauth-rails_csrf_protection (1.0.2)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
@@ -404,7 +410,7 @@ DEPENDENCIES
   net-ldap (~> 0.17.1)
   nokogiri (~> 1.18, >= 1.18.9)
   omniauth (>= 2.1)
-  omniauth-cul
+  omniauth-cul!
   omniauth-rails_csrf_protection (~> 1.0)
   pry
   puma (~> 5.2)
