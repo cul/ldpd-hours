@@ -11,14 +11,14 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   # GET /resource/sign_in
-  # TODO: let the view handle the POST form submission and 
-  # auto-submit the form
   def new
-    if Rails.env == 'development'
-      puts "About to redirect to developer omniauth"
-      redirect_to user_developer_omniauth_authorize_path
-    else
-      redirect_to user_cas_omniauth_authorize_path
-    end
+    render 'users/sessions/new'
+    # if Rails.env == 'development'
+    #   # Show the developer login form instead of redirecting
+    #   @developer_auth_path = user_developer_omniauth_authorize_path
+    #   render 'new'
+    # else
+    #   redirect_to user_cas_omniauth_authorize_path
+    # end
   end
 end
