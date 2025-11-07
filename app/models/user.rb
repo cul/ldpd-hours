@@ -25,6 +25,10 @@ class User < ApplicationRecord
     !self.permissions.editor_roles.blank?
   end
 
+  def ability
+    @ability ||= Ability.new(self)
+  end
+
   def role
     Permission::VALID_ROLES.find { |role| send("#{role}?") }
   end
