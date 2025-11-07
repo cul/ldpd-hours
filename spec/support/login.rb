@@ -1,7 +1,7 @@
 shared_context 'login user' do
   include_context 'mock ldap'
 
-  let(:logged_in_user) { User.create(uid: 'abc123', email: 'abc123@columbia.edu', provider: 'saml') }
+  let(:logged_in_user) { User.create(uid: 'abc123', email: 'abc123@columbia.edu') }
 
   let(:saml_hash) do
     OmniAuth::AuthHash.new({ 'uid' => logged_in_user.uid, 'extra' => {} })

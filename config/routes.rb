@@ -2,20 +2,15 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: "locations#index"
 
-  resources :users
-  # devise_for :users, controllers: {sessions: 'users/sessions', omniauth_callbacks: 'users/omniauth_callbacks'}
-
-  # skip_omniauth_callbacks = Rails.env.development? ? [] : [:omniauth_callbacks]
-
   devise_for :users,
-             controllers: { sessions: 'users/sessions', omniauth_callbacks: 'users/omniauth_callbacks' },
-             skip: skip_omniauth_callbacks
+             controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
-  # devise_scope :user do
-    # get 'sign_in', to: 'users/sessions#new', as: :new_user_session    
-    # delete 'sign_out', to: 'users/sessions#destroy', as: :destroy_user_session
-å
-  # end
+  resources :users
+
+  devise_scope :user do
+    get 'sign_in', to: 'users/sessions#new', as: :new_user_session    
+    delete 'sign_out', to: 'users/sessions#destroy', as: :destroy_user_session
+  end
 
   resources :locations, param: :code do
     get :open_now, on: :collection
