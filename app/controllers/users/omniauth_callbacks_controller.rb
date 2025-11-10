@@ -28,6 +28,16 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     callback_url = user_columbia_cas_omniauth_callback_url
     uid, _affils = Omniauth::Cul::ColumbiaCas.validation_callback(request.params['ticket'], callback_url)
     puts "Received user_id: #{uid}, affils: #{_affils.inspect}"
+
+    current_user = User.find_by(uid: uid)
+
+    if !current_user
+      flash[:alert] = "Login attempt failed.  Please try again."
+      redirect_to root_path
+      return
+    end
+
+    sign_in_and_redirect current_user, event: :authentication
   
     # Custom auth logic for your app goes here.
     # The code below is provided as an example.  If you want to use Omniauth::Cul::PermissionFileValidator,
