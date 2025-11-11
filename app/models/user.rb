@@ -4,7 +4,7 @@ class User < ApplicationRecord
   before_validation :add_ldap_info
 
   # Configure devise
-  devise :omniauthable, omniauth_providers: Devise.omniauth_configs.keys
+  devise :omniauthable, :trackable, omniauth_providers: Devise.omniauth_configs.keys
 
   def administrator?
     !self.permissions.admin_roles.blank?

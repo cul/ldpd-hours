@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_11_07_200425) do
+ActiveRecord::Schema[7.1].define(version: 2025_11_11_200508) do
   create_table "access_points", force: :cascade do |t|
     t.integer "client_count"
     t.datetime "created_at", null: false
@@ -78,9 +78,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_07_200425) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at", precision: nil
-    t.datetime "remember_created_at", precision: nil
     t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at", precision: nil
     t.datetime "last_sign_in_at", precision: nil
@@ -91,7 +88,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_07_200425) do
     t.string "uid"
     t.string "email", default: "", null: false
     t.string "name"
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid"], name: "index_users_on_uid"
   end
 
