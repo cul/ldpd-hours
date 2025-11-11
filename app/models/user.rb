@@ -4,14 +4,7 @@ class User < ApplicationRecord
   before_validation :add_ldap_info
 
   # Configure devise
-  devise :validatable, :omniauthable, omniauth_providers: Devise.omniauth_configs.keys
-
-  # def password
-  #   Devise.friendly_token[0,20]
-  # end
-
-  # def password=(*val)
-  # end
+  devise :omniauthable, omniauth_providers: Devise.omniauth_configs.keys
 
   def administrator?
     !self.permissions.admin_roles.blank?
@@ -57,6 +50,7 @@ class User < ApplicationRecord
   # @return [true] if updating permissions was successful
   # @return [false] if updating permissions failed
   def update_permissions(params)
+    puts "Updating permissions with params: #{params.inspect}"
     role = params.fetch(:role, nil)
     location_ids = params.fetch(:location_ids, [])
 
