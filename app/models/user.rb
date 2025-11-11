@@ -6,12 +6,12 @@ class User < ApplicationRecord
   # Configure devise
   devise :validatable, :omniauthable, omniauth_providers: Devise.omniauth_configs.keys
 
-  def password
-    Devise.friendly_token[0,20]
-  end
+  # def password
+  #   Devise.friendly_token[0,20]
+  # end
 
-  def password=(*val)
-  end
+  # def password=(*val)
+  # end
 
   def administrator?
     !self.permissions.admin_roles.blank?
@@ -35,6 +35,10 @@ class User < ApplicationRecord
 
   def has_role?
     !role.blank?
+  end
+
+  def valid_password?(password)
+    false
   end
 
   def editable_locations

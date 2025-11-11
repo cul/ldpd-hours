@@ -10,10 +10,6 @@ Rails.application.routes.draw do
   devise_scope :user do
     get 'sign_in', to: 'users/sessions#new', as: :new_user_session    
     delete 'sign_out', to: 'users/sessions#destroy', as: :destroy_user_session
-
-    unless Rails.env.development?
-      get 'users/auth/columbia_cas/callback', to: 'users/omniauth_callbacks#columbia_cas', as: :user_columbia_cas_omniauth_callback
-    end
   end
 
   resources :locations, param: :code do
