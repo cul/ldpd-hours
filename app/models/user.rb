@@ -50,7 +50,6 @@ class User < ApplicationRecord
   # @return [true] if updating permissions was successful
   # @return [false] if updating permissions failed
   def update_permissions(params)
-    puts "Updating permissions with params: #{params.inspect}"
     role = params.fetch(:role, nil)
     location_ids = params.fetch(:location_ids, [])
 

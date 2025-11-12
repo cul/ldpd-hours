@@ -5,4 +5,12 @@ class Users::SessionsController < Devise::SessionsController
   def new_session_path(scope)
     new_user_session_path # this accomodates Users namespace of the controller
   end
+
+  def new
+    super
+  end
+
+  def destroy
+    super
+  end
 end
