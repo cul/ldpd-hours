@@ -1,16 +1,10 @@
 class User < ApplicationRecord
-  include Cul::Omniauth::Users
-
   has_many :permissions, dependent: :destroy
 
   before_validation :add_ldap_info
 
-  def password
-    Devise.friendly_token[0,20]
-  end
-
-  def password=(*val)
-  end
+  # Configure devise
+  devise :omniauthable, :trackable, omniauth_providers: Devise.omniauth_configs.keys
 
   def administrator?
     !self.permissions.admin_roles.blank?
@@ -24,6 +18,10 @@ class User < ApplicationRecord
     !self.permissions.editor_roles.blank?
   end
 
+  def ability
+    @ability ||= Ability.new(self)
+  end
+
   def role
     Permission::VALID_ROLES.find { |role| send("#{role}?") }
   end
@@ -32,14 +30,18 @@ class User < ApplicationRecord
     !role.blank?
   end
 
+  def valid_password?(password)
+    false
+  end
+
   def editable_locations
     self.permissions
       .editor_roles
       .map{ |p| Location.find(p.subject_id) }
   end
 
-  # Updating permissions. Destroys all previously definited permissions.
-  # Recreates them based on the paramters given. If 'administrator' or 'manager'
+  # Updating permissions. Destroys all previously defined permissions.
+  # Recreates them based on the parameters given. If 'administrator' or 'manager'
   # role is given, adds in corresponding permission for user. If 'editor' is
   # passed in as the role editor permissions are added based on the the list if
   # location_ids given. location_ids are ignored if passed in with

@@ -12,7 +12,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @user.provider = "saml"
+
     if @user.save && @user.update_permissions(permissions_params)
       flash[:success] = "User successfully added"
       redirect_to users_path
