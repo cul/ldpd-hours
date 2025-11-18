@@ -13,8 +13,8 @@
         <a class="nav-link" href="/">Hours Public</a>
       </li>
       <li class="nav-item">
-        <% if @current_user %>
-          <%= link_to "Sign out #{current_user.uid}", destroy_user_session_path, class: "nav-link" %>
+        <% if current_user %>
+          <%= link_to "Sign out #{current_user.uid}", destroy_user_session_path, method: :delete, class: "nav-link" %>
         <% else %>
           <%= link_to "Sign in", new_user_session_path, class: "nav-link" %>
         <% end %>

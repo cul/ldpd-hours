@@ -8,7 +8,6 @@ Bundler.require(*Rails.groups)
 
 module LdpdHours
   class Application < Rails::Application
-    include Cul::Omniauth::FileConfigurable
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
 

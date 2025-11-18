@@ -17,8 +17,7 @@
 
    The above seed command will seed the db with two locations and an administrative user. Administrative credentials are:
    ```
-   name: Test User
-   email: admin@example.com
+   UID: admin
    ```
 - `$ bundle exec rails s`
 - Navigate to `http://localhost:3000`

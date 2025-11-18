@@ -1,20 +1,12 @@
 shared_context 'login user' do
   include_context 'mock ldap'
 
-  let(:logged_in_user) { User.create(uid: 'abc123', email: 'abc123@columbia.edu', provider: 'saml') }
-
-  let(:saml_hash) do
-    OmniAuth::AuthHash.new({ 'uid' => logged_in_user.uid, 'extra' => {} })
-  end
+  let(:logged_in_user) { User.create(uid: 'abc123', email: 'abc123@columbia.edu') }
 
   before :each do
-    OmniAuth.config.test_mode = true
-    OmniAuth.config.mock_auth[:saml] = saml_hash
-    Rails.application.env_config["devise.mapping"] = Devise.mappings[:user]
-    Rails.application.env_config["omniauth.auth"] = OmniAuth.config.mock_auth[:saml]
     entry = double('entry', name: 'Jane Doe', email: logged_in_user.email)
     allow(ldap).to receive(:find_by_uni).with(logged_in_user.uid).and_return(entry)
-    visit '/sign_in'
+    login_as(logged_in_user, scope: :user)
   end
 end
 
