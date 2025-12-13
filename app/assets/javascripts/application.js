@@ -17,4 +17,5 @@
 //= require popper.js/dist/umd/popper.min.js
 //= require bootstrap/dist/js/bootstrap
 //= require bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js
+//= require ./typeahead-0.11.1.bundle.min.js
 //= require_tree .
