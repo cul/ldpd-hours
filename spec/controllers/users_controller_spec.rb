@@ -4,14 +4,12 @@ RSpec.describe UsersController, type: :controller do
   let(:butler) { FactoryBot.create(:butler) }
   let(:lehman) { FactoryBot.create(:lehman) }
 
-  let(:jane) { User.create(uid: 'xyz123', email: 'xyz123@columbia.edu') }
+  let(:uid) { 'xyz123' }
+  let(:jane) { User.create(uid: uid, email: 'xyz123@columbia.edu') }
+  include_context 'mock ldap'
 
   # POST /users/:id
   describe "#create" do
-    let(:uid) { 'xyz123' }
-
-    include_context 'mock ldap'
-
     before :each do
       entry = double('entry', name: 'Jane Doe', email: "janedoe@columbia.edu")
       allow(ldap).to receive(:find_by_uni).with(uid).and_return(entry)

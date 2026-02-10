@@ -30,5 +30,6 @@
 /config/master.key
 /config/secrets.yml
 /config/wifi_density.yml
+/config/cul_ldap.yml
 
 /coverage

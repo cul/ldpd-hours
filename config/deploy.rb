@@ -21,6 +21,7 @@ set :deploy_to, "/opt/passenger/#{fetch(:deploy_name)}"
 # Default value for :linked_files is []
 append  :linked_files,
         'config/database.yml',
+        'config/cul_ldap.yml',
         'config/credentials.yml.enc',
         'config/master.key',
         'config/wifi_density.yml'
