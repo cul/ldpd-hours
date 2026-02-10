@@ -7,7 +7,9 @@ RSpec.describe TimetablesController, type: :controller do
   # POST /locations/:location_id/timetables/batch_update(.:format)
   describe '#batch_update' do
     describe 'when editor for lehman logged in' do
-      let(:logged_in_user) { User.create(uid: 'abc123', email: 'abc123@columbia.edu') }
+      let(:uid) { 'abc123' }
+      let(:logged_in_user) { User.create(uid: uid, email: 'abc123@columbia.edu') }
+      include_context 'mock ldap'
 
       before do
         logged_in_user.update_permissions(role: Permission::EDITOR, location_ids: [lehman.id])

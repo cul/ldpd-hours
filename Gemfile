@@ -17,7 +17,7 @@ gem 'puma', '~> 5.2'
 gem 'sass', '~> 3.7.4'
 gem 'sass-rails', '~> 5'
 gem "sprockets-rails"
-gem "net-ldap", '~> 0.17.1'
+gem "cul-ldap", '0.1.0'
 gem 'nokogiri', '~> 1.18', '>= 1.18.9', force_ruby_platform: true
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -79,5 +79,3 @@ gem 'omniauth', '>= 2.1'
 gem 'cancancan', '~> 3.0'
 
 gem 'gaffe'
-
-gem "cul-ldap", github: "cul/cul-ldap"
